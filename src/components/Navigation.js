@@ -31,17 +31,9 @@ const styles = theme => ({
     }
   },
   search: {
-    backgroundColor: fade(theme.palette.common.white, 0.15),
-    "&:hover": {
-      backgroundColor: fade(theme.palette.common.white, 0.25)
-    },
-    marginRight: theme.spacing(2),
-    marginLeft: 0,
-    width: "100%",
-    [theme.breakpoints.up("sm")]: {
-      marginLeft: theme.spacing(3),
-      width: "auto"
-    }
+    width:'60%',
+    alignSelf:'center',
+    marginLeft:'8%'
   },
   searchIcon: {
     width: theme.spacing(7),
@@ -74,31 +66,50 @@ const styles = theme => ({
     [theme.breakpoints.up("md")]: {
       display: "none"
     }
+  },
+  SearcFeild:{
+    // [theme.breakpoints.up("xl")]: {
+    //   width:'850px'
+    // },
+    // [theme.breakpoints.up("lg")]: {
+    //   width:'750px'
+    // },
+    // [theme.breakpoints.up("md")]: {
+    //   width:'650px'
+    // },
+    // [theme.breakpoints.down("sm")]: {
+    //   width:'200px'
+    // }
   }
 });
 
 class Navigation extends Component {
   state = {};
   render() {
-    const classes = this.props;
+    const {classes} = this.props;
     return (
       <div className={classes.grow}>
-        <AppBar position="fixed">
-          <Toolbar variant="dense">
+        <AppBar position="fixed" style={{display:'flex',alignItems:'center',justifyContent:'center'}}>
+          <Toolbar variant="dense" style={{width:'80%'}}>
+            <div style={{marginRight:'auto'}}>
             <Typography className={classes.title} variant="h6" noWrap>
-              Read-Write-Share
+              RW&D
             </Typography>
+            </div>
+           
 
-            <div className={classes.search}>
+            <div className={classes.search} >
               <Search
-                size="default"
-                placeholder="input search text"
+                size="large"
+                placeholder="Search"
                 onSearch={value => console.log(value)}
                 enterButton
+                
+                
               />
             </div>
             <div className={classes.grow} />
-            <div className={classes.sectionDesktop}>
+            <div className={classes.sectionDesktop} style={{marginLeft:'auto'}}>
               <IconButton aria-label="show 4 new mails" color="inherit">
                 <Badge badgeContent={4} color="secondary">
                   <MailIcon />
