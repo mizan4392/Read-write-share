@@ -31,9 +31,9 @@ const styles = theme => ({
     }
   },
   search: {
-    width:'60%',
-    alignSelf:'center',
-    marginLeft:'8%'
+    width: '60%',
+    alignSelf: 'center',
+    marginLeft: '8%'
   },
   searchIcon: {
     width: theme.spacing(7),
@@ -67,7 +67,7 @@ const styles = theme => ({
       display: "none"
     }
   },
-  SearcFeild:{
+  SearcFeild: {
     // [theme.breakpoints.up("xl")]: {
     //   width:'850px'
     // },
@@ -86,17 +86,17 @@ const styles = theme => ({
 class Navigation extends Component {
   state = {};
   render() {
-    const {classes} = this.props;
+    const { classes } = this.props;
     return (
       <div className={classes.grow}>
-        <AppBar position="fixed" style={{display:'flex',alignItems:'center',justifyContent:'center'}}>
-          <Toolbar variant="dense" style={{width:'80%'}}>
-            <div style={{marginRight:'auto'}}>
-            <Typography className={classes.title} variant="h6" noWrap>
-              RW&D
+        <AppBar position="fixed" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <Toolbar variant="dense" style={{ width: '80%' }}>
+            <div style={{ marginRight: 'auto' }}>
+              <Typography className={classes.title} variant="h6" noWrap>
+                RW&D
             </Typography>
             </div>
-           
+
 
             <div className={classes.search} >
               <Search
@@ -104,12 +104,13 @@ class Navigation extends Component {
                 placeholder="Search"
                 onSearch={value => console.log(value)}
                 enterButton
-                
-                
+                size="default "
+
+
               />
             </div>
             <div className={classes.grow} />
-            <div className={classes.sectionDesktop} style={{marginLeft:'auto'}}>
+            <div className={classes.sectionDesktop} style={{ marginLeft: 'auto' }}>
               <IconButton aria-label="show 4 new mails" color="inherit">
                 <Badge badgeContent={4} color="secondary">
                   <MailIcon />
