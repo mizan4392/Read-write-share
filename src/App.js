@@ -4,13 +4,15 @@ import './App.css';
 import Navigation from './components/Navigation';
 import Login from './pages/authentication/Login';
 import Signup from './pages/authentication/Signup';
+import Post from './pages/Post';
 
 function App() {
   return (
     <div>
       <Navigation />
       {/* <Login /> */}
-      <Signup />
+      {/* <Signup /> */}
+      <Post />
     </div>
   );
 }
