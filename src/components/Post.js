@@ -41,7 +41,7 @@ class Post extends Component {
 
         const { classes } = this.props
         return (
-            <div style={{ marginTop: '20%', color: 'black' }}>
+            <div >
 
                 <Card className={classes.root}>
 

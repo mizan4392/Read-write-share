@@ -6,7 +6,8 @@ import {
   Toolbar,
   Typography,
   IconButton,
-  Badge
+  Badge,
+  Container
 } from "@material-ui/core";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import MailIcon from "@material-ui/icons/Mail";
@@ -90,7 +91,8 @@ class Navigation extends Component {
     return (
       <div className={classes.grow}>
         <AppBar position="fixed" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <Toolbar variant="dense" style={{ width: '80%' }}>
+          <Container>
+          <Toolbar variant="dense" >
             <div style={{ marginRight: 'auto' }}>
               <Typography className={classes.title} variant="h6" noWrap>
                 RW&D
@@ -136,6 +138,7 @@ class Navigation extends Component {
               </IconButton>
             </div>
           </Toolbar>
+          </Container>
         </AppBar>
       </div>
     );

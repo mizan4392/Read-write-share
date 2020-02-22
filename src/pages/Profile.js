@@ -5,7 +5,12 @@ import { Icon } from 'antd'
 
 const styles = theme => ({
     root: {
-        flexGrow: 1,
+        marginTop:'3.5%',
+        
+    },
+    Container:{
+        padding:'20px',
+        paddingTop:'0px'
     },
     paper: {
 
@@ -34,9 +39,9 @@ class Profile extends Component {
     render() {
         const { classes } = this.props
         return (
-            <div style={{ marginTop: '10%' }}>
+            <div className={classes.root}>
                 <Container>
-                    <Grid container spacing={2}>
+                    <Grid container spacing={2} className={classes.Container}>
                         <Grid item xs={12}>
                             <div style={{ position: 'relative' }}>
                                 <img src="https://il3.picdn.net/shutterstock/videos/13734893/thumb/1.jpg" height="250px" width="100%"></img>
