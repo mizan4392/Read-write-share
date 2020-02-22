@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { withStyles, Card, CardHeader, Avatar, IconButton, CardContent } from '@material-ui/core';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import { NavLink } from 'react-router-dom'
 import { Typography } from 'antd';
 const styles = theme => ({
     root: {

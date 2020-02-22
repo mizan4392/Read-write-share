@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
+import { Container,Grid, Paper, withStyles, Avatar } from '@material-ui/core';
 
-import { Container, Box, Grid, Paper, withStyles, Avatar, Typography } from '@material-ui/core';
-import { Icon } from 'antd'
 
 const styles = theme => ({
     root: {

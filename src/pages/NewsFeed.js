@@ -1,15 +1,36 @@
 import React, { Component } from 'react'
 import Post from '../components/Post'
 import CreatePost from '../components/CreatePost'
+import { withStyles } from '@material-ui/core'
+
+
+const styles = theme =>({
+    Root:{
+        display:'flex',
+        marginTop:'5%',
+        alignItems:'center',
+        flexDirection:'column',
+        color:'black'
+    }
+})
+
+
 
 class NewsFeed extends Component {
+
+
+
     render() {
+        const {classes}  = this.props
         return (
-            <div style={{display:'flex',marginTop:'5%',justifyContent:'center'}}>
+            <div className={classes.Root}>
                 <CreatePost />
-                <Post />
+                <Post /> 
+            
             </div>
         )
     }
 }
-export default NewsFeed
+
+
+export default withStyles(styles)(NewsFeed)
