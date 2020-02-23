@@ -1,10 +1,28 @@
 import React, { Component } from 'react'
-import { withStyles, Card, CardHeader, Avatar, IconButton, CardContent } from '@material-ui/core';
+import { withStyles, Card, CardHeader, Avatar, IconButton, CardContent, Container } from '@material-ui/core';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { Typography } from 'antd';
 const styles = theme => ({
-    root: {
-        maxWidth: 345,
+
+    Container:{
+        //textAlign: 'center',
+        //marginRight:'2px'
+       // marginTop:'20%'
+    },
+    Card: {
+
+    background: '#c5cdd9',
+    borderRadius: '20px',
+    padding: '10px',
+    maxWidth: '700px',
+    minheight:'200px',
+    //marginRight:'0%',
+     marginTop: '2%',
+    [theme.breakpoints.down("sm")]: {
+      //marginTop: '12%',
+      marginLeft:'auto',
+    }
+    
     },
     media: {
         height: 0,
@@ -40,9 +58,9 @@ class Post extends Component {
 
         const { classes } = this.props
         return (
-            <div >
+            <Container>
 
-                <Card className={classes.root}>
+                <Card className={classes.Card}>
 
                     <CardHeader
                         avatar={
@@ -57,16 +75,19 @@ class Post extends Component {
                         }
                         title="Shrimp and Chorizo Paella"
                         subheader="September 14, 2016"
+                        style={{backgroundColor:'white'}}
                     />
 
-                    <CardContent>
+                    <CardContent style={{backgroundColor:'white'}}>
                         <Typography variant="body2" color="textSecondary" component="p">
                             This impressive paella is a perfect party dish and a fun meal to cook together with your
                             guests. Add 1 cup of frozen peas along with the mussels, if you like.
-        </Typography>
+                        </Typography>
                     </CardContent>
                 </Card>
-            </div>
+            </Container>
+
+
 
         )
     }

@@ -24,8 +24,32 @@ class NewsFeed extends Component {
         const {classes}  = this.props
         return (
             <div className={classes.Root}>
+              
                 <CreatePost />
-                <Post /> 
+               
+              
+               <div style={{marginTop:'1%'}}>
+               <Post /> 
+               </div>
+               <div style={{marginTop:'1%'}}>
+               <Post /> 
+               </div>
+               <div style={{marginTop:'1%'}}>
+               <Post /> 
+               </div>
+               <div style={{marginTop:'1%'}}>
+               <Post /> 
+               </div>
+               <div style={{marginTop:'1%'}}>
+               <Post /> 
+               </div>
+               <div style={{marginTop:'1%'}}>
+               <Post /> 
+               </div>
+               
+              
+                
+             
             
             </div>
         )

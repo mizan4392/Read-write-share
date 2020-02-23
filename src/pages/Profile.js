@@ -1,15 +1,19 @@
 import React, { Component } from 'react'
-import { Container,Grid, Paper, withStyles, Avatar } from '@material-ui/core';
+import { Container, Grid, Paper, withStyles, Avatar, Tab, Tabs } from '@material-ui/core';
+import ProfilePic from '../assets/Profile/sobuz.jpg'
+import CoverPhoto from '../assets/Profile/cover.jpg'
+import CreatePost from '../components/CreatePost';
+import Post from '../components/Post';
 
 
 const styles = theme => ({
     root: {
-        marginTop:'3.5%',
-        
+        marginTop: '3.5%',
+
     },
-    Container:{
-        padding:'20px',
-        paddingTop:'0px'
+    Container: {
+        padding: '20px',
+        paddingTop: '0px'
     },
     paper: {
 
@@ -35,17 +39,29 @@ const styles = theme => ({
 
 
 class Profile extends Component {
+
+    state ={
+        value:0
+    }
+
+    
+    handleChange = (event, newValue) => {
+        // setValue(newValue);
+        this.setState({value:newValue})
+      };
+
     render() {
         const { classes } = this.props
+        const {value} = this.state
         return (
             <div className={classes.root}>
                 <Container>
                     <Grid container spacing={2} className={classes.Container}>
                         <Grid item xs={12}>
                             <div style={{ position: 'relative' }}>
-                                <img src="https://il3.picdn.net/shutterstock/videos/13734893/thumb/1.jpg" height="250px" width="100%"></img>
+                                <img src={CoverPhoto} height="300px" width="100%" style={{ backgroundRepeat: 'no-repeat', backgroundPosition: 'center' }}></img>
                                 <div className={classes.Avatar}>
-                                    <Avatar alt="Cindy Baker" src="https://p7.hiclipart.com/preview/340/956/944/computer-icons-user-profile-head-ico-download.jpg" className={classes.large} />
+                                    <Avatar alt="Cindy Baker" src={ProfilePic} className={classes.large} />
                                 </div>
                             </div>
                         </Grid>
@@ -58,21 +74,21 @@ class Profile extends Component {
                                         <span style={{ color: 'black' }}>Md Mizanur Rahaman</span>
                                     </div>
                                     <div>
-                                      <label style={{color:'black'}}>Phone: 01830791133</label>
+                                        <label style={{ color: 'black' }}>Phone: 01830791133</label>
                                     </div>
                                     <div>
-                                      <label style={{color:'black'}}>Address: 57/ka,Leakcircus Kolabagan </label>
+                                        <label style={{ color: 'black' }}>Address: 57/ka,Leakcircus Kolabagan </label>
                                     </div>
                                     <div>
-                                      <label style={{color:'black'}}>Email:dev.mizan4392@gmail.com </label>
+                                        <label style={{ color: 'black' }}>Email:dev.mizan4392@gmail.com </label>
                                     </div>
 
-                                    <div style={{textAlign:'center'}}>
-                                        <div style={{display:'flex',color:'black',justifyContent:'center'}}>
-                                            <div><p style={{color:'black'}}>4.5</p></div>
+                                    <div style={{ textAlign: 'center' }}>
+                                        <div style={{ display: 'flex', color: 'black', justifyContent: 'center' }}>
+                                            <div><p style={{ color: 'black' }}>4.5</p></div>
                                             <div>
-                                                <p style={{color:'black'}}>star</p>
-                                                <p style={{color:'black'}}>rating</p>
+                                                <p style={{ color: 'black' }}>star</p>
+                                                <p style={{ color: 'black' }}>rating</p>
                                             </div>
                                         </div>
                                     </div>
@@ -82,8 +98,27 @@ class Profile extends Component {
 
                         </Grid>
                         <Grid item xs={12} sm={8}>
-                            <Paper className={classes.paper}>
-                                <img src="https://il3.picdn.net/shutterstock/videos/13734893/thumb/1.jpg" height="280px" width="100%"></img>
+                            <Paper square>
+                                
+                                <Tabs
+                                    value={value}
+                                    indicatorColor="primary"
+                                    textColor="primary"
+                                    onChange={this.handleChange}
+                                    aria-label="disabled tabs example"
+                                    style={{marginBottom:'1%'}}
+                                >
+                                    <Tab label="Your Posts" />
+                                   
+                                    <Tab label="Your Events" />
+                                    <Tab label="Shared Posts" />
+                                </Tabs>
+                                <Post />
+                                <Post />
+                                <Post />
+                                <Post />
+                                <Post />
+
                             </Paper>
                         </Grid></Grid>
                 </Container>
