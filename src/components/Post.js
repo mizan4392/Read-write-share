@@ -1,28 +1,29 @@
 import React, { Component } from 'react'
-import { withStyles, Card, CardHeader, Avatar, IconButton, CardContent, Container } from '@material-ui/core';
+import { withStyles, Card, CardHeader, Avatar, IconButton, CardContent, Container, CardActions, Divider } from '@material-ui/core';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import { Typography } from 'antd';
+import { Typography, Button, Comment } from 'antd';
+import Page_Comment from './Comment';
 const styles = theme => ({
 
-    Container:{
+    Container: {
         //textAlign: 'center',
         //marginRight:'2px'
-       // marginTop:'20%'
+        // marginTop:'20%'
     },
     Card: {
 
-    background: '#c5cdd9',
-    borderRadius: '20px',
-    padding: '10px',
-    maxWidth: '700px',
-    minheight:'200px',
-    //marginRight:'0%',
-     marginTop: '2%',
-    [theme.breakpoints.down("sm")]: {
-      //marginTop: '12%',
-      marginLeft:'auto',
-    }
-    
+        background: '#c5cdd9',
+        borderRadius: '20px',
+        padding: '10px',
+        maxWidth: '700px',
+        minheight: '200px',
+        //marginRight:'0%',
+        marginTop: '2%',
+        [theme.breakpoints.down("sm")]: {
+            //marginTop: '12%',
+            marginLeft: 'auto',
+        }
+
     },
     media: {
         height: 0,
@@ -75,16 +76,42 @@ class Post extends Component {
                         }
                         title="Shrimp and Chorizo Paella"
                         subheader="September 14, 2016"
-                        style={{backgroundColor:'white'}}
+                        style={{ backgroundColor: 'white' }}
                     />
 
-                    <CardContent style={{backgroundColor:'white'}}>
+                    <CardContent style={{ backgroundColor: 'white' }}>
                         <Typography variant="body2" color="textSecondary" component="p">
                             This impressive paella is a perfect party dish and a fun meal to cook together with your
                             guests. Add 1 cup of frozen peas along with the mussels, if you like.
                         </Typography>
                     </CardContent>
+                    <Divider></Divider>
+                    <CardActions style={{ backgroundColor: 'white', display: 'flex', justifyContent: 'space-between' }}>
+                        <div>
+                            <Button size="small" icon="like">
+                                Like
+                         </Button>
+                        </div>
+
+                        <div>
+                            <Button size="small" icon="message">
+                                Comment
+                        </Button>
+                        </div>
+
+                        <div>
+                            <Button size="small" icon="share-alt" >
+                                Share
+                        </Button>
+                        </div>
+                        
+                    </CardActions>
+                    <Divider></Divider>
+                    <Page_Comment/>
+                 
+                   
                 </Card>
+                
             </Container>
 
 
