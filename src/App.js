@@ -12,6 +12,7 @@ import {
 } from "react-router-dom";
 import NewsFeed from './pages/NewsFeed';
 import Login from './pages/Login';
+import Signup from './pages/SignUp';
 
 function App() {
   return (
@@ -22,6 +23,8 @@ function App() {
         <Route exact path={ROUTES.ROOT} component={withRouter(NewsFeed)} />
         <Route exact path={ROUTES.PROFILE} component={withRouter(Profile)} />
         <Route exact path={ROUTES.LOGIN} component={withRouter(Login)} />
+        <Route exact path={ROUTES.SIGNIN} component={withRouter(Signup)} />
+
 
       </Router>
     </div>
