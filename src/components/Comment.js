@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
-import { Container, withStyles, List, ListItem, ListItemAvatar, Avatar, ListItemText, Divider, Typography, CardActionArea, Modal, Backdrop, Fade, ListItemSecondaryAction, IconButton, Button, Box, Card, CardHeader, CardContent, CardActions } from '@material-ui/core'
+import { withStyles, List, Avatar, Card, CardHeader, CardContent } from '@material-ui/core'
 
 import ProfilePic from '../assets/Profile/sobuz.jpg'
+import ReplyComment from './ReplyComment'
+import { Button } from 'antd'
 
 const styles = theme => ({
 
@@ -18,7 +20,7 @@ const styles = theme => ({
     root: {
         width: '100%',
         backgroundColor: '#fff',
-        marginBottom: '30px',
+        marginBottom: '10px',
         // [theme.breakpoints.down('sm')]: {
         //     display: 'none'
         // },
@@ -53,7 +55,7 @@ const styles = theme => ({
     },
     heading: {
         textAlign: 'center',
-        marginBottom: '15px',
+        marginBottom: '5px',
         textTransform: 'uppercase',
         backgroundColor: "#6e6969",
         color: "#fff",
@@ -67,6 +69,9 @@ const styles = theme => ({
         [theme.breakpoints.up('sm')]: {
             display: 'none'
         },
+    },
+    CardHeaderRoot: {
+        padding: '5px'
     }
 
 })
@@ -87,7 +92,19 @@ class Page_Comment extends Component {
 
         const { classes } = this.props
 
-        const comments = <React.Fragment> <h3><strong>Mizanur Rahaman</strong> </h3> <p style={{maxWidth:'550px'}}>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It ha</p> </React.Fragment>
+        const comments = <React.Fragment>
+            <h3>
+                <strong style={{ background: '#e1eff2', padding: '5px', borderRadius: '10px', color: '#0e5ec2' }}>Mizanur Rahaman</strong>
+            </h3>
+            <p style={{ maxWidth: '550px', background: '#dbdbdb', padding: '5px', borderRadius: '10px' }}>Lorem Ipsum has
+            been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
+            scrambled it to make a type specimen book. It ha
+                 </p>
+            <div style={{ display: 'flex' }}>
+                <Button icon="like" style={{ background: 'none', border: 'none ' }}></Button>
+                <p style={{ textDecoration: 'underline', cursor: 'pointer', color: 'blue', marginLeft: '10px', marginTop: '5px' }}>Reply</p>
+            </div>
+        </React.Fragment>
 
         const renderComments = [1, 2, 3, 4, 5].map(e => {
 
@@ -103,8 +120,15 @@ class Page_Comment extends Component {
                         //     </IconButton>
                         // }
                         title={comments}
-                       // subheader="September 14, 2016"
+                        // subheader="September 14, 2016"
+                        classes={{
+                            root: classes.CardHeaderRoot
+                        }}
                     />
+                    <CardContent>
+                        <ReplyComment />
+                    </CardContent>
+
 
                 </Card>
             )
@@ -116,9 +140,9 @@ class Page_Comment extends Component {
             <React.Fragment>
 
                 <List className={classes.root} >
-{renderComments}
+                    {renderComments}
                 </List>
-                
+
 
             </React.Fragment>
         )

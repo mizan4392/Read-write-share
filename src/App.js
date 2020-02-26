@@ -11,6 +11,7 @@ import {
   withRouter
 } from "react-router-dom";
 import NewsFeed from './pages/NewsFeed';
+import Login from './pages/Login';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
       <Router>
         <Route exact path={ROUTES.ROOT} component={withRouter(NewsFeed)} />
         <Route exact path={ROUTES.PROFILE} component={withRouter(Profile)} />
+        <Route exact path={ROUTES.LOGIN} component={withRouter(Login)} />
 
       </Router>
     </div>

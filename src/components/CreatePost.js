@@ -18,18 +18,18 @@ const styles = theme => ({
     borderRadius: '20px',
     padding: '10px',
     maxWidth: '700px',
-    minheight:'200px',
-    marginLeft:'22%',
+    minheight: '200px',
+    marginLeft: '22%',
     [theme.breakpoints.down("sm")]: {
       //marginTop: '12%',
-      marginLeft:'auto',
+      marginLeft: 'auto',
     }
   },
   Quill: {
     color: 'black',
-    // minWidth: '700px',
-    height: '200px',
-   //minheight:'200px',
+    minWidth: '200px',
+    // height: '200px',
+    //minheight:'200px',
     background: 'white'
 
   }
@@ -50,14 +50,14 @@ class CreatePost extends Component {
   render() {
     const { classes } = this.props
     return (
-      
-        <Container className={classes.Container}>
-          <Card className={classes.Card}>
-            <h2>Wright A Post</h2>
-            <ReactQuill value={this.state.text} onChange={this.handleChange} className={classes.Quill} />
-          </Card>
-        </Container>
-    
+
+      <Container className={classes.Container}>
+        <Card className={classes.Card}>
+          <h2>Wright A Post</h2>
+          <ReactQuill value={this.state.text} onChange={this.handleChange} className={classes.Quill} />
+        </Card>
+      </Container>
+
 
 
 
