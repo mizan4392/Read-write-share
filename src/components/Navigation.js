@@ -7,14 +7,18 @@ import {
   Typography,
   IconButton,
   Badge,
-  Container
+  Container,
+  MenuItem,
+  Menu
 } from "@material-ui/core";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import MailIcon from "@material-ui/icons/Mail";
-import NotificationsIcon from "@material-ui/icons/Notifications";
+// import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
 
 import { Input, Icon } from "antd";
+import { withRouter } from "react-router-dom";
+import Notification from "./Notification";
 
 const { Search } = Input;
 
@@ -68,81 +72,117 @@ const styles = theme => ({
       display: "none"
     }
   },
-  SearcFeild: {
-    // [theme.breakpoints.up("xl")]: {
-    //   width:'850px'
-    // },
-    // [theme.breakpoints.up("lg")]: {
-    //   width:'750px'
-    // },
-    // [theme.breakpoints.up("md")]: {
-    //   width:'650px'
-    // },
-    // [theme.breakpoints.down("sm")]: {
-    //   width:'200px'
-    // }
+  Brand: {
+    cursor: 'pointer'
   }
+
 });
 
 class Navigation extends Component {
-  state = {};
+  state = {
+    openMenu: null,
+    profileMenue: null
+  };
+  handelMenueOpen = e => {
+    this.setState({ openMenu: e.currentTarget })
+  }
+  handelProfileOpen = e => {
+    this.setState({ profileMenue: e.currentTarget })
+  }
+  handelProfileClose = e => {
+    this.setState({ profileMenue: null })
+  }
+  handleClose = e => {
+    this.setState({ openMenu: null })
+  }
   render() {
     const { classes } = this.props;
+
+    const renderCreateMenu = (<Menu
+      id="simple-menu"
+      anchorEl={this.state.openMenu}
+      keepMounted
+      open={Boolean(this.state.openMenu)}
+      onClose={this.handleClose}
+    >
+
+      <MenuItem onClick={this.handleClose}>Post</MenuItem>
+      <MenuItem onClick={this.handleClose}>Event</MenuItem>
+
+    </Menu>)
+
+    const renderProfileMenu = (<Menu
+      id="simple-menu"
+      anchorEl={this.state.profileMenue}
+      keepMounted
+      open={Boolean(this.state.profileMenue)}
+      onClose={this.handelProfileClose}
+    >
+
+      <MenuItem onClick={() => {
+        this.props.history.push('/profile')
+      }}>Profile</MenuItem>
+      <MenuItem onClick={this.handelProfileClose}>SignOut</MenuItem>
+
+    </Menu>)
+
     return (
       <div className={classes.grow}>
         <AppBar position="fixed" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <Container>
-          <Toolbar variant="dense" >
-            <div style={{ marginRight: 'auto' }}>
-              <Typography className={classes.title} variant="h6" noWrap>
-                RW&D
-            </Typography>
-            </div>
+            <Toolbar variant="dense" >
+              <div style={{ marginRight: 'auto' }}>
+                <h4 className={classes.Brand} onClick={() => {
+                  this.props.history.push('/')
+                }}>
+                  RW&D
+                </h4>
 
 
-            <div className={classes.search} >
-              <Search
-                size="large"
-                placeholder="Search"
-                onSearch={value => console.log(value)}
-                enterButton
-                size="default "
+              </div>
 
 
-              />
-            </div>
-            <div className={classes.grow} />
-            <div className={classes.sectionDesktop} style={{ marginLeft: 'auto' }}>
-              <IconButton aria-label="show 4 new mails" color="inherit">
-                <Badge badgeContent={4} color="secondary">
-                  <MailIcon />
-                </Badge>
-              </IconButton>
-              <IconButton
-                aria-label="show 17 new notifications"
-                color="inherit"
-              >
-                <Badge badgeContent={17} color="secondary">
-                  <NotificationsIcon />
-                </Badge>
-              </IconButton>
-              <IconButton
-                edge="end"
-                aria-label="account of current user"
-                //aria-controls={menuId}
-                aria-haspopup="true"
-                // onClick={handleProfileMenuOpen}
-                color="inherit"
-              >
-                <AccountCircle />
-              </IconButton>
-            </div>
-          </Toolbar>
+              <div className={classes.search} >
+                <Search
+                  size="large"
+                  placeholder="Search"
+                  onSearch={value => console.log(value)}
+                  enterButton
+                  size="default "
+
+
+                />
+              </div>
+              <div className={classes.grow} />
+              <div className={classes.sectionDesktop} style={{ marginLeft: 'auto' }}>
+
+                <IconButton aria-label="show 4 new mails" color="inherit" style={{ fontSize: '1rem' }} onClick={this.handelMenueOpen}>
+                  Create
+                </IconButton>
+                <div style={{ position: 'relative' }}>
+                  <Notification />
+                </div>
+
+                <IconButton
+                  edge="end"
+                  aria-label="account of current user"
+
+                  aria-haspopup="true"
+                  onClick={this.handelProfileOpen}
+                  color="inherit"
+
+                >
+                  <AccountCircle />
+                </IconButton>
+              </div>
+            </Toolbar>
           </Container>
+          {renderCreateMenu}
+          {renderProfileMenu}
         </AppBar>
       </div>
     );
   }
 }
 
-export default withStyles(styles)(Navigation);
+export default withRouter(withStyles(styles)(Navigation));

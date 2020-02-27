@@ -72,6 +72,19 @@ const styles = theme => ({
     },
     CardHeaderRoot: {
         padding: '5px'
+    },
+    UserName: {
+        background: '#e1eff2',
+        padding: '5px',
+        borderRadius: '10px',
+        color: '#0e5ec2',
+        fontSize: '1rem'
+    },
+    ReplyBody: {
+        maxWidth: '550px',
+        background: '#dbdbdb',
+        padding: '5px',
+        borderRadius: '10px'
     }
 
 })
@@ -92,7 +105,7 @@ class ReplyComment extends Component {
 
         const { classes } = this.props
 
-        const comments = <React.Fragment> <h3><strong style={{ background: '#e1eff2', padding: '5px', borderRadius: '10px', color: '#0e5ec2' }}>Mizanur Rahaman</strong> </h3> <p style={{ maxWidth: '550px', background: '#dbdbdb', padding: '5px', borderRadius: '10px' }}>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It ha</p> </React.Fragment>
+        const comments = <React.Fragment> <h3><strong className={classes.UserName}>Mizanur Rahaman</strong> </h3> <p className={classes.ReplyBody}>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It ha</p> </React.Fragment>
 
         const renderComments = [1, 2, 3, 4, 5].map(e => {
 

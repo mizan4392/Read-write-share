@@ -72,6 +72,27 @@ const styles = theme => ({
     },
     CardHeaderRoot: {
         padding: '5px'
+    },
+    UserName: {
+        background: '#e1eff2',
+        padding: '5px',
+        borderRadius: '10px',
+        color: '#0e5ec2',
+        fontSize: '1rem'
+    },
+    commentBody: {
+        maxWidth: '550px',
+        background: '#dbdbdb',
+        padding: '5px',
+        borderRadius: '10px'
+
+    },
+    ReplyBtn: {
+        textDecoration: 'underline',
+        cursor: 'pointer',
+        color: 'blue',
+        marginLeft: '10px',
+        marginTop: '5px'
     }
 
 })
@@ -94,15 +115,15 @@ class Page_Comment extends Component {
 
         const comments = <React.Fragment>
             <h3>
-                <strong style={{ background: '#e1eff2', padding: '5px', borderRadius: '10px', color: '#0e5ec2' }}>Mizanur Rahaman</strong>
+                <strong className={classes.UserName}>Mizanur Rahaman</strong>
             </h3>
-            <p style={{ maxWidth: '550px', background: '#dbdbdb', padding: '5px', borderRadius: '10px' }}>Lorem Ipsum has
+            <p className={classes.commentBody}>Lorem Ipsum has
             been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
             scrambled it to make a type specimen book. It ha
                  </p>
             <div style={{ display: 'flex' }}>
                 <Button icon="like" style={{ background: 'none', border: 'none ' }}></Button>
-                <p style={{ textDecoration: 'underline', cursor: 'pointer', color: 'blue', marginLeft: '10px', marginTop: '5px' }}>Reply</p>
+                <p className={classes.ReplyBtn} >Reply</p>
             </div>
         </React.Fragment>
 

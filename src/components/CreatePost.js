@@ -4,6 +4,7 @@ import ReactQuill from 'react-quill';
 
 import 'react-quill/dist/quill.snow.css';
 import { Card, withStyles, Container } from '@material-ui/core';
+import { Button } from 'antd';
 
 
 const styles = theme => ({
@@ -32,6 +33,17 @@ const styles = theme => ({
     //minheight:'200px',
     background: 'white'
 
+  },
+  PostBtn: {
+    width: '100%',
+    background: 'green',
+    margin: '5px',
+    color: '#fff',
+    '&:hover': {
+      background: '#fff',
+      color: 'green',
+      border: '2px solid green'
+    }
   }
 })
 
@@ -55,6 +67,9 @@ class CreatePost extends Component {
         <Card className={classes.Card}>
           <h2>Wright A Post</h2>
           <ReactQuill value={this.state.text} onChange={this.handleChange} className={classes.Quill} />
+          <div style={{ width: '100%' }}>
+            <Button className={classes.PostBtn}>Post</Button>
+          </div>
         </Card>
       </Container>
 

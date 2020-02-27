@@ -13,22 +13,44 @@ import {
 import NewsFeed from './pages/NewsFeed';
 import Login from './pages/Login';
 import Signup from './pages/SignUp';
-
-function App() {
-  return (
-    <div>
-
-      <Navigation />
-      <Router>
-        <Route exact path={ROUTES.ROOT} component={withRouter(NewsFeed)} />
-        <Route exact path={ROUTES.PROFILE} component={withRouter(Profile)} />
-        <Route exact path={ROUTES.LOGIN} component={withRouter(Login)} />
-        <Route exact path={ROUTES.SIGNIN} component={withRouter(Signup)} />
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { setNotificationState } from './redux/actions/action_misc'
 
 
-      </Router>
-    </div>
+class App extends React.Component {
+
+
+  render() {
+    return (
+      <div >
+        <Router>
+
+          <Navigation />
+          <Route exact path={ROUTES.ROOT} component={withRouter(NewsFeed)} />
+          <Route exact path={ROUTES.PROFILE} component={withRouter(Profile)} />
+          <Route exact path={ROUTES.LOGIN} component={withRouter(Login)} />
+          <Route exact path={ROUTES.SIGNIN} component={withRouter(Signup)} />
+
+
+        </Router>
+      </div >
+    );
+  }
+
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(
+    { setNotificationState },
+    dispatch
   );
 }
 
-export default App;
+function mapStateToProps({ }) {
+  return {};
+}
+
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
