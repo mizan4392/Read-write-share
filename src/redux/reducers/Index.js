@@ -4,14 +4,15 @@ import {
     notificationState
 } from './reducers_misc'
 
-import { login } from './reducers_auth'
+import { login, signup } from './reducers_auth'
 
 
 
 const rootReducer = combineReducers({
     notificationState,
-
-    login
+    //reducers auth
+    login,
+    signup
 })
 
 export default rootReducer

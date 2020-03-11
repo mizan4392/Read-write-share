@@ -1,6 +1,8 @@
 export const NOTIFICATION_STATE = "NOTIFICATION_STATE"
-export const LOGIN_USER = "LOGIN_USER"
 
+//action auth
+export const LOGIN_USER = "LOGIN_USER"
+export const SIGNUP_USER = "SIGNUP_USER"
 
 
 //action misc

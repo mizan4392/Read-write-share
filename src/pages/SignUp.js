@@ -2,30 +2,55 @@ import React, { Component } from "react";
 import "./Login.css";
 //redux
 import Particles from 'react-particles-js'
-import { Input, Icon } from "antd";
+import { Input, Icon, Button } from "antd";
+import { signupUser } from '../redux/actions/actionAuth'
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 
 
 
 class Signup extends Component {
     state = {
-        full_name: "",
+        fullName: "",
         email: "",
         password: "",
         confirm_password: "",
-
+        signup: null,
+        loading: false,
+        error: false
     };
 
 
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.signup !== this.state.signup) {
+            this.setState({ signup: nextProps.signup }, () => {
+                if (this.state.signup.status === "SUCCESS") {
+                    this.props.history.push("/login")
+                } else {
+                    this.setState({ loading: false })
+                }
+            })
+        }
+    }
 
     handleSubmit = e => {
         e.preventDefault();
-        // let userData = {
-        //     email: this.state.email,
-        //     password: this.state.password
-        // };
+        let userData = {
+            fullName: this.state.fullName,
+            email: this.state.email,
+            password: this.state.password,
+            gender: "male"
+        };
+        if (this.state.password !== this.state.confirm_password) {
+            this.setState({ error: true })
+        } else {
+            this.setState({ loading: true }, () => {
+                this.props.signupUser(userData);
+            })
+        }
 
-        // this.props.loginUser(userData, this.props.history);
-        console.log(this.state)
+
+        // console.log(this.state)
     };
     //setting the form value to state
     handleChange = e => {
@@ -50,7 +75,7 @@ class Signup extends Component {
                                     prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
                                     placeholder="Full Name"
                                     size="large"
-                                    name="full_name"
+                                    name="fullName"
                                     type="text"
                                     onChange={this.handleChange}
                                 />
@@ -93,11 +118,12 @@ class Signup extends Component {
                                 />
 
                             </div>
-
+                            <span style={{ color: 'red' }}>{this.state.error ? "Password and Confirm Password not matched" : ""}</span>
+                            <span style={{ color: 'red' }}>{this.props.login && this.props.login.status !== "SUCCESS" ? "Email already taken" : ""}</span>
                             <div >
-                                <button type="submit" className="btn btn-success btn-block" onClick={this.handleSubmit} >
+                                <Button type="submit" className="btn btn-success btn-block" onClick={this.handleSubmit} loading={this.state.loading} >
                                     Signup
-                         </button>
+                         </Button>
                                 <div className="form-group">
                                     <a href='#' onClick={() => this.props.history.push('/login')}>Already have an Account? Login</a>
                                 </div>
@@ -114,4 +140,16 @@ class Signup extends Component {
     }
 }
 
-export default Signup;
+
+
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({ signupUser }, dispatch);
+}
+
+
+function mapStateToProps({ signup }) {
+    return { signup };
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Signup);

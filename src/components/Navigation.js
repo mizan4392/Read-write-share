@@ -163,6 +163,9 @@ class Navigation extends Component {
           <MenuItem onClick={() => {
             this.props.history.push("/login");
           }}>Login</MenuItem>
+          <MenuItem onClick={() => {
+            this.props.history.push("/signup");
+          }}>Signup</MenuItem>
         </Menu>
 
 

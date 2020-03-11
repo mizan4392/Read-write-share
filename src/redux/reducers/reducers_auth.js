@@ -13,4 +13,13 @@ const login = (state = null, action) => {
     }
 }
 
-export { login }
+const signup = (state = null, action) => {
+    switch (action.type) {
+        case TYPES.LOGIN_USER:
+            return action.payload;
+        default:
+            return state;
+    }
+}
+
+export { login, signup }

@@ -5,20 +5,6 @@ import axios from 'axios';
 
 export const loginUser = async (data) => {
 
-    // let token = ""
-    // axios
-    //     .post(`${root}/login`, data)
-    //     .then((res) => {
-    //         setAuthorizationHeader(res.data.token)
-    //         token = res.data.token
-    //         history.push("/");
-
-    //     })
-    //     .catch((err) => {
-    //         console.log("err----------", err)
-
-    //     });
-
     try {
         await axios
             .post(`${root}/login`, data).then(res => {
@@ -48,17 +34,34 @@ export const loginUser = async (data) => {
 
 }
 
-export const signupUser = async (newUserData, history) => {
+export const signupUser = async (newUserData) => {
 
-    axios
-        .post("/signup", newUserData)
-        .then((res) => {
-            setAuthorizationHeader(res.data.token)
-            history.push("/login");
-        })
-        .catch((err) => {
+    try {
+        await axios
+            .post(`${root}/signup`, newUserData).then(res => {
+                //setAuthorizationHeader(res.data.token)
 
-        });
+            })
+
+        let data = {
+            status: "SUCCESS",
+            message: "Signup is succesfull"
+        };
+        return {
+            type: TYPES.LOGIN_USER,
+            payload: data
+        };
+
+    } catch (error) {
+        let data = {
+            status: "FAILURE",
+            message: error
+        };
+        return {
+            type: TYPES.LOGIN_USER,
+            payload: data
+        };
+    }
 };
 
 
