@@ -20,6 +20,9 @@ import { Input, Icon } from "antd";
 import { withRouter } from "react-router-dom";
 import Notification from "./Notification";
 import NotificationsIcon from "@material-ui/icons/Notifications";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { signout } from '../redux/actions/action_misc'
 
 const { Search } = Input;
 
@@ -82,8 +85,15 @@ class Navigation extends Component {
   state = {
     openMenu: null,
     profileMenue: null,
-    mobileMoreAnchorEl: null
+    mobileMoreAnchorEl: null,
+    login: null
   };
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.login !== this.state.login) {
+      this.setState({ login: nextProps.login })
+    }
+  }
   handelMenueOpen = e => {
     this.setState({ openMenu: e.currentTarget });
   };
@@ -107,6 +117,8 @@ class Navigation extends Component {
   render() {
     const { classes } = this.props;
 
+    const login = this.props.login && this.props.login.status === "SUCCESS" ? true : false
+
     const renderCreateMenu = (
       <Menu
         id="simple-menu"
@@ -121,7 +133,8 @@ class Navigation extends Component {
     );
 
     const renderProfileMenu = (
-      <Menu
+
+      login ? <Menu
         id="simple-menu"
         anchorEl={this.state.profileMenue}
         keepMounted
@@ -135,8 +148,24 @@ class Navigation extends Component {
         >
           Profile
         </MenuItem>
-        <MenuItem onClick={this.handelProfileClose}>SignOut</MenuItem>
-      </Menu>
+
+        <MenuItem onClick={() => {
+          this.props.signout()
+        }}>SignOut</MenuItem>
+      </Menu> :
+        <Menu
+          id="simple-menu"
+          anchorEl={this.state.profileMenue}
+          keepMounted
+          open={Boolean(this.state.profileMenue)}
+          onClose={this.handelProfileClose}
+        >
+          <MenuItem onClick={() => {
+            this.props.history.push("/login");
+          }}>Login</MenuItem>
+        </Menu>
+
+
     );
     const isMobileMenuOpen = Boolean(this.state.mobileMoreAnchorEl);
     const mobileMenuId = "primary-search-account-menu-mobile";
@@ -264,4 +293,15 @@ class Navigation extends Component {
   }
 }
 
-export default withRouter(withStyles(styles)(Navigation));
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ signout }, dispatch);
+}
+
+
+
+function mapStateToProps({ login }) {
+  return { login };
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(withStyles(styles)(Navigation)));

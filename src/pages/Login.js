@@ -2,7 +2,11 @@ import React, { Component } from "react";
 import "./Login.css";
 //redux
 import Particles from 'react-particles-js'
-import { Input, Icon } from "antd";
+import { Input, Icon, Button } from "antd";
+import { connect } from "react-redux";
+import { loginUser } from '../redux/actions/actionAuth'
+import { bindActionCreators } from "redux";
+
 
 const params = {
     particles: {
@@ -20,19 +24,41 @@ class Login extends Component {
     state = {
         email: "",
         password: "",
-        errors: {}
+        errors: {},
+        loading: false,
+        login: null
     };
 
 
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.login !== this.state.login) {
+            this.setState({ login: nextProps.login }, () => {
+                if (this.state.login.status === "SUCCESS") {
+                    this.props.history.push('/')
+                } else {
+                    this.setState({ loading: false })
+                }
+            })
+        }
+    }
+
 
     handleSubmit = e => {
-        e.preventDefault();
-        let userData = {
-            email: this.state.email,
-            password: this.state.password
-        };
 
-        this.props.loginUser(userData, this.props.history);
+
+        e.preventDefault();
+        console.log("Click")
+        if (this.state.email.length > 0) {
+            this.setState({ loading: true }, () => {
+                let userData = {
+                    email: this.state.email,
+                    password: this.state.password
+                };
+                this.props.loginUser(userData, this.props.history);
+            })
+        }
+
+
     };
     //setting the form value to state
     handleChange = e => {
@@ -47,16 +73,21 @@ class Login extends Component {
                 <div className="row">
                     <div className="col-md-4 col-sm-4 col-xs-12" />
                     <div className="col-md-4 col-sm-4 col-xs-12">
-                        <form className="form-container" onSubmit={this.handleSubmit} >
+                        <form className="form-container" >
 
                             <h1 style={{ textAlign: 'center' }}> Login</h1>
                             <div className="form-group">
                                 {/* <label htmlFor="exampleInputEmail1">Email address</label> */}
 
                                 <Input
+                                    name="email"
+                                    type="email"
                                     prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
                                     placeholder="Email"
                                     size="large"
+                                    value={this.state.email}
+                                    onChange={this.handleChange}
+
                                 />
 
                             </div>
@@ -64,8 +95,11 @@ class Login extends Component {
                                 <Input
                                     prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
                                     type="password"
+                                    name="password"
                                     placeholder="Password"
                                     size="large"
+                                    value={this.state.password}
+                                    onChange={this.handleChange}
                                 />
 
                             </div>
@@ -73,11 +107,12 @@ class Login extends Component {
                                 <a href='#'>Forgote Password?</a>
                             </div>
                             <div >
-                                <button type="submit" className="btn btn-success btn-block" >
+                                <span style={{ color: 'red' }}>{this.props.login && this.props.login.status !== "SUCCESS" ? "Email or Password Error" : ""}</span>
+                                <Button type="submit" className="btn btn-success btn-block" loading={this.state.loading} onClick={this.handleSubmit} >
                                     Login
-                         </button>
+                         </Button>
                                 <div className="form-group">
-                                    <a href='#'>Don't have an Account? Signup</a>
+                                    <a href='#' onClick={() => this.props.history.push('/signup')}>Don't have an Account? Signup</a>
                                 </div>
 
                             </div>
@@ -92,4 +127,17 @@ class Login extends Component {
     }
 }
 
-export default Login;
+
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({ loginUser }, dispatch);
+}
+
+
+
+function mapStateToProps({ login }) {
+    return { login };
+}
+
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

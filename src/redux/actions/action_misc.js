@@ -9,3 +9,11 @@ export function setNotificationState(notificationState) {
         payload: notificationState
     };
 }
+
+
+export const signout = async () => {
+    return {
+        type: TYPES.LOGOUT_USER,
+        data: null
+    }
+}

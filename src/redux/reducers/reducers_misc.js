@@ -9,4 +9,13 @@ const notificationState = (state = null, action) => {
     }
 };
 
-export { notificationState }
+const login = (state = null, action) => {
+    switch (action.type) {
+        case TYPES.LOGOUT_USER:
+            return action.payload;
+        default:
+            return state;
+    }
+}
+
+export { notificationState, login }

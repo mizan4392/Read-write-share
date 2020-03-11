@@ -8,21 +8,24 @@ import { Input, Icon } from "antd";
 
 class Signup extends Component {
     state = {
+        full_name: "",
         email: "",
         password: "",
-        errors: {}
+        confirm_password: "",
+
     };
 
 
 
     handleSubmit = e => {
         e.preventDefault();
-        let userData = {
-            email: this.state.email,
-            password: this.state.password
-        };
+        // let userData = {
+        //     email: this.state.email,
+        //     password: this.state.password
+        // };
 
-        this.props.loginUser(userData, this.props.history);
+        // this.props.loginUser(userData, this.props.history);
+        console.log(this.state)
     };
     //setting the form value to state
     handleChange = e => {
@@ -37,7 +40,7 @@ class Signup extends Component {
                 <div className="row">
                     <div className="col-md-4 col-sm-4 col-xs-12" />
                     <div className="col-md-4 col-sm-4 col-xs-12">
-                        <form className="form-container" onSubmit={this.handleSubmit} >
+                        <form className="form-container"  >
 
                             <h1 style={{ textAlign: 'center' }}> Signup</h1>
                             <div className="form-group">
@@ -47,6 +50,9 @@ class Signup extends Component {
                                     prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
                                     placeholder="Full Name"
                                     size="large"
+                                    name="full_name"
+                                    type="text"
+                                    onChange={this.handleChange}
                                 />
 
                             </div>
@@ -57,6 +63,9 @@ class Signup extends Component {
                                     prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
                                     placeholder="Email"
                                     size="large"
+                                    name="email"
+                                    type="email"
+                                    onChange={this.handleChange}
                                 />
 
                             </div>
@@ -66,6 +75,9 @@ class Signup extends Component {
                                     type="password"
                                     placeholder="Password"
                                     size="large"
+                                    name="password"
+                                    type="password"
+                                    onChange={this.handleChange}
                                 />
 
                             </div>
@@ -75,16 +87,19 @@ class Signup extends Component {
                                     type="password"
                                     placeholder="Confirm Password"
                                     size="large"
+                                    name="confirm_password"
+                                    type="password"
+                                    onChange={this.handleChange}
                                 />
 
                             </div>
 
                             <div >
-                                <button type="submit" className="btn btn-success btn-block" >
+                                <button type="submit" className="btn btn-success btn-block" onClick={this.handleSubmit} >
                                     Signup
                          </button>
                                 <div className="form-group">
-                                    <a href='#'>Already have an Account? Login</a>
+                                    <a href='#' onClick={() => this.props.history.push('/login')}>Already have an Account? Login</a>
                                 </div>
 
                             </div>
