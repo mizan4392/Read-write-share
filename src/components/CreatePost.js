@@ -5,6 +5,8 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { Card, withStyles, Container } from '@material-ui/core';
 import { Button } from 'antd';
+import "@pathofdev/react-tag-input/build/index.css";
+import ReactTagInput from "@pathofdev/react-tag-input";
 
 
 const styles = theme => ({
@@ -51,25 +53,45 @@ const styles = theme => ({
 class CreatePost extends Component {
   constructor(props) {
     super(props)
-    this.state = { text: '' } // You can also pass a Quill Delta here
-    this.handleChange = this.handleChange.bind(this)
+    this.state = {
+       text: '' ,
+       tags:[]
+      } 
+  
   }
 
-  handleChange(value) {
-    this.setState({ text: value })
+  handleChange=(value)=> {
+    this.setState({ text: value})
+  }
+
+  handleTageChange = tags=>{
+    this.setState({tags})
+  }
+  handleClick = e=>{
+    e.preventDefault()
+    
   }
 
   render() {
-    console.log(this.state.text)
+    console.log(this.state)
     const { classes } = this.props
     return (
 
       <Container className={classes.Container}>
         <Card className={classes.Card}>
           <h2>Wright A Post</h2>
+          <div>
           <ReactQuill value={this.state.text} onChange={this.handleChange} className={classes.Quill} />
+          <label>Please add some tag to the post (It will help us to boost your post)</label>
+          <ReactTagInput 
+            tags={this.state.tags} 
+            onChange={this.handleTageChange}
+            placeholder="Please add Tag and press enter"
+    />
+          </div>
+         
           <div style={{ width: '100%' }}>
-            <Button className={classes.PostBtn}>Post</Button>
+            <Button className={classes.PostBtn} onClick={this.handleClick}>Post</Button>
           </div>
         </Card>
       </Container>
