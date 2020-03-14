@@ -4,7 +4,7 @@ import "./Login.css";
 import Particles from 'react-particles-js'
 import { Input, Icon, Button } from "antd";
 import { connect } from "react-redux";
-import { loginUser } from '../redux/actions/actionAuth'
+import { loginUser,getUserData } from '../redux/actions/actionAuth'
 import { bindActionCreators } from "redux";
 
 
@@ -35,6 +35,8 @@ class Login extends Component {
             this.setState({ login: nextProps.login }, () => {
                 if (this.state.login.status === "SUCCESS") {
                     this.props.history.push('/')
+                    this.props.getUserData()
+
                 } else {
                     this.setState({ loading: false })
                 }
@@ -129,7 +131,7 @@ class Login extends Component {
 
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({ loginUser }, dispatch);
+    return bindActionCreators({ loginUser,getUserData }, dispatch);
 }
 
 

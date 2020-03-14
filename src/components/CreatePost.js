@@ -61,7 +61,8 @@ class CreatePost extends Component {
     this.state = {
       text: '',
       tags: [],
-      newPostResponse: null
+      newPostResponse: null,
+      loading:false
     }
 
   }
@@ -69,7 +70,12 @@ class CreatePost extends Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.newPostResponse !== this.state.newPostResponse) {
       this.setState({ newPostResponse: nextProps.newPostResponse }, () => {
-        window.location.reload()
+        if(this.state.newPostResponse.status === "SUCCESS"){
+          // window.location.reload()
+        }else{
+          alert('Login session Expeired please login again')
+        }
+      
       })
     }
   }
@@ -106,7 +112,7 @@ class CreatePost extends Component {
   }
 
   render() {
-    console.log(this.state)
+    // console.log(this.state)
     const { classes } = this.props
 
     return (
@@ -125,7 +131,7 @@ class CreatePost extends Component {
           </div>
 
           <div style={{ width: '100%' }}>
-            <Button className={classes.PostBtn} onClick={this.handleClick}>Post</Button>
+            <Button className={classes.PostBtn} onClick={this.handleClick} loading={this.state.loading}>Post</Button>
           </div>
         </Card>
       </Container>

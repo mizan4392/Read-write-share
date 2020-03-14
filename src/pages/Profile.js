@@ -113,11 +113,11 @@ class Profile extends Component {
                                     <Tab label="Your Events" />
                                     <Tab label="Shared Posts" />
                                 </Tabs>
+                                {/* <Post />
                                 <Post />
                                 <Post />
                                 <Post />
-                                <Post />
-                                <Post />
+                                <Post /> */}
 
                             </Paper>
                         </Grid></Grid>

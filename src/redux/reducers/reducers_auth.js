@@ -15,11 +15,19 @@ const login = (state = null, action) => {
 
 const signup = (state = null, action) => {
     switch (action.type) {
-        case TYPES.LOGIN_USER:
+        case TYPES.SIGNUP_USER:
+            return action.payload;
+        default:
+            return state;
+    }
+}
+const userData = (state = null, action) => {
+    switch (action.type) {
+        case TYPES.FETCH_USER_DATA:
             return action.payload;
         default:
             return state;
     }
 }
 
-export { login, signup }
+export { login, signup ,userData}

@@ -10,7 +10,7 @@ import { composeWithDevTools } from 'redux-devtools-extension/logOnlyInProductio
 const persistConfig = {
     key: "read-write-share",
     storage: storage,
-    whitelist: ["login", "categoryId", "userData", "selectedMeetingForView"]
+    whitelist: ["login", "userData", "userData", "selectedMeetingForView"]
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

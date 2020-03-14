@@ -1,72 +1,56 @@
 import * as TYPES from '../Types'
 import { root, local } from '../../util/url'
 import axios from 'axios';
-
+import {addDataReturnPromise} from './index'
+import * as END_POINT from '../../util/endPoints'
 
 export const loginUser = async (data) => {
 
-    try {
-        await axios
-            .post(`${root}/login`, data).then(res => {
-                setAuthorizationHeader(res.data.token)
 
-            })
 
-        data = {
-            status: "SUCCESS",
-            message: "Login is succesfull"
-        };
-        return {
-            type: TYPES.LOGIN_USER,
-            payload: data
-        };
 
-    } catch (error) {
-        data = {
-            status: "FAILURE",
-            message: error
-        };
-        return {
-            type: TYPES.LOGIN_USER,
-            payload: data
-        };
-    }
+    return addDataReturnPromise(END_POINT.LOGIN,data,TYPES.LOGIN_USER)
+
+
 
 }
 
 export const signupUser = async (newUserData) => {
 
+    return addDataReturnPromise(END_POINT.SIGNUP,newUserData,TYPES.SIGNUP_USER)
+};
+
+export const getUserData =async () =>{
+    let data = []
     try {
         await axios
-            .post(`${root}/signup`, newUserData).then(res => {
-                //setAuthorizationHeader(res.data.token)
-
+            .get(`${root}/user`).then(res => {
+                console.log(res.data)
+                data = res.data
             })
 
-        let data = {
-            status: "SUCCESS",
-            message: "Signup is succesfull"
-        };
+
         return {
-            type: TYPES.LOGIN_USER,
+            type: TYPES.FETCH_USER_DATA,
             payload: data
         };
 
     } catch (error) {
-        let data = {
+       let data = {
             status: "FAILURE",
             message: error
         };
         return {
-            type: TYPES.LOGIN_USER,
+            type: TYPES.FETCH_USER_DATA,
             payload: data
         };
     }
-};
 
+    //   axios.get('/user')
+    //       .then(res =>{
+              
+    //       })
+    //       .catch(err => console.log(err))
+  };
 
-const setAuthorizationHeader = (token) => {
-    const FBIdtoken = `Auth ${token}`;
-    localStorage.setItem("FBIdtoken", FBIdtoken);
-    axios.defaults.headers.common['Authorization'] = FBIdtoken;
-}
+  

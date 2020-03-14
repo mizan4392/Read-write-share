@@ -5,7 +5,8 @@ import {
 } from './reducers_misc'
 
 import { newPostResponse } from '../reducers/reducers_push'
-import { login, signup } from './reducers_auth'
+import { login, signup,userData } from './reducers_auth'
+import {allPosts} from './reducers_fetch'
 
 
 
@@ -14,9 +15,15 @@ const rootReducer = combineReducers({
     //reducers auth
     login,
     signup,
+    userData,
 
     //reducers push
-    newPostResponse
+    newPostResponse,
+
+    //reducers fetch
+    allPosts
+
+    
 })
 
 export default rootReducer

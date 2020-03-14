@@ -11,3 +11,9 @@ export const LOGOUT_USER = "LOGOUT_USER"
 
 //action Push
 export const CREATE_NEW_POST = "CREATE_NEW_POST"
+
+
+
+//action fetch
+export const FETCH_USER_DATA = "FETCH_USER_DATA"
+export const FETCH_ALL_POST = "FETCH_ALL_POST"
