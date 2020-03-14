@@ -7,6 +7,11 @@ import { Card, withStyles, Container } from '@material-ui/core';
 import { Button } from 'antd';
 import "@pathofdev/react-tag-input/build/index.css";
 import ReactTagInput from "@pathofdev/react-tag-input";
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { withRouter } from 'react-router-dom';
+import { pushPostData } from '../redux/actions/actions_push'
+
 
 
 const styles = theme => ({
@@ -31,8 +36,8 @@ const styles = theme => ({
   Quill: {
     color: 'black',
     minWidth: '200px',
-    // height: '200px',
-    //minheight:'200px',
+    height: '100%',
+    minheight: '400px',
     background: 'white'
 
   },
@@ -54,42 +59,71 @@ class CreatePost extends Component {
   constructor(props) {
     super(props)
     this.state = {
-       text: '' ,
-       tags:[]
-      } 
-  
+      text: '',
+      tags: [],
+      newPostResponse: null
+    }
+
   }
 
-  handleChange=(value)=> {
-    this.setState({ text: value})
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.newPostResponse !== this.state.newPostResponse) {
+      this.setState({ newPostResponse: nextProps.newPostResponse }, () => {
+        window.location.reload()
+      })
+    }
   }
 
-  handleTageChange = tags=>{
-    this.setState({tags})
+  handleChange = (value) => {
+    this.setState({ text: value })
   }
-  handleClick = e=>{
+
+  handleTageChange = tags => {
+    this.setState({ tags })
+  }
+  handleClick = e => {
+    const login = this.props.login && this.props.login.status === "SUCCESS" ? true : false
+
+    if (login) {
+      let tags = ""
+      this.state.tags.map(t => {
+        tags = tags + "-" + t
+      })
+
+      let data = {
+        body: this.state.text,
+        tags: this.state.tags
+      }
+
+      this.props.pushPostData(data)
+
+
+    } else {
+      this.props.history.push('/login')
+    }
     e.preventDefault()
-    
+
   }
 
   render() {
     console.log(this.state)
     const { classes } = this.props
+
     return (
 
       <Container className={classes.Container}>
         <Card className={classes.Card}>
           <h2>Wright A Post</h2>
           <div>
-          <ReactQuill value={this.state.text} onChange={this.handleChange} className={classes.Quill} />
-          <label>Please add some tag to the post (It will help us to boost your post)</label>
-          <ReactTagInput 
-            tags={this.state.tags} 
-            onChange={this.handleTageChange}
-            placeholder="Please add Tag and press enter"
-    />
+            <ReactQuill value={this.state.text} onChange={this.handleChange} className={classes.Quill} />
+            <label>Please add some tag to the post (It will help us to boost your post)</label>
+            <ReactTagInput
+              tags={this.state.tags}
+              onChange={this.handleTageChange}
+              placeholder="Please add Tag and press enter"
+            />
           </div>
-         
+
           <div style={{ width: '100%' }}>
             <Button className={classes.PostBtn} onClick={this.handleClick}>Post</Button>
           </div>
@@ -103,4 +137,17 @@ class CreatePost extends Component {
   }
 }
 
-export default withStyles(styles)(CreatePost)
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ pushPostData }, dispatch);
+}
+
+
+
+function mapStateToProps({ login, newPostResponse }) {
+  return { login, newPostResponse };
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(withStyles(styles)(CreatePost)));
+
