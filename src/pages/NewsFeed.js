@@ -18,40 +18,21 @@ const styles = theme => ({
 });
 
 class NewsFeed extends Component {
-  state = {
-    allPosts: null
-  };
 
   componentDidMount() {
     this.props.fetchAllPost();
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.allPosts !== this.state.allPosts) {
-      this.setState({ allPosts: nextProps.allPosts });
-    }
-  }
 
   render() {
     const { classes } = this.props;
-    console.log(this.props.allPosts);
-    const renderPost =
-      this.props.allPosts &&
-      this.props.allPosts.map(post => {
-        return (
-          <div style={{ marginTop: "1%",width:'100%',maxWidth:'700px' ,padding:'10px',marginLeft: '3%',}} key={post.postId}>
-            {" "}
-            <Post post={post} key={post.postId} />{" "}
-          </div>
-        );
-      });
+  
 
     return (
       <Container>
         <div className={classes.Root}>
           <CreatePost />
-
-          {renderPost}
+          <Post />
         </div>
       </Container>
     );

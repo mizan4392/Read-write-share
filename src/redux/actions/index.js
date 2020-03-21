@@ -3,6 +3,7 @@ import { root, local } from '../../util/url'
 
 export const addDataReturnPromise = async (ref, object, actiontype) => {
 
+   
     try {
         await axios
             .post(`${root}/${ref}`, object).then(res => {
@@ -37,7 +38,7 @@ export const addDataReturnPromise = async (ref, object, actiontype) => {
 
 
 export const fetchDataReturnPromise = async (ref, actiontype) => {
-
+    addAutorization()
     let data = []
     // console.log("aaaaaaaaa----",actiontype)
     try {
@@ -68,6 +69,10 @@ export const fetchDataReturnPromise = async (ref, actiontype) => {
 
 
 
+const addAutorization = ()=>{
+    let token = localStorage.getItem("FBIdtoken");
+    axios.defaults.headers.common['Authorization'] = token;
+}
 
 
 

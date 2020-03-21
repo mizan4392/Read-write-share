@@ -31,3 +31,42 @@ export const pushPostData = async (data) => {
         };
     }
 }
+
+export const deletePost = async (postId) => {
+    let data = {}
+    addAutorization()
+    try {
+        await axios
+        .delete(`${root}/post/${postId}`)
+        .then(() => {
+           
+        })
+        
+        data = {
+            status: "SUCCESS",
+            message: "Post is deleted succesfully"
+        };
+        
+        return {
+            type: TYPES.DELETE_NEW_POST,
+            payload: data
+        };
+
+    } catch (error) {
+        data = {
+            status: "FAILURE",
+            message: error
+        };
+        return {
+            type: TYPES.DELETE_NEW_POST,
+            payload: data
+        };
+    }
+}
+const addAutorization = ()=>{
+    let token = localStorage.getItem("FBIdtoken");
+    axios.defaults.headers.common['Authorization'] = token;
+}
+
+
+

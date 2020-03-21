@@ -46,11 +46,9 @@ export const getUserData =async () =>{
         };
     }
 
-    //   axios.get('/user')
-    //       .then(res =>{
-              
-    //       })
-    //       .catch(err => console.log(err))
+
   };
+
+
 
   

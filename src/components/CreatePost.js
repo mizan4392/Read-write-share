@@ -4,13 +4,14 @@ import ReactQuill from 'react-quill';
 
 import 'react-quill/dist/quill.snow.css';
 import { Card, withStyles, Container } from '@material-ui/core';
-import { Button } from 'antd';
+import { Button ,notification} from 'antd';
 import "@pathofdev/react-tag-input/build/index.css";
 import ReactTagInput from "@pathofdev/react-tag-input";
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
 import { pushPostData } from '../redux/actions/actions_push'
+import { fetchAllPost } from '../redux/actions/action_fetch'
 
 
 
@@ -62,7 +63,7 @@ class CreatePost extends Component {
       text: '',
       tags: [],
       newPostResponse: null,
-      loading:false
+      loading: false
     }
 
   }
@@ -70,15 +71,37 @@ class CreatePost extends Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.newPostResponse !== this.state.newPostResponse) {
       this.setState({ newPostResponse: nextProps.newPostResponse }, () => {
-        if(this.state.newPostResponse.status === "SUCCESS"){
-          // window.location.reload()
-        }else{
-          alert('Login session Expeired please login again')
+        if (this.state.newPostResponse.status === "SUCCESS") {
+            this.setState({loading:false,text:"",tags:[]},()=>{
+              this.openNotification()
+              this.props.fetchAllPost()
+            })
+           
+        } else {
+        
+          this.setState({loading:false})
         }
-      
+
       })
     }
   }
+  openNotification = () => {
+
+    var placement = 'bottomRight'
+
+    notification.info({
+        message: 'New Post Created Sucessfully',
+        //   description:
+        //     'This is the content of the notification. This is the content of the notification. This is the content of the notification.'
+        //     ,
+        onClick: () => {
+            console.log('Notification Clicked!');
+        },
+        placement,
+        style:{backgroundColor:'#c7b300',color:'#fff'}
+        
+    });
+};
 
   handleChange = (value) => {
     this.setState({ text: value })
@@ -90,7 +113,7 @@ class CreatePost extends Component {
   handleClick = e => {
     const login = this.props.login && this.props.login.status === "SUCCESS" ? true : false
 
-    if (login) {
+    if (login ) {
       let tags = ""
       this.state.tags.map(t => {
         tags = tags + "-" + t
@@ -100,8 +123,15 @@ class CreatePost extends Component {
         body: this.state.text,
         tags: this.state.tags
       }
+      if(data.body.length > 0){
+        this.setState({ loading: true }, () => {
+          this.props.pushPostData(data)
+        })
+      }else{
+        alert("Please Write Something")
+      }
+    
 
-      this.props.pushPostData(data)
 
 
     } else {
@@ -145,7 +175,7 @@ class CreatePost extends Component {
 
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ pushPostData }, dispatch);
+  return bindActionCreators({ pushPostData,fetchAllPost }, dispatch);
 }
 
 
