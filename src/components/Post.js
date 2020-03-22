@@ -9,8 +9,12 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import InfoIcon from '@material-ui/icons/Info';
-import { deletePost } from '../redux/actions/actions_push'
-import { fetchAllPost } from '../redux/actions/action_fetch'
+import { deletePost,likePost ,unLikePost} from '../redux/actions/actions_push'
+import { fetchAllPost ,} from '../redux/actions/action_fetch'
+import {getUserData} from '../redux/actions/actionAuth'
+import dayjs from 'dayjs'
+import relativeTime from 'dayjs/plugin/relativeTime'
+
 
 import { notification } from 'antd'
 
@@ -51,6 +55,11 @@ const styles = theme => ({
     avatar: {
         backgroundColor: 'red',
     },
+    likeButton:{
+        display:'flex',
+        flexDirection:'column' ,
+       
+    }
 });
 
 
@@ -66,7 +75,11 @@ class Post extends Component {
         userData: null,
         deletePostResponse: null,
         deletePostId: "",
-        loading:false
+        loading: false,
+        likePostResponse:null,
+        likeButtonLoading:false,
+        likeButtonId:"",
+        unLikePostResponse:null
     };
 
     componentWillReceiveProps(nextProps) {
@@ -92,12 +105,50 @@ class Post extends Component {
 
             })
         }
+
+        if (nextProps.likePostResponse !== this.state.likePostResponse) {
+            this.setState({ likePostResponse: nextProps.likePostResponse }, () => {
+                if (this.state.likePostResponse.status === "SUCCESS") {
+                    this.setState({ likeButtonLoading: false },()=>{
+                        this.props.getUserData()
+                        this.props.fetchAllPost()
+                    })
+                    
+
+                } else {
+                    // alert('Login session Expeired please login again')
+                    this.setState({ likeButtonLoading: false })
+                }
+
+            })
+        }
+
+        if (nextProps.unLikePostResponse !== this.state.unLikePostResponse) {
+            this.setState({ unLikePostResponse: nextProps.unLikePostResponse }, () => {
+                if (this.state.unLikePostResponse.status === "SUCCESS") {
+                    this.setState({ likeButtonLoading: false },()=>{
+                        this.props.getUserData()
+                        this.props.fetchAllPost()
+                    })
+                    
+
+                } else {
+                    // alert('Login session Expeired please login again')
+                    this.setState({ likeButtonLoading: false })
+                }
+
+            })
+        }
+
+        
+
+
     }
     handleDelete = () => {
-        this.setState({loading:true},()=>{
+        this.setState({ loading: true }, () => {
             this.props.deletePost(this.state.deletePostId)
         })
-        
+
     }
     confirm() {
         Modal.confirm({
@@ -124,7 +175,7 @@ class Post extends Component {
                 console.log('Notification Clicked!');
             },
             placement
-            
+
         });
     };
 
@@ -135,13 +186,26 @@ class Post extends Component {
         })
     }
 
+    handleLikeOnPost = postId => {
+
+        // console.log(postId)
+        this.setState({likeButtonLoading:true,likeButtonId:postId},()=>{
+            this.props.likePost(postId)
+        })
+        
+    }
+    handleUnLikeOnPost = postId => {
+        this.setState({likeButtonLoading:true,likeButtonId:postId},()=>{
+            this.props.unLikePost(postId)
+        })
+    }
     render() {
 
         const { classes } = this.props
+        dayjs.extend(relativeTime)
 
 
-
-        console.log(this.state)
+        // console.log(this.state)
 
 
 
@@ -153,20 +217,20 @@ class Post extends Component {
 
                     <CardHeader
                         avatar={
-                            <Avatar aria-label="recipe" className={classes.avatar}>
+                            <Avatar aria-label="recipe" className={classes.avatar} src={post.userImage}>
                                 R
                             </Avatar>
                         }
                         action={
                             this.state.userData && this.state.userData.userId === post.userId ?
-                             <div>
-                                 {/* {this.state.loading ? <Spin/>:<div></div>} */}
-                                <Button icon="delete" style={{ paddingBottom: '15px', color: 'red',border:'none'}} onClick={() => this.handleClick(post.postId)} loading={post.postId === this.state.deletePostId ? this.state.loading : false}> 
-                                </Button>   
-                             </div> : (<div></div>)
+                                <div>
+                                    {/* {this.state.loading ? <Spin/>:<div></div>} */}
+                                    <Button icon="delete" style={{ paddingBottom: '15px', color: 'red', border: 'none' }} onClick={() => this.handleClick(post.postId)} loading={post.postId === this.state.deletePostId ? this.state.loading : false}>
+                                    </Button>
+                                </div> : (<div></div>)
                         }
                         title={post.full_name}
-                        subheader="September 14, 2016"
+                        subheader={dayjs(post.createdAt).fromNow()}
                         style={{ backgroundColor: 'white' }}
                     />
 
@@ -177,11 +241,30 @@ class Post extends Component {
 
                     </CardContent>
                     <Divider></Divider>
+
                     <CardActions style={{ backgroundColor: 'white', display: 'flex', justifyContent: 'space-between' }}>
+
                         <div>
-                            <Button size="small" icon="like">
-                                Like
+                            {
+                                this.props.userData.likes &&
+                                    this.props.userData.likes.find(like => like.postId === post.postId) ?
+                                    <div className={classes.likeButton}>
+                                        <span style={{marginLeft:'10px',marginBottom:'10px'}}>{post.likeCount} Likes</span>
+                                        <Button size="small" loading={post.postId === this.state.likeButtonId ? this.state.likeButtonLoading : false} icon="like" style={{ color: 'blue' }} onClick={() => this.handleUnLikeOnPost(post.postId)}>
+                                            Liked
+                                        </Button>
+                                    </div>
+
+                                    :
+                                    <div className={classes.likeButton}>
+                                        <span style={{marginLeft:'10px',marginBottom:'10px'}}>{post.likeCount} Likes</span>
+                                    <Button size="small" icon="like" onClick={() => this.handleLikeOnPost(post.postId)} loading={post.postId === this.state.likeButtonId ? this.state.likeButtonLoading : false}>
+                                        Like
                                 </Button>
+                                </div>
+
+                            }
+
                         </div>
 
                         <div>
@@ -221,11 +304,11 @@ class Post extends Component {
 
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({ deletePost, fetchAllPost }, dispatch);
+    return bindActionCreators({ deletePost, fetchAllPost ,likePost,getUserData,unLikePost}, dispatch);
 }
 
-function mapStateToProps({ allPosts, userData, deletePostResponse }) {
-    return { allPosts, userData, deletePostResponse };
+function mapStateToProps({ allPosts, userData, deletePostResponse,likePostResponse ,unLikePostResponse}) {
+    return { allPosts, userData, deletePostResponse ,likePostResponse,unLikePostResponse};
 }
 
 

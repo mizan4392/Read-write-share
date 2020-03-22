@@ -1,6 +1,27 @@
 import * as TYPES from '../Types'
 
 
+
+const unLikePostResponse = (state = null, action) => {
+    switch (action.type) {
+        case TYPES.UNLIKE_ON_POST:
+            return action.payload;
+        default:
+            return state;
+    }
+}
+
+
+const likePostResponse = (state = null, action) => {
+    switch (action.type) {
+        case TYPES.LIKE_ON_POST:
+            return action.payload;
+        default:
+            return state;
+    }
+}
+
+
 const deletePostResponse = (state = null, action) => {
     switch (action.type) {
         case TYPES.DELETE_NEW_POST:
@@ -21,4 +42,4 @@ const newPostResponse = (state = null, action) => {
     }
 }
 
-export { newPostResponse ,deletePostResponse}
+export { newPostResponse ,deletePostResponse,likePostResponse,unLikePostResponse}

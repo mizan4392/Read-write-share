@@ -6,7 +6,7 @@ import {
 
 
 
-import { newPostResponse ,deletePostResponse} from '../reducers/reducers_push'
+import { newPostResponse ,deletePostResponse,likePostResponse,unLikePostResponse} from '../reducers/reducers_push'
 import { login, signup,userData } from './reducers_auth'
 import {allPosts} from './reducers_fetch'
 
@@ -22,6 +22,8 @@ const rootReducer = combineReducers({
     //reducers push
     newPostResponse,
     deletePostResponse,
+    likePostResponse,
+    unLikePostResponse,
 
     //reducers fetch
     allPosts

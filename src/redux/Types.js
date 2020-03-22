@@ -12,7 +12,8 @@ export const LOGOUT_USER = "LOGOUT_USER"
 //action Push
 export const CREATE_NEW_POST = "CREATE_NEW_POST"
 export const DELETE_NEW_POST = "DELETE_NEW_POST"
-
+export const LIKE_ON_POST = "LIKE_ON_POST"
+export const UNLIKE_ON_POST = "UNLIKE_ON_POST"
 
 
 //action fetch
