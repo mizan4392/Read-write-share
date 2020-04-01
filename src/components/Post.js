@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { withStyles, Card, CardHeader, Avatar, IconButton, CardContent, Container, CardActions, Divider } from '@material-ui/core';
+import { withStyles, Card, CardHeader, Avatar, IconButton, CardContent, Container, CardActions, Divider, Input } from '@material-ui/core';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { Typography, Button, Comment, Modal, Spin } from 'antd';
 import Page_Comment from './Comment';
@@ -214,7 +214,6 @@ class Post extends Component {
             return (
 
                 <Card className={classes.Card} key={post.postId}>
-
                     <CardHeader
                         avatar={
                             <Avatar aria-label="recipe" className={classes.avatar} src={post.userImage}>
@@ -246,7 +245,7 @@ class Post extends Component {
 
                         <div>
                             {
-                                this.props.userData.likes &&
+                                this.props.userData&&this.props.userData.likes &&
                                     this.props.userData.likes.find(like => like.postId === post.postId) ?
                                     <div className={classes.likeButton}>
                                         <span style={{marginLeft:'10px',marginBottom:'10px'}}>{post.likeCount} Likes</span>
@@ -268,8 +267,8 @@ class Post extends Component {
                         </div>
 
                         <div>
-                            <Button size="small" icon="message">
-                                Comment
+                            <Button size="small">
+                                View Comments
                     </Button>
                         </div>
 
@@ -281,6 +280,15 @@ class Post extends Component {
 
                     </CardActions>
                     <Divider></Divider>
+
+                    <div style={{display:'flex',margin:'10px'}}>
+                    <Avatar aria-label="recipe" className={classes.avatar} src={post.userImage}>
+                                R
+                    </Avatar>
+
+                            <Input placeholder="Post a comment" style={{marginLeft:'10px',width:'100%'}}/>
+                            <Button icon="message" style={{marginLeft:'10px'}}></Button>
+                    </div>
                     {/* <Page_Comment/> */}
 
 

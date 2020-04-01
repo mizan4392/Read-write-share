@@ -40,11 +40,11 @@ export const addDataReturnPromise = async (ref, object, actiontype) => {
 export const fetchDataReturnPromise = async (ref, actiontype) => {
     addAutorization()
     let data = []
-    // console.log("aaaaaaaaa----",actiontype)
+    console.log('im fetch')
     try {
         await axios
             .get(`${root}/${ref}`).then(res => {
-                // console.log("resData",res)
+                console.log("resData",res)
                data = res.data
             })
 
@@ -56,6 +56,8 @@ export const fetchDataReturnPromise = async (ref, actiontype) => {
         };
 
     } catch (error) {
+
+        console.log(error)
        let data = {
             status: "FAILURE",
             message: error

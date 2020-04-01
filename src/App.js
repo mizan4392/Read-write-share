@@ -20,21 +20,15 @@ import { setNotificationState } from './redux/actions/action_misc'
 
 class App extends React.Component {
 
-
-
-
   render() {
     return (
       <div >
         <Router>
-
           <Navigation />
           <Route exact path={ROUTES.ROOT} component={withRouter(NewsFeed)} />
           <Route exact path={ROUTES.PROFILE} component={withRouter(Profile)} />
           <Route exact path={ROUTES.LOGIN} component={withRouter(Login)} />
           <Route exact path={ROUTES.SIGNIN} component={withRouter(Signup)} />
-
-
         </Router>
       </div >
     );

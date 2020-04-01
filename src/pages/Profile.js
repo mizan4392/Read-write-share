@@ -1,9 +1,17 @@
 import React, { Component } from 'react'
-import { Container, Grid, Paper, withStyles, Avatar, Tab, Tabs } from '@material-ui/core';
+import { Container, Grid, Paper, withStyles, Avatar } from '@material-ui/core';
 import ProfilePic from '../assets/Profile/sobuz.jpg'
 import CoverPhoto from '../assets/Profile/cover.jpg'
 import CreatePost from '../components/CreatePost';
 import Post from '../components/Post';
+import {fetchUsersPost} from '../redux/actions/action_fetch'
+import { Tabs } from 'antd';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+
+const { TabPane } = Tabs;
+
 
 
 const styles = theme => ({
@@ -40,19 +48,23 @@ const styles = theme => ({
 
 class Profile extends Component {
 
-    state ={
-        value:0
+    state = {
+        value: 0,
+        userData:null
     }
 
-    
+    componentDidMount(){
+        this.props.fetchUsersPost()
+    }
+
     handleChange = (event, newValue) => {
         // setValue(newValue);
-        this.setState({value:newValue})
-      };
+        this.setState({ value: newValue })
+    };
 
     render() {
         const { classes } = this.props
-        const {value} = this.state
+        const { value } = this.state
         return (
             <div className={classes.root}>
                 <Container>
@@ -99,28 +111,20 @@ class Profile extends Component {
                         </Grid>
                         <Grid item xs={12} sm={8}>
                             <Paper square>
-                                
-                                <Tabs
-                                    value={value}
-                                    indicatorColor="primary"
-                                    textColor="primary"
-                                    onChange={this.handleChange}
-                                    aria-label="disabled tabs example"
-                                    style={{marginBottom:'1%'}}
-                                >
-                                    <Tab label="Your Posts" />
-                                   
-                                    <Tab label="Your Events" />
-                                    <Tab label="Shared Posts" />
+                                <Tabs defaultActiveKey="1" >
+                                    <TabPane tab="YOUR POST" key="1">
+                                        <Post />
+                                    </TabPane>
+                                    <TabPane tab="YOUR EVENTS" key="2">
+                                        Content of Tab Pane 2
+                                    </TabPane>
+                                    <TabPane tab="YOUR SHARE" key="3">
+                                        Content of Tab Pane 3
+                                    </TabPane>
                                 </Tabs>
-                                {/* <Post />
-                                <Post />
-                                <Post />
-                                <Post />
-                                <Post /> */}
-
                             </Paper>
-                        </Grid></Grid>
+                        </Grid>
+                    </Grid>
                 </Container>
 
             </div>
@@ -128,4 +132,15 @@ class Profile extends Component {
     }
 }
 
-export default withStyles(styles)(Profile)
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({ fetchUsersPost}, dispatch);
+}
+
+function mapStateToProps({ userData}) {
+    return {userData };
+}
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(withRouter(withStyles(styles)(Profile)));
+
