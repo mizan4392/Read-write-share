@@ -7,6 +7,7 @@ export const SIGNUP_USER = "SIGNUP_USER"
 
 //action misc
 export const LOGOUT_USER = "LOGOUT_USER"
+export const SET_POST_ID_FOR_COMMENT = "SET_POST_ID_FOR_COMMENT"
 
 
 //action Push

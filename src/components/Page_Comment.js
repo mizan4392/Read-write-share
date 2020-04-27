@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
-import { withStyles, List, Avatar, Card, CardHeader, CardContent } from '@material-ui/core'
+import { withStyles, List, Avatar, ListItem, ListItemAvatar, Typography,ListItemText } from '@material-ui/core'
 
 import ProfilePic from '../assets/Profile/sobuz.jpg'
-import ReplyComment from './ReplyComment'
-import { Button } from 'antd'
-
+import dayjs from 'dayjs'
+import relativeTime from 'dayjs/plugin/relativeTime'
+import { Button, Input } from 'antd'
+const { TextArea } = Input;
 const styles = theme => ({
 
     container: {
@@ -21,6 +22,8 @@ const styles = theme => ({
         width: '100%',
         backgroundColor: '#fff',
         marginBottom: '10px',
+        display: 'scroll',
+        overflow: 'hidden'
         // [theme.breakpoints.down('sm')]: {
         //     display: 'none'
         // },
@@ -101,57 +104,51 @@ const styles = theme => ({
 class Page_Comment extends Component {
 
     state = {
-        open: false
+        open: false,
+        body:""
     }
 
 
-
+    handleCommentTextChange = e =>{
+        this.setState({body:e.target.value})
+    }
 
 
     render() {
-
+        dayjs.extend(relativeTime)
 
         const { classes } = this.props
 
-        const comments = <React.Fragment>
-            <h3>
-                <strong className={classes.UserName}>Mizanur Rahaman</strong>
-            </h3>
-            <p className={classes.commentBody}>Lorem Ipsum has
-            been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
-            scrambled it to make a type specimen book. It ha
-                 </p>
-            <div style={{ display: 'flex' }}>
-                <Button icon="like" style={{ background: 'none', border: 'none ' }}></Button>
-                <p className={classes.ReplyBtn} >Reply</p>
-            </div>
-        </React.Fragment>
+        console.log(this.state)
+
+
 
         const renderComments = [1, 2, 3, 4, 5].map(e => {
 
             return (
-                <Card className={classes.root}>
-                    <CardHeader
-                        avatar={
-                            <Avatar alt="Cindy Baker" src={ProfilePic} className={classes.large} />
+                <ListItem alignItems="flex-start" key={e}>
+                    <ListItemAvatar>
+                        <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+                    </ListItemAvatar>
+                    <ListItemText
+                        primary="Brunch this weekend?"
+                        secondary={
+                            <React.Fragment>
+                                <Typography
+                                    component="span"
+                                    variant="body2"
+                                    className={classes.inline}
+                                    color="textPrimary"
+                                >
+                                    Ali Connors
+                                </Typography>
+                                <br></br>
+                                <p>I'll be in your neighborhood doing errands this…</p>
+                                
+                            </React.Fragment>
                         }
-                        // action={
-                        //     <IconButton aria-label="settings">
-                        //         <MoreVertIcon />
-                        //     </IconButton>
-                        // }
-                        title={comments}
-                        // subheader="September 14, 2016"
-                        classes={{
-                            root: classes.CardHeaderRoot
-                        }}
                     />
-                    <CardContent>
-                        <ReplyComment />
-                    </CardContent>
-
-
-                </Card>
+                </ListItem>
             )
 
 
@@ -160,6 +157,11 @@ class Page_Comment extends Component {
         return (
             <React.Fragment>
 
+                <div style={{ display: 'flex' }}>
+                    <Avatar src={ProfilePic}></Avatar>
+                    <TextArea rows={3} placeholder="Post a Comment" style={{ marginLeft: '10px' }} value={this.state.body} onChange={this.handleCommentTextChange}></TextArea>
+                    <Button icon="message" style={{ marginLeft: '10px', maxWidth: '40px' }}></Button>
+                </div>
                 <List className={classes.root} >
                     {renderComments}
                 </List>

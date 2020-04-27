@@ -1,22 +1,23 @@
 import React, { Component } from 'react'
-import { withStyles, Card, CardHeader, Avatar, IconButton, CardContent, Container, CardActions, Divider, Input } from '@material-ui/core';
+import { withStyles, Card, CardHeader, Avatar, IconButton, CardContent, Container, CardActions, Divider } from '@material-ui/core';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import { Typography, Button, Comment, Modal, Spin } from 'antd';
-import Page_Comment from './Comment';
+import { Typography, Button, Comment, Spin ,Modal,Input} from 'antd';
+import Page_Comment from './Page_Comment';
 import ReactHtmlParser from 'react-html-parser';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import InfoIcon from '@material-ui/icons/Info';
-import { deletePost,likePost ,unLikePost} from '../redux/actions/actions_push'
-import { fetchAllPost ,} from '../redux/actions/action_fetch'
-import {getUserData} from '../redux/actions/actionAuth'
+import { deletePost, likePost, unLikePost } from '../redux/actions/actions_push'
+import { fetchAllPost, } from '../redux/actions/action_fetch'
+import { getUserData } from '../redux/actions/actionAuth'
+import { setPostIdForComment } from '../redux/actions/action_misc'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
-
-
 import { notification } from 'antd'
+
+const { TextArea } = Input;
 
 const styles = theme => ({
 
@@ -55,10 +56,10 @@ const styles = theme => ({
     avatar: {
         backgroundColor: 'red',
     },
-    likeButton:{
-        display:'flex',
-        flexDirection:'column' ,
-       
+    likeButton: {
+        display: 'flex',
+        flexDirection: 'column',
+
     }
 });
 
@@ -76,10 +77,11 @@ class Post extends Component {
         deletePostResponse: null,
         deletePostId: "",
         loading: false,
-        likePostResponse:null,
-        likeButtonLoading:false,
-        likeButtonId:"",
-        unLikePostResponse:null
+        likePostResponse: null,
+        likeButtonLoading: false,
+        likeButtonId: "",
+        unLikePostResponse: null,
+        commentModal: false
     };
 
     componentWillReceiveProps(nextProps) {
@@ -109,11 +111,11 @@ class Post extends Component {
         if (nextProps.likePostResponse !== this.state.likePostResponse) {
             this.setState({ likePostResponse: nextProps.likePostResponse }, () => {
                 if (this.state.likePostResponse.status === "SUCCESS") {
-                    this.setState({ likeButtonLoading: false },()=>{
+                    this.setState({ likeButtonLoading: false }, () => {
                         this.props.getUserData()
                         this.props.fetchAllPost()
                     })
-                    
+
 
                 } else {
                     // alert('Login session Expeired please login again')
@@ -126,11 +128,11 @@ class Post extends Component {
         if (nextProps.unLikePostResponse !== this.state.unLikePostResponse) {
             this.setState({ unLikePostResponse: nextProps.unLikePostResponse }, () => {
                 if (this.state.unLikePostResponse.status === "SUCCESS") {
-                    this.setState({ likeButtonLoading: false },()=>{
+                    this.setState({ likeButtonLoading: false }, () => {
                         this.props.getUserData()
                         this.props.fetchAllPost()
                     })
-                    
+
 
                 } else {
                     // alert('Login session Expeired please login again')
@@ -140,7 +142,7 @@ class Post extends Component {
             })
         }
 
-        
+
 
 
     }
@@ -189,15 +191,26 @@ class Post extends Component {
     handleLikeOnPost = postId => {
 
         // console.log(postId)
-        this.setState({likeButtonLoading:true,likeButtonId:postId},()=>{
+        this.setState({ likeButtonLoading: true, likeButtonId: postId }, () => {
             this.props.likePost(postId)
         })
-        
+
     }
     handleUnLikeOnPost = postId => {
-        this.setState({likeButtonLoading:true,likeButtonId:postId},()=>{
+        this.setState({ likeButtonLoading: true, likeButtonId: postId }, () => {
             this.props.unLikePost(postId)
         })
+    }
+
+    handleCommentClick = postId => {
+        this.setState({ commentModal: true }, () => {
+            this.props.setPostIdForComment(postId)
+        })
+
+    }
+
+    handleCommentModalClose = e => {
+        this.setState({ commentModal: false })
     }
     render() {
 
@@ -245,10 +258,10 @@ class Post extends Component {
 
                         <div>
                             {
-                                this.props.userData&&this.props.userData.likes &&
+                                this.props.userData && this.props.userData.likes &&
                                     this.props.userData.likes.find(like => like.postId === post.postId) ?
                                     <div className={classes.likeButton}>
-                                        <span style={{marginLeft:'10px',marginBottom:'10px'}}>{post.likeCount} Likes</span>
+                                        <span style={{ marginLeft: '10px', marginBottom: '10px' }}>{post.likeCount} Likes</span>
                                         <Button size="small" loading={post.postId === this.state.likeButtonId ? this.state.likeButtonLoading : false} icon="like" style={{ color: 'blue' }} onClick={() => this.handleUnLikeOnPost(post.postId)}>
                                             Liked
                                         </Button>
@@ -256,20 +269,20 @@ class Post extends Component {
 
                                     :
                                     <div className={classes.likeButton}>
-                                        <span style={{marginLeft:'10px',marginBottom:'10px'}}>{post.likeCount} Likes</span>
-                                    <Button size="small" icon="like" onClick={() => this.handleLikeOnPost(post.postId)} loading={post.postId === this.state.likeButtonId ? this.state.likeButtonLoading : false}>
-                                        Like
+                                        <span style={{ marginLeft: '10px', marginBottom: '10px' }}>{post.likeCount} Likes</span>
+                                        <Button size="small" icon="like" onClick={() => this.handleLikeOnPost(post.postId)} loading={post.postId === this.state.likeButtonId ? this.state.likeButtonLoading : false}>
+                                            Like
                                 </Button>
-                                </div>
+                                    </div>
 
                             }
 
                         </div>
 
                         <div>
-                            <Button size="small">
+                            <Button size="small" onClick={() => this.handleCommentClick(post.postId)}>
                                 View Comments
-                    </Button>
+                            </Button>
                         </div>
 
                         <div>
@@ -280,18 +293,6 @@ class Post extends Component {
 
                     </CardActions>
                     <Divider></Divider>
-
-                    <div style={{display:'flex',margin:'10px'}}>
-                    <Avatar aria-label="recipe" className={classes.avatar} src={post.userImage}>
-                                R
-                    </Avatar>
-
-                            <Input placeholder="Post a comment" style={{marginLeft:'10px',width:'100%'}}/>
-                            <Button icon="message" style={{marginLeft:'10px'}}></Button>
-                    </div>
-                    {/* <Page_Comment/> */}
-
-
                 </Card>
 
             )
@@ -304,6 +305,21 @@ class Post extends Component {
         return (
             <Container>
                 {renderCard}
+
+    
+
+                <Modal
+                    visible={this.state.commentModal}
+                    title="Comments"
+                    onOk={this.handleCommentModalClose}
+                    onCancel={this.handleCommentModalClose}
+                    footer={null}
+                >
+                    <Page_Comment />
+                </Modal>
+
+
+
             </Container>
 
         )
@@ -312,11 +328,11 @@ class Post extends Component {
 
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({ deletePost, fetchAllPost ,likePost,getUserData,unLikePost}, dispatch);
+    return bindActionCreators({ deletePost, fetchAllPost, likePost, getUserData, unLikePost, setPostIdForComment }, dispatch);
 }
 
-function mapStateToProps({ allPosts, userData, deletePostResponse,likePostResponse ,unLikePostResponse}) {
-    return { allPosts, userData, deletePostResponse ,likePostResponse,unLikePostResponse};
+function mapStateToProps({ allPosts, userData, deletePostResponse, likePostResponse, unLikePostResponse }) {
+    return { allPosts, userData, deletePostResponse, likePostResponse, unLikePostResponse };
 }
 
 

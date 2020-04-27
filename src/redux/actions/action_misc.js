@@ -11,6 +11,17 @@ export function setNotificationState(notificationState) {
 }
 
 
+
+export const setPostIdForComment = async (postId) => {
+
+    
+    return {
+        type: TYPES.SET_POST_ID_FOR_COMMENT,
+        payload: postId
+    }
+}
+
+
 export const signout = async () => {
     return {
         type: TYPES.LOGOUT_USER,
