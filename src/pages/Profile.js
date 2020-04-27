@@ -1,14 +1,17 @@
 import React, { Component } from 'react'
-import { Container, Grid, Paper, withStyles, Avatar } from '@material-ui/core';
+import { Container, Grid, Paper, withStyles, Avatar, Tooltip ,Box,Typography} from '@material-ui/core';
+
 import ProfilePic from '../assets/Profile/sobuz.jpg'
 import CoverPhoto from '../assets/Profile/cover.jpg'
 import CreatePost from '../components/CreatePost';
 import Post from '../components/Post';
-import {fetchUsersPost} from '../redux/actions/action_fetch'
+import { fetchUsersPost } from '../redux/actions/action_fetch'
 import { Tabs } from 'antd';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import CameraAltIcon from '@material-ui/icons/CameraAlt';
+import Rating from '@material-ui/lab/Rating';
 
 const { TabPane } = Tabs;
 
@@ -16,7 +19,7 @@ const { TabPane } = Tabs;
 
 const styles = theme => ({
     root: {
-        marginTop: '3.5%',
+        marginTop: '4%',
 
     },
     Container: {
@@ -32,6 +35,7 @@ const styles = theme => ({
     large: {
         width: theme.spacing(23),
         height: theme.spacing(23),
+        position: 'relative'
     },
     Avatar: {
         position: 'absolute',
@@ -42,6 +46,30 @@ const styles = theme => ({
             left: '20%',
             top: '70%',
         }
+    },
+    CoverPhotoUplodeLabel: {
+        position: 'absolute',
+        top: '0',
+        right: '1px',
+        marginRight: '10px',
+        border: '1px solid #ccc',
+        display: 'inline-block',
+        padding: "6px 12px",
+        cursor: "pointer",
+        backgroundColor: '#000',
+        marginTop: '10px'
+    },
+    profilePhotoUplodeLabel: {
+        position: 'absolute',
+        bottom: '0',
+        top: '85%',
+        marginRight: '10px',
+        // border: '1px solid #ccc',
+        display: 'inline-block',
+        padding: "6px 12px",
+        cursor: "pointer",
+        backgroundColor: 'transperent',
+        borderRadius: '10px'
     }
 });
 
@@ -50,10 +78,10 @@ class Profile extends Component {
 
     state = {
         value: 0,
-        userData:null
+        userData: null
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.props.fetchUsersPost()
     }
 
@@ -71,9 +99,27 @@ class Profile extends Component {
                     <Grid container spacing={2} className={classes.Container}>
                         <Grid item xs={12}>
                             <div style={{ position: 'relative' }}>
-                                <img src={CoverPhoto} height="300px" width="100%" style={{ backgroundRepeat: 'no-repeat', backgroundPosition: 'center' }}></img>
+                                <div >
+                                    <img src={CoverPhoto} height="300px" width="100%" style={{ backgroundRepeat: 'no-repeat', backgroundPosition: 'center', position: 'relative' }}></img>
+                                    <Tooltip title="Uplode Cover Photo">
+                                        <label className={classes.CoverPhotoUplodeLabel} >
+                                            <CameraAltIcon style={{ color: '#fff' }} />
+                                            <input type="file" style={{ display: 'none' }}></input>
+                                        </label>
+                                    </Tooltip>
+
+
+                                </div>
+
+
                                 <div className={classes.Avatar}>
                                     <Avatar alt="Cindy Baker" src={ProfilePic} className={classes.large} />
+                                    <Tooltip title="Uplode Profile Photo">
+                                        <label className={classes.profilePhotoUplodeLabel} >
+                                            <CameraAltIcon style={{ color: '#000' }} />
+                                            <input type="file" style={{ display: 'none' }}></input>
+                                        </label>
+                                    </Tooltip>
                                 </div>
                             </div>
                         </Grid>
@@ -96,13 +142,10 @@ class Profile extends Component {
                                     </div>
 
                                     <div style={{ textAlign: 'center' }}>
-                                        <div style={{ display: 'flex', color: 'black', justifyContent: 'center' }}>
-                                            <div><p style={{ color: 'black' }}>4.5</p></div>
-                                            <div>
-                                                <p style={{ color: 'black' }}>star</p>
-                                                <p style={{ color: 'black' }}>rating</p>
-                                            </div>
-                                        </div>
+                                        <Box component="fieldset" mb={3} borderColor="transparent">
+                                            <Typography component="legend">Rating</Typography>
+                                            <Rating name="disabled" value={10} disabled />
+                                        </Box>
                                     </div>
                                 </div>
 
@@ -133,11 +176,11 @@ class Profile extends Component {
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({ fetchUsersPost}, dispatch);
+    return bindActionCreators({ fetchUsersPost }, dispatch);
 }
 
-function mapStateToProps({ userData}) {
-    return {userData };
+function mapStateToProps({ userData }) {
+    return { userData };
 }
 export default connect(
     mapStateToProps,

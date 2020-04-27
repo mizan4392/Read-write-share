@@ -281,7 +281,7 @@ class Post extends Component {
 
                         <div>
                             <Button size="small" onClick={() => this.handleCommentClick(post.postId)}>
-                                View Comments
+                                Comments
                             </Button>
                         </div>
 
