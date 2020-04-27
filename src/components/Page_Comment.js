@@ -160,7 +160,7 @@ class Page_Comment extends Component {
                 <div style={{ display: 'flex' }}>
                     <Avatar src={ProfilePic}></Avatar>
                     <TextArea rows={3} placeholder="Post a Comment" style={{ marginLeft: '10px' }} value={this.state.body} onChange={this.handleCommentTextChange}></TextArea>
-                    <Button icon="message" style={{ marginLeft: '10px', maxWidth: '40px' }}></Button>
+                    <Button size="large" icon="message" style={{ marginLeft: '10px', maxWidth: '40px' }}></Button>
                 </div>
                 <List className={classes.root} >
                     {renderComments}

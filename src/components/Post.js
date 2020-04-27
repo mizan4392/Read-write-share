@@ -262,16 +262,16 @@ class Post extends Component {
                                     this.props.userData.likes.find(like => like.postId === post.postId) ?
                                     <div className={classes.likeButton}>
                                         <span style={{ marginLeft: '10px', marginBottom: '10px' }}>{post.likeCount} Likes</span>
-                                        <Button size="small" loading={post.postId === this.state.likeButtonId ? this.state.likeButtonLoading : false} icon="like" style={{ color: 'blue' }} onClick={() => this.handleUnLikeOnPost(post.postId)}>
-                                            Liked
+                                        <Button size="large" loading={post.postId === this.state.likeButtonId ? this.state.likeButtonLoading : false} icon="like" style={{ color: 'blue' }} onClick={() => this.handleUnLikeOnPost(post.postId)}>
+                                            
                                         </Button>
                                     </div>
 
                                     :
                                     <div className={classes.likeButton}>
                                         <span style={{ marginLeft: '10px', marginBottom: '10px' }}>{post.likeCount} Likes</span>
-                                        <Button size="small" icon="like" onClick={() => this.handleLikeOnPost(post.postId)} loading={post.postId === this.state.likeButtonId ? this.state.likeButtonLoading : false}>
-                                            Like
+                                        <Button size="large" icon="like" onClick={() => this.handleLikeOnPost(post.postId)} loading={post.postId === this.state.likeButtonId ? this.state.likeButtonLoading : false}>
+                                            
                                 </Button>
                                     </div>
 
@@ -280,14 +280,14 @@ class Post extends Component {
                         </div>
 
                         <div>
-                            <Button size="small" onClick={() => this.handleCommentClick(post.postId)}>
-                                Comments
+                            <Button size="large" icon="message" style={{marginTop:'35px'}} onClick={() => this.handleCommentClick(post.postId)}>
+                                
                             </Button>
                         </div>
 
                         <div>
-                            <Button size="small" icon="share-alt" >
-                                Share
+                            <Button size="large" icon="share-alt" style={{marginTop:'35px'}} >
+                               
                     </Button>
                         </div>
 
@@ -305,9 +305,6 @@ class Post extends Component {
         return (
             <Container>
                 {renderCard}
-
-    
-
                 <Modal
                     visible={this.state.commentModal}
                     title="Comments"
