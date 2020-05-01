@@ -9,7 +9,7 @@ import {
 import { newPostResponse ,deletePostResponse,likePostResponse,unLikePostResponse,postCommentResponse} from '../reducers/reducers_push'
 import { login, signup,userData } from './reducers_auth'
 import {allPosts,postComments} from './reducers_fetch'
-import { postIdForComment } from './reducers_misc'
+import { postIdForComment,postIdForShare } from './reducers_misc'
 
 
 
@@ -32,7 +32,8 @@ const rootReducer = combineReducers({
     postComments,
 
     //reducers misc
-    postIdForComment
+    postIdForComment,
+    postIdForShare
 
     
 })

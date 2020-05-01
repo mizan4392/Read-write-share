@@ -52,11 +52,6 @@ class Page_Comment extends Component {
             this.setState({postComments:nextProps.postComments})
         }
 
-        // if(nextProps.userData !== this.state.userData){
-        //     this.setState({userData:nextProps.userData})
-        // }
-
-
         if (nextProps.postCommentResponse !== this.state.postCommentResponse) {
             this.setState({ postCommentResponse: nextProps.postCommentResponse }, () => {
                 if (this.state.postCommentResponse.status === "SUCCESS") {

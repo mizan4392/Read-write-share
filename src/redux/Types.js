@@ -8,7 +8,7 @@ export const SIGNUP_USER = "SIGNUP_USER"
 //action misc
 export const LOGOUT_USER = "LOGOUT_USER"
 export const SET_POST_ID_FOR_COMMENT = "SET_POST_ID_FOR_COMMENT"
-
+export const SET_POST_ID_FOR_SHARE = "SET_POST_ID_FOR_SHARE"
 
 //action Push
 export const CREATE_NEW_POST = "CREATE_NEW_POST"

@@ -19,6 +19,16 @@ const postIdForComment = (state = null, action) => {
     }
 }
 
+const postIdForShare = (state = null, action) => {
+    switch (action.type) {
+        case TYPES.SET_POST_ID_FOR_SHARE:
+           
+            return action.payload;
+        default:
+            return state;
+    }
+}
+
 
 const login = (state = null, action) => {
     switch (action.type) {
@@ -29,4 +39,4 @@ const login = (state = null, action) => {
     }
 }
 
-export { notificationState, login ,postIdForComment}
+export { notificationState, login ,postIdForComment,postIdForShare}

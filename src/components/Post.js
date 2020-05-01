@@ -12,10 +12,12 @@ import InfoIcon from '@material-ui/icons/Info';
 import { deletePost, likePost, unLikePost } from '../redux/actions/actions_push'
 import { fetchAllPost, } from '../redux/actions/action_fetch'
 import { getUserData } from '../redux/actions/actionAuth'
-import { setPostIdForComment } from '../redux/actions/action_misc'
+import { setPostIdForComment,setPostIdForShare } from '../redux/actions/action_misc'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import { notification } from 'antd'
+
+import SharePost from './SharePost';
 
 const { TextArea } = Input;
 
@@ -81,7 +83,8 @@ class Post extends Component {
         likeButtonLoading: false,
         likeButtonId: "",
         unLikePostResponse: null,
-        commentModal: false
+        commentModal: false,
+        shareModal:false
     };
 
     componentWillReceiveProps(nextProps) {
@@ -212,6 +215,17 @@ class Post extends Component {
     handleCommentModalClose = e => {
         this.setState({ commentModal: false })
     }
+    handleshareModalClose = e =>{
+        this.setState({shareModal:false})
+    }
+
+    handleSharClick = postId =>{
+        this.setState({ shareModal: true }, () => {
+            this.props.setPostIdForShare(postId)
+        })
+    }
+
+
     render() {
 
         const { classes } = this.props
@@ -282,7 +296,7 @@ class Post extends Component {
                         </div>
 
                         <div>
-                            <Button size="large" icon="share-alt" style={{marginTop:'35px'}} >
+                            <Button size="large" icon="share-alt" style={{marginTop:'35px'}} onClick={() => this.handleSharClick(post.postId)}>
                                
                     </Button>
                         </div>
@@ -311,6 +325,15 @@ class Post extends Component {
                     <Page_Comment />
                 </Modal>
 
+                <Modal
+                    visible={this.state.shareModal}
+                    title="Share This Post"
+                    onOk={this.handleSharePost}
+                    onCancel={this.handleshareModalClose}
+                    footer={null}
+                >
+                   <SharePost />
+                </Modal>
 
 
             </Container>
@@ -321,7 +344,7 @@ class Post extends Component {
 
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({ deletePost, fetchAllPost, likePost, getUserData, unLikePost, setPostIdForComment }, dispatch);
+    return bindActionCreators({ deletePost, fetchAllPost, likePost, getUserData, unLikePost, setPostIdForComment ,setPostIdForShare}, dispatch);
 }
 
 function mapStateToProps({ allPosts, userData, deletePostResponse, likePostResponse, unLikePostResponse }) {
