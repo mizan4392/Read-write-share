@@ -218,10 +218,6 @@ class Post extends Component {
         dayjs.extend(relativeTime)
 
 
-        // console.log(this.state)
-
-
-
         const renderCard = this.props.allPosts && this.props.allPosts.map(post => {
 
             return (

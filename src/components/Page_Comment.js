@@ -5,98 +5,23 @@ import ProfilePic from '../assets/Profile/sobuz.jpg'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import { Button, Input } from 'antd'
+import { bindActionCreators } from 'redux'
+import {pushCommentData} from '../redux/actions/actions_push'
+import { fetchPostComments } from '../redux/actions/action_fetch'
+import { connect } from 'react-redux'
 const { TextArea } = Input;
 const styles = theme => ({
 
-    container: {
-        width: '100%',
-        [theme.breakpoints.down('md')]: {
-            maxWidth: '600px'
-        },
-        marginTop: '10%',
-        display: 'flex',
-        justifyContent: 'center',
-
-    },
+   
     root: {
         width: '100%',
         backgroundColor: '#fff',
         marginBottom: '10px',
         display: 'scroll',
         overflow: 'hidden'
-        // [theme.breakpoints.down('sm')]: {
-        //     display: 'none'
-        // },
+    
 
     },
-    listItem: {
-        boxSizing: 'border-box',
-        boxShadow: '20px',
-        marginBottom: '10px',
-
-    },
-    dotview: {
-        [theme.breakpoints.up('lg')]: {
-            display: 'none'
-        },
-    },
-    productName: {
-        [theme.breakpoints.down('md')]: {
-            display: 'none'
-        },
-    },
-    modal: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    paper: {
-        backgroundColor: theme.palette.background.paper,
-        border: '2px solid #000',
-        boxShadow: theme.shadows[5],
-        padding: theme.spacing(2, 4, 3),
-    },
-    heading: {
-        textAlign: 'center',
-        marginBottom: '5px',
-        textTransform: 'uppercase',
-        backgroundColor: "#6e6969",
-        color: "#fff",
-        borderRadius: "15px",
-        marginTop: "10px",
-        margin: "5px",
-        fontSize: "1.5rem",
-        //paddingBottom: "5px"
-    },
-    Mobile: {
-        [theme.breakpoints.up('sm')]: {
-            display: 'none'
-        },
-    },
-    CardHeaderRoot: {
-        padding: '5px'
-    },
-    UserName: {
-        background: '#e1eff2',
-        padding: '5px',
-        borderRadius: '10px',
-        color: '#0e5ec2',
-        fontSize: '1rem'
-    },
-    commentBody: {
-        maxWidth: '550px',
-        background: '#dbdbdb',
-        padding: '5px',
-        borderRadius: '10px'
-
-    },
-    ReplyBtn: {
-        textDecoration: 'underline',
-        cursor: 'pointer',
-        color: 'blue',
-        marginLeft: '10px',
-        marginTop: '5px'
-    }
 
 })
 
@@ -105,12 +30,62 @@ class Page_Comment extends Component {
 
     state = {
         open: false,
-        body:""
+        body:"",
+        postIdForComment:null,
+        commentButtonLoading:false,
+        postCommentResponse:null,
+        postComments:null,
+        userData:null
+    }
+
+ 
+
+    componentWillReceiveProps(nextProps){
+        
+        if(nextProps.postIdForComment !== this.state.postIdForComment){
+            this.setState({postIdForComment:nextProps.postIdForComment},()=>{
+                this.props.fetchPostComments(this.state.postIdForComment)
+            })
+        }
+
+        if(nextProps.postComments !== this.state.postComments){
+            this.setState({postComments:nextProps.postComments})
+        }
+
+        // if(nextProps.userData !== this.state.userData){
+        //     this.setState({userData:nextProps.userData})
+        // }
+
+
+        if (nextProps.postCommentResponse !== this.state.postCommentResponse) {
+            this.setState({ postCommentResponse: nextProps.postCommentResponse }, () => {
+                if (this.state.postCommentResponse.status === "SUCCESS") {
+                    this.setState({ commentButtonLoading: false ,body:""}, () => {
+                        this.props.fetchPostComments(this.state.postIdForComment)
+                    })
+
+
+                } else {
+                    // alert('Login session Expeired please login again')
+                    this.setState({ commentButtonLoading: false })
+                }
+
+            })
+        }
+
     }
 
 
     handleCommentTextChange = e =>{
         this.setState({body:e.target.value})
+    }
+
+    handleCommentOnPost = e =>{
+         const {body,postIdForComment} = this.state
+         this.setState({commentButtonLoading:true},()=>{
+            this.props.pushCommentData(postIdForComment,body)
+         })
+        
     }
 
 
@@ -119,19 +94,16 @@ class Page_Comment extends Component {
 
         const { classes } = this.props
 
-        console.log(this.state)
-
-
-
-        const renderComments = [1, 2, 3, 4, 5].map(e => {
+        // userData.credentials
+        const renderComments = this.state.postComments && this.state.postComments.map(comment => {
 
             return (
-                <ListItem alignItems="flex-start" key={e}>
+                <ListItem alignItems="flex-start" key={comment.commentId}>
                     <ListItemAvatar>
-                        <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+                        <Avatar alt="Remy Sharp" src={comment.userImage} />
                     </ListItemAvatar>
                     <ListItemText
-                        primary="Brunch this weekend?"
+                        primary={comment.full_name}
                         secondary={
                             <React.Fragment>
                                 <Typography
@@ -140,10 +112,10 @@ class Page_Comment extends Component {
                                     className={classes.inline}
                                     color="textPrimary"
                                 >
-                                    Ali Connors
+                                   {comment.body}
                                 </Typography>
                                 <br></br>
-                                <p>I'll be in your neighborhood doing errands this…</p>
+                        {dayjs(comment.createdAt).fromNow()}
                                 
                             </React.Fragment>
                         }
@@ -158,18 +130,29 @@ class Page_Comment extends Component {
             <React.Fragment>
 
                 <div style={{ display: 'flex' }}>
-                    <Avatar src={ProfilePic}></Avatar>
+                    <Avatar src={this.props.userData && this.props.userData.credentials&& this.props.userData.credentials.imageUrl}></Avatar>
                     <TextArea rows={3} placeholder="Post a Comment" style={{ marginLeft: '10px' }} value={this.state.body} onChange={this.handleCommentTextChange}></TextArea>
-                    <Button size="large" icon="message" style={{ marginLeft: '10px', maxWidth: '40px' }}></Button>
+                    <Button size="large" icon="message" style={{ marginLeft: '10px', maxWidth: '40px' }} onClick={this.handleCommentOnPost} loading={this.state.commentButtonLoading}></Button>
                 </div>
                 <List className={classes.root} >
                     {renderComments}
                 </List>
-
-
             </React.Fragment>
         )
     }
 }
 
-export default withStyles(styles)(Page_Comment)
+function mapDispatchToProps(dispatch){
+
+    return bindActionCreators({pushCommentData,fetchPostComments},dispatch)
+
+}
+
+function mapStateToProps({postIdForComment,postCommentResponse,postComments,userData}){
+    return{postIdForComment,postCommentResponse,postComments,userData}
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+) (withStyles(styles)(Page_Comment))

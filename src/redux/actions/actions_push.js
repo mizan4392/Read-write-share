@@ -5,8 +5,6 @@ import axios from 'axios';
 
 export const unLikePost = async postId  => {
 
-    console.log("--",postId)
-
     try {
         await axios
             .get(`${root}/post/${postId}/unlike`).then(res => {
@@ -37,8 +35,6 @@ export const unLikePost = async postId  => {
 
 
 export const likePost = async postId  => {
-
-    console.log("--",postId)
 
     try {
         await axios
@@ -98,6 +94,41 @@ export const pushPostData = async (data) => {
         };
     }
 }
+
+export const pushCommentData = async (postId,text) => {
+
+    let data = {
+        body:text
+    }
+
+    try {
+        await axios
+            .post(`${root}/post/${postId}/comment`, data).then(res => {
+                // setAuthorizationHeader(res.data.token)
+
+            })
+
+        data = {
+            status: "SUCCESS",
+            message: "Comment is succesfull"
+        };
+        return {
+            type: TYPES.COMMENT_ON_POST,
+            payload: data
+        };
+
+    } catch (error) {
+        data = {
+            status: "FAILURE",
+            message: error
+        };
+        return {
+            type: TYPES.COMMENT_ON_POST,
+            payload: data
+        };
+    }
+}
+
 
 export const deletePost = async (postId) => {
     let data = {}

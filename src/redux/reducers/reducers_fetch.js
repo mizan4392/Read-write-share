@@ -9,4 +9,13 @@ const allPosts = (state = null, action) => {
     }
 }
 
-export{allPosts}
+const postComments = (state = null, action) => {
+    switch (action.type) {
+        case TYPES.FETCH_POST_COMMENT:
+            return action.payload;
+        default:
+            return state;
+    }
+}
+
+export{allPosts,postComments}

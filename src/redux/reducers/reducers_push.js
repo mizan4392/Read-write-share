@@ -42,4 +42,13 @@ const newPostResponse = (state = null, action) => {
     }
 }
 
-export { newPostResponse ,deletePostResponse,likePostResponse,unLikePostResponse}
+const postCommentResponse = (state = null, action) => {
+    switch (action.type) {
+        case TYPES.COMMENT_ON_POST:
+            return action.payload;
+        default:
+            return state;
+    }
+}
+
+export { newPostResponse ,deletePostResponse,likePostResponse,unLikePostResponse,postCommentResponse}
