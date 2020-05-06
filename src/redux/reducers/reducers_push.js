@@ -51,4 +51,21 @@ const postCommentResponse = (state = null, action) => {
     }
 }
 
-export { newPostResponse ,deletePostResponse,likePostResponse,unLikePostResponse,postCommentResponse}
+const postShareResponse = (state = null, action) => {
+    switch (action.type) {
+        case TYPES.SHARE_A_POST:
+            return action.payload;
+        default:
+            return state;
+    }
+}
+
+
+export {
+    newPostResponse,
+    deletePostResponse,
+    likePostResponse,
+    unLikePostResponse,
+    postCommentResponse,
+    postShareResponse
+}

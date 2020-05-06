@@ -6,10 +6,17 @@ import {
 
 
 
-import { newPostResponse ,deletePostResponse,likePostResponse,unLikePostResponse,postCommentResponse} from '../reducers/reducers_push'
-import { login, signup,userData } from './reducers_auth'
-import {allPosts,postComments} from './reducers_fetch'
-import { postIdForComment,postIdForShare } from './reducers_misc'
+import {
+    newPostResponse,
+    deletePostResponse,
+    likePostResponse,
+    unLikePostResponse,
+    postCommentResponse,
+    postShareResponse
+} from '../reducers/reducers_push'
+import { login, signup, userData } from './reducers_auth'
+import { allPosts, postComments } from './reducers_fetch'
+import { postIdForComment, postForShare } from './reducers_misc'
 
 
 
@@ -26,6 +33,7 @@ const rootReducer = combineReducers({
     likePostResponse,
     unLikePostResponse,
     postCommentResponse,
+    postShareResponse,
 
     //reducers fetch
     allPosts,
@@ -33,9 +41,9 @@ const rootReducer = combineReducers({
 
     //reducers misc
     postIdForComment,
-    postIdForShare
+    postForShare
 
-    
+
 })
 
 export default rootReducer

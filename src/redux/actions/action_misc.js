@@ -21,11 +21,10 @@ export const setPostIdForComment = async (postId) => {
     }
 }
 
-export const setPostIdForShare = async (postId) => {
+export const setPostForShare = async (postId) => {
 
-    
     return {
-        type: TYPES.SET_POST_ID_FOR_SHARE,
+        type: TYPES.SET_POST_FOR_SHARE,
         payload: postId
     }
 }

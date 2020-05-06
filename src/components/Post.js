@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { withStyles, Card, CardHeader, Avatar, IconButton, CardContent, Container, CardActions, Divider } from '@material-ui/core';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import { Typography, Button, Comment, Spin ,Modal,Input} from 'antd';
+import { Typography, Button, Comment, Spin, Modal, Input } from 'antd';
 import Page_Comment from './Page_Comment';
 import ReactHtmlParser from 'react-html-parser';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -12,7 +12,7 @@ import InfoIcon from '@material-ui/icons/Info';
 import { deletePost, likePost, unLikePost } from '../redux/actions/actions_push'
 import { fetchAllPost, } from '../redux/actions/action_fetch'
 import { getUserData } from '../redux/actions/actionAuth'
-import { setPostIdForComment,setPostIdForShare } from '../redux/actions/action_misc'
+import { setPostIdForComment, setPostForShare } from '../redux/actions/action_misc'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import { notification } from 'antd'
@@ -84,7 +84,7 @@ class Post extends Component {
         likeButtonId: "",
         unLikePostResponse: null,
         commentModal: false,
-        shareModal:false
+        shareModal: false
     };
 
     componentWillReceiveProps(nextProps) {
@@ -185,7 +185,7 @@ class Post extends Component {
     };
 
     handleClick = postId => {
-        console.log(postId)
+
         this.setState({ deletePostId: postId }, () => {
             this.confirm()
         })
@@ -215,13 +215,15 @@ class Post extends Component {
     handleCommentModalClose = e => {
         this.setState({ commentModal: false })
     }
-    handleshareModalClose = e =>{
-        this.setState({shareModal:false})
+    handleshareModalClose = e => {
+        this.setState({ shareModal: false })
     }
 
-    handleSharClick = postId =>{
+    handleSharClick = postId => {
+
+        const sharedPost = this.state.allPosts.filter(post => { return post.postId === postId })
         this.setState({ shareModal: true }, () => {
-            this.props.setPostIdForShare(postId)
+            this.props.setPostForShare(sharedPost[0])
         })
     }
 
@@ -273,7 +275,7 @@ class Post extends Component {
                                     <div className={classes.likeButton}>
                                         <span style={{ marginLeft: '10px', marginBottom: '10px' }}>{post.likeCount} Likes</span>
                                         <Button size="large" loading={post.postId === this.state.likeButtonId ? this.state.likeButtonLoading : false} icon="like" style={{ color: 'blue' }} onClick={() => this.handleUnLikeOnPost(post.postId)}>
-                                            
+
                                         </Button>
                                     </div>
 
@@ -281,8 +283,8 @@ class Post extends Component {
                                     <div className={classes.likeButton}>
                                         <span style={{ marginLeft: '10px', marginBottom: '10px' }}>{post.likeCount} Likes</span>
                                         <Button size="large" icon="like" onClick={() => this.handleLikeOnPost(post.postId)} loading={post.postId === this.state.likeButtonId ? this.state.likeButtonLoading : false}>
-                                            
-                                </Button>
+
+                                        </Button>
                                     </div>
 
                             }
@@ -290,15 +292,15 @@ class Post extends Component {
                         </div>
 
                         <div>
-                            <Button size="large" icon="message" style={{marginTop:'35px'}} onClick={() => this.handleCommentClick(post.postId)}>
-                                
+                            <Button size="large" icon="message" style={{ marginTop: '35px' }} onClick={() => this.handleCommentClick(post.postId)}>
+
                             </Button>
                         </div>
 
                         <div>
-                            <Button size="large" icon="share-alt" style={{marginTop:'35px'}} onClick={() => this.handleSharClick(post.postId)}>
-                               
-                    </Button>
+                            <Button size="large" icon="share-alt" style={{ marginTop: '35px' }} onClick={() => this.handleSharClick(post.postId)}>
+
+                            </Button>
                         </div>
 
                     </CardActions>
@@ -332,7 +334,7 @@ class Post extends Component {
                     onCancel={this.handleshareModalClose}
                     footer={null}
                 >
-                   <SharePost />
+                    <SharePost />
                 </Modal>
 
 
@@ -344,7 +346,7 @@ class Post extends Component {
 
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({ deletePost, fetchAllPost, likePost, getUserData, unLikePost, setPostIdForComment ,setPostIdForShare}, dispatch);
+    return bindActionCreators({ deletePost, fetchAllPost, likePost, getUserData, unLikePost, setPostIdForComment, setPostForShare }, dispatch);
 }
 
 function mapStateToProps({ allPosts, userData, deletePostResponse, likePostResponse, unLikePostResponse }) {
