@@ -1,15 +1,109 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="bf4b3b6c-16af-4917-a8d9-2808103ebac2" name="Default Changelist" comment="" />
+    <list default="true" id="bf4b3b6c-16af-4917-a8d9-2808103ebac2" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/logo192.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/logo512.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/manifest.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/robots.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.test.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/Login/bg-gif-1.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/Login/bg-gif-2.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/Login/bg-gif-3.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/Login/bg.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/Login/bg1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/Login/bg2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/Login/bg3.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/Login/bg4.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/Login/bg5.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/Login/bg6.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/Login/bg7.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/Login/books-1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/Login/books-2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/Login/books-3.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/Login/login-background.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/Profile/cover.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/Profile/sobuz.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/constants/Collection.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/constants/Routs.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/CreatePost.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Events.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Navigation.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Notification.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Page_Comment.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Post.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ReplyComment.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/SharePost.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/logo.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Login.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Login.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/NewsFeed.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/PageComment.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Profile.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/SignUp.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/Types.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/actions/actionAuth.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/actions/action_fetch.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/actions/action_misc.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/actions/actions_push.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/actions/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/reducers/Index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/reducers/reducers_auth.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/reducers/reducers_fetch.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/reducers/reducers_misc.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/reducers/reducers_push.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/store/Index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/serviceWorker.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/setupTests.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/util/endPoints.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/util/url.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test.rest" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="ProjectId" id="1ZRNazKhL36h0QciRKmfrHN0dJU" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -21,7 +115,23 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1584798025274</updated>
+      <workItem from="1594562194363" duration="139000" />
+      <workItem from="1594562363952" duration="90000" />
     </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="2" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>
