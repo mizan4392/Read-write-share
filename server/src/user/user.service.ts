@@ -22,4 +22,21 @@ export class UserService {
     };
     return this.userRipo.update({ id: data.id }, obj);
   }
+
+  async updateUser(userId, data) {
+    const res = await this.userRipo
+      .update({ id: userId }, data)
+      .then(res => {
+        return res;
+      })
+      .catch(err => {
+        return err;
+      });
+
+    if (res.affected) {
+      return { success: true, msg: res };
+    } else {
+      return { success: false, msg: res };
+    }
+  }
 }
