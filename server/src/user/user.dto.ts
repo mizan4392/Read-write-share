@@ -1,36 +1,33 @@
+import { IsEmail, IsNotEmpty } from 'class-validator';
 
-import {IsEmail, IsNotEmpty} from "class-validator";
+export class UserDto {
+  @IsNotEmpty()
+  userName: string;
 
-export class UserDto  {
-    @IsNotEmpty()
-    userName:string;
+  firstName: string;
 
-    firstName:string;
+  lastName: string;
 
-    lastName:string;
+  address: string;
 
+  phone: string;
 
-    address:string;
+  @IsEmail()
+  email: string;
 
+  password: string;
 
-    phone:string
+  photoUrl: string;
 
-    @IsEmail()
-    email:string
+  interest: string;
 
+  coverPhotoUrl: string;
 
-    password:string;
+  dob: string;
 
+  bio: string;
 
-    photoUrl:string;
+  createdAt: string;
 
-
-    interest:string;
-
-
-    bio:string;
-
-    createdAt:string;
-
-    updatedAt:string;
+  updatedAt: string;
 }

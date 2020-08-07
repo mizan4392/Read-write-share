@@ -35,9 +35,18 @@ export class User extends BaseEntity {
   @Column({ type: 'longtext', nullable: true })
   bio: string;
 
+  @Column({ type: 'timestamp', nullable: true })
+  dob: string;
+
+  @Column({ type: 'int', nullable: true })
+  rating: number;
+
+  @Column({ type: 'longtext', nullable: true })
+  coverPhotoUrl: string;
+
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: string;
 
-  @Column({ type: 'longtext', nullable: true })
+  @Column({ type: 'timestamp', nullable: true })
   updatedAt: string;
 }
