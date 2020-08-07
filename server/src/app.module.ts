@@ -9,12 +9,15 @@ import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { PostModule } from './post/post.module';
 
+import { LikeModule } from './like/like.module';
+
 @Module({
   imports: [
     TypeOrmModule.forRoot(TypeormConfig),
     UserModule,
     AuthModule,
     PostModule,
+    LikeModule,
   ],
   controllers: [AppController],
   providers: [AppService],
