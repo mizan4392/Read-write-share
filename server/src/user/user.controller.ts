@@ -4,6 +4,7 @@ import {
   Post,
   UsePipes,
   ValidationPipe,
+  Param,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UserDto } from './user.dto';
@@ -12,9 +13,8 @@ import { UserDto } from './user.dto';
 export class UserController {
   constructor(private userService: UserService) {}
 
-  @Post()
-  @UsePipes(ValidationPipe)
-  createUser(@Body() body: UserDto) {
-    return this.userService.createUser(body);
+  @Post('update/:id')
+  updateUser(@Body() body: UserDto, @Param() id) {
+    return this.userService.updateUser(id.id, body);
   }
 }
