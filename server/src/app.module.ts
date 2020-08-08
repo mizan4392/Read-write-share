@@ -10,6 +10,10 @@ import { AuthModule } from './auth/auth.module';
 import { PostModule } from './post/post.module';
 
 import { LikeModule } from './like/like.module';
+import { CommentController } from './comment/comment.controller';
+import { CommentModule } from './comment/comment.module';
+import { ReplyCommentController } from './reply-comment/reply-comment.controller';
+import { ReplyCommentModule } from './reply-comment/reply-comment.module';
 
 @Module({
   imports: [
@@ -18,6 +22,8 @@ import { LikeModule } from './like/like.module';
     AuthModule,
     PostModule,
     LikeModule,
+    CommentModule,
+    ReplyCommentModule,
   ],
   controllers: [AppController],
   providers: [AppService],
