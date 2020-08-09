@@ -14,6 +14,10 @@ import { CommentController } from './comment/comment.controller';
 import { CommentModule } from './comment/comment.module';
 import { ReplyCommentController } from './reply-comment/reply-comment.controller';
 import { ReplyCommentModule } from './reply-comment/reply-comment.module';
+import { EventsController } from './events/events.controller';
+import { EventsModule } from './events/events.module';
+import { FollowersController } from './followers/followers.controller';
+import { FollowersModule } from './followers/followers.module';
 
 @Module({
   imports: [
@@ -24,6 +28,8 @@ import { ReplyCommentModule } from './reply-comment/reply-comment.module';
     LikeModule,
     CommentModule,
     ReplyCommentModule,
+    EventsModule,
+    FollowersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
