@@ -1,48 +1,62 @@
 import React, { Component } from "react";
 import {
   withStyles,
-  fade,
   AppBar,
   Toolbar,
-  Typography,
   IconButton,
-  Badge,
   Container,
   MenuItem,
-  Menu
+  Menu,
+  Divider,
 } from "@material-ui/core";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import MailIcon from "@material-ui/icons/Mail";
-// import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
-
-import { Input, Icon } from "antd";
+import {
+  Input,
+  Space,
+  Button,
+  Tooltip,
+  Card,
+  Typography,
+  Popover,
+  Avatar,
+  List,
+  Badge,
+} from "antd";
 import { withRouter } from "react-router-dom";
 import Notification from "./Notification";
-import NotificationsIcon from "@material-ui/icons/Notifications";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { signout } from '../redux/actions/action_misc'
+import { signout } from "../redux/actions/action_misc";
+import {
+  NotificationOutlined,
+  PlusOutlined,
+  UserOutlined,
+  FlagOutlined,
+  SettingOutlined,
+} from "@ant-design/icons";
 
 const { Search } = Input;
+const { Text, Title } = Typography;
 
-const styles = theme => ({
+const styles = (theme) => ({
   grow: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   menuButton: {
-    marginRight: theme.spacing(2)
+    marginRight: theme.spacing(2),
   },
   title: {
     display: "none",
     [theme.breakpoints.up("sm")]: {
-      display: "block"
-    }
+      display: "block",
+    },
   },
   search: {
     width: "60%",
     alignSelf: "center",
-    marginLeft: "8%"
+    marginLeft: "8%",
   },
   searchIcon: {
     width: theme.spacing(7),
@@ -51,34 +65,34 @@ const styles = theme => ({
     pointerEvents: "none",
     display: "flex",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   inputRoot: {
-    color: "inherit"
+    color: "inherit",
   },
   inputInput: {
     padding: theme.spacing(1, 1, 1, 7),
     transition: theme.transitions.create("width"),
     width: "100%",
     [theme.breakpoints.up("md")]: {
-      width: 200
-    }
+      width: 200,
+    },
   },
   sectionDesktop: {
     display: "none",
     [theme.breakpoints.up("md")]: {
-      display: "flex"
-    }
+      display: "flex",
+    },
   },
   sectionMobile: {
     display: "flex",
     [theme.breakpoints.up("md")]: {
-      display: "none"
-    }
+      display: "none",
+    },
   },
   Brand: {
-    cursor: "pointer"
-  }
+    cursor: "pointer",
+  },
 });
 
 class Navigation extends Component {
@@ -86,38 +100,39 @@ class Navigation extends Component {
     openMenu: null,
     profileMenue: null,
     mobileMoreAnchorEl: null,
-    login: null
+    login: null,
   };
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.login !== this.state.login) {
-      this.setState({ login: nextProps.login })
+      this.setState({ login: nextProps.login });
     }
   }
-  handelMenueOpen = e => {
+  handelMenueOpen = (e) => {
     this.setState({ openMenu: e.currentTarget });
   };
-  handelProfileOpen = e => {
+  handelProfileOpen = (e) => {
     this.setState({ profileMenue: e.currentTarget });
   };
-  handelProfileClose = e => {
+  handelProfileClose = (e) => {
     this.setState({ profileMenue: null });
   };
-  handleClose = e => {
+  handleClose = (e) => {
     this.setState({ openMenu: null });
   };
 
   handleMobileMenuClose = () => {
     this.setState({ mobileMoreAnchorEl: null });
   };
-  handleMobileMenuOpen = event => {
+  handleMobileMenuOpen = (event) => {
     this.setState({ mobileMoreAnchorEl: event.currentTarget });
   };
 
   render() {
     const { classes } = this.props;
 
-    const login = this.props.login && this.props.login.status === "SUCCESS" ? true : false
+    const login =
+      this.props.login && this.props.login.status === "SUCCESS" ? true : false;
 
     const renderCreateMenu = (
       <Menu
@@ -132,9 +147,8 @@ class Navigation extends Component {
       </Menu>
     );
 
-    const renderProfileMenu = (
-
-      login ? <Menu
+    const renderProfileMenu = login ? (
+      <Menu
         id="simple-menu"
         anchorEl={this.state.profileMenue}
         keepMounted
@@ -149,26 +163,37 @@ class Navigation extends Component {
           Profile
         </MenuItem>
 
-        <MenuItem onClick={() => {
-          this.props.signout()
-        }}>SignOut</MenuItem>
-      </Menu> :
-        <Menu
-          id="simple-menu"
-          anchorEl={this.state.profileMenue}
-          keepMounted
-          open={Boolean(this.state.profileMenue)}
-          onClose={this.handelProfileClose}
+        <MenuItem
+          onClick={() => {
+            this.props.signout();
+          }}
         >
-          <MenuItem onClick={() => {
+          SignOut
+        </MenuItem>
+      </Menu>
+    ) : (
+      <Menu
+        id="simple-menu"
+        anchorEl={this.state.profileMenue}
+        keepMounted
+        open={Boolean(this.state.profileMenue)}
+        onClose={this.handelProfileClose}
+      >
+        <MenuItem
+          onClick={() => {
             this.props.history.push("/login");
-          }}>Login</MenuItem>
-          <MenuItem onClick={() => {
+          }}
+        >
+          Login
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
             this.props.history.push("/signup");
-          }}>Signup</MenuItem>
-        </Menu>
-
-
+          }}
+        >
+          Signup
+        </MenuItem>
+      </Menu>
     );
     const isMobileMenuOpen = Boolean(this.state.mobileMoreAnchorEl);
     const mobileMenuId = "primary-search-account-menu-mobile";
@@ -184,7 +209,7 @@ class Navigation extends Component {
       >
         <MenuItem>
           <IconButton aria-label="show 4 new mails" color="inherit">
-            <Badge badgeContent={4} color="secondary">
+            <Badge count={4} color="secondary">
               <MailIcon />
             </Badge>
           </IconButton>
@@ -192,8 +217,8 @@ class Navigation extends Component {
         </MenuItem>
         <MenuItem>
           <IconButton aria-label="show 11 new notifications">
-            <Badge badgeContent={11} color="secondary">
-              <NotificationsIcon style={{ color: "#fff" }} />
+            <Badge count={11} color="secondary">
+              {/* <NotificationsIcon style={{ color: "#fff" }} /> */}
             </Badge>
           </IconButton>
           <p>Notifications</p>
@@ -213,19 +238,78 @@ class Navigation extends Component {
       </Menu>
     );
 
+    const profilePopover = () => (
+      <List itemLayout="horizontal" style={{ width: "150px" }} split={false}>
+        <List.Item>
+          <Space size="small" direction="horizontal">
+            <UserOutlined />
+            <Typography>Profile</Typography>
+          </Space>
+        </List.Item>
+        <List.Item>
+          <Space size="small" direction="horizontal">
+            <FlagOutlined />
+            <Typography>Saved</Typography>
+          </Space>
+        </List.Item>
+        <List.Item>
+          <Space size="small" direction="horizontal">
+            <SettingOutlined />
+            <Typography>Setting</Typography>
+          </Space>
+        </List.Item>
+        <Divider></Divider>
+        <List.Item>
+          <Typography>Logout</Typography>
+        </List.Item>
+      </List>
+    );
+
+    const createPopover = () => (
+      <List itemLayout="horizontal" style={{ width: "150px" }} split={false}>
+        <List.Item>
+          <Space size="small" direction="horizontal">
+            <PlusOutlined />
+            <Typography>Post</Typography>
+          </Space>
+        </List.Item>
+        <List.Item>
+          <Space size="small" direction="horizontal">
+            <PlusOutlined />
+            <Typography>Event</Typography>
+          </Space>
+        </List.Item>
+      </List>
+    );
+
+    const notificationPopover = () => (
+      <div>
+        <List>
+          {[1, 2, 3, 4].map((i) => {
+            return (
+              <List.Item>
+                <Typography>Simple Notification</Typography>
+              </List.Item>
+            );
+          })}
+        </List>
+      </div>
+    );
+
     return (
       <div className={classes.grow}>
         <AppBar
           position="fixed"
           style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center"
+            background: "#fff",
           }}
         >
           <Container>
-            <Toolbar variant="dense">
-              <div style={{ marginRight: "auto" }}>
+            <Toolbar
+              variant="dense"
+              style={{ display: "flex", justifyContent: "space-between" }}
+            >
+              <div>
                 <h4
                   className={classes.Brand}
                   onClick={() => {
@@ -235,16 +319,53 @@ class Navigation extends Component {
                   RW&D
                 </h4>
               </div>
-
-              <div className={classes.search}>
-                <Search
-                  size="large"
-                  placeholder="Search"
-                  onSearch={value => console.log(value)}
-                  enterButton
-                  size="default "
-                />
+              <div>
+                <Search placeholder="Search..." size="small" />
               </div>
+              <div>
+                <div className={classes.sectionDesktop}>
+                  <Space direction="horizontal" size="large">
+                    <Tooltip title="Create">
+                      <Popover
+                        content={createPopover()}
+                        placement="bottomLeft"
+                        trigger="click"
+                      >
+                        <PlusOutlined style={{ color: "#000" }} />
+                      </Popover>
+                    </Tooltip>
+                    <Tooltip title="Notification">
+                      <Popover
+                        content={notificationPopover()}
+                        placement="bottomLeft"
+                        trigger="click"
+                      >
+                        <NotificationOutlined style={{ color: "#000" }} />
+                      </Popover>
+                    </Tooltip>
+                    <Tooltip title="user">
+                      <Popover
+                        content={profilePopover()}
+                        placement="bottomLeft"
+                        trigger="click"
+                      >
+                        <Avatar
+                          // src={`${API_BASE}/${userData?.photo}`}
+                          size="large"
+                          style={{ marginRight: 5 }}
+                          style={{ cursor: "pointer" }}
+                        />
+                      </Popover>
+                    </Tooltip>
+                  </Space>
+                </div>
+                <div className={classes.sectionMobile}>
+                  <Button>moreIcon</Button>
+                </div>
+              </div>
+              {/* <div style={{ marginRight: "auto" }}>
+                
+             
               <div className={classes.grow} />
               <div
                 className={classes.sectionDesktop}
@@ -285,7 +406,7 @@ class Navigation extends Component {
                 </IconButton>
               </div>
 
-              {renderMobileMenu}
+              {renderMobileMenu} */}
             </Toolbar>
           </Container>
           {renderCreateMenu}
@@ -300,11 +421,11 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({ signout }, dispatch);
 }
 
-
-
 function mapStateToProps({ login }) {
   return { login };
 }
 
-
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(withStyles(styles)(Navigation)));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(withStyles(styles)(Navigation)));
