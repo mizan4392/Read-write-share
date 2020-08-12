@@ -7,34 +7,28 @@ import { fetchAllPost } from "../redux/actions/action_fetch";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
-const styles = theme => ({
-  Root: {
-    display: "flex",
-    marginTop: "5%",
-    alignItems: "center",
-    flexDirection: "column",
-    color: "black"
-  }
+const styles = (theme) => ({
+  // Root: {
+  //   display: "flex",
+  //   marginTop: "5%",
+  //   flexDirection: "column",
+  //   color: "black",
+  // },
 });
 
 class NewsFeed extends Component {
-
   componentDidMount() {
     this.props.fetchAllPost();
   }
 
-
   render() {
     const { classes } = this.props;
-  
 
     return (
-      <Container>
-        <div className={classes.Root}>
-          <CreatePost />
-          <Post />
-        </div>
-      </Container>
+      <div className={classes.Root}>
+        {/* <CreatePost /> */}
+        <Post />
+      </div>
     );
   }
 }
