@@ -263,7 +263,7 @@ class Post extends Component {
                 <MoreVertIcon style={{ color: "black" }} />
               </a>
             }
-            style={{ width: "70%", marginBottom: "15px" }}
+            style={{ marginBottom: "15px" }}
             key={post.postId}
             actions={[
               <Input
@@ -318,126 +318,6 @@ class Post extends Component {
           </Card>
         );
       });
-
-    // const renderCard =
-    //   this.props.allPosts &&
-    //   this.props.allPosts.map((post) => {
-    //     return (
-    //       <Card className={classes.Card} key={post.postId}>
-    //         <CardHeader
-    //           avatar={
-    //             <Avatar
-    //               aria-label="recipe"
-    //               className={classes.avatar}
-    //               src={post.userImage}
-    //             >
-    //               R
-    //             </Avatar>
-    //           }
-    //           action={
-    //             this.state.userData &&
-    //             this.state.userData.userId === post.userId ? (
-    //               <div>
-    //                 {/* {this.state.loading ? <Spin/>:<div></div>} */}
-    //                 <Button
-    //                   icon="delete"
-    //                   style={{
-    //                     paddingBottom: "15px",
-    //                     color: "red",
-    //                     border: "none",
-    //                   }}
-    //                   onClick={() => this.handleClick(post.postId)}
-    //                   loading={
-    //                     post.postId === this.state.deletePostId
-    //                       ? this.state.loading
-    //                       : false
-    //                   }
-    //                 ></Button>
-    //               </div>
-    //             ) : (
-    //               <div></div>
-    //             )
-    //           }
-    //           title={post.full_name}
-    //           subheader={dayjs(post.createdAt).fromNow()}
-    //           style={{ backgroundColor: "white" }}
-    //         />
-
-    //         <CardContent style={{ backgroundColor: "white" }}>
-    //           {ReactHtmlParser(post.body)}
-    //         </CardContent>
-    //         <Divider></Divider>
-
-    //         <CardActions
-    //           style={{
-    //             backgroundColor: "white",
-    //             display: "flex",
-    //             justifyContent: "space-between",
-    //           }}
-    //         >
-    //           <div>
-    //             {this.props.userData &&
-    //             this.props.userData.likes &&
-    //             this.props.userData.likes.find(
-    //               (like) => like.postId === post.postId
-    //             ) ? (
-    //               <div className={classes.likeButton}>
-    //                 <span style={{ marginLeft: "10px", marginBottom: "10px" }}>
-    //                   {post.likeCount} Likes
-    //                 </span>
-    //                 <Button
-    //                   size="large"
-    //                   loading={
-    //                     post.postId === this.state.likeButtonId
-    //                       ? this.state.likeButtonLoading
-    //                       : false
-    //                   }
-    //                   icon="like"
-    //                   style={{ color: "blue" }}
-    //                   onClick={() => this.handleUnLikeOnPost(post.postId)}
-    //                 ></Button>
-    //               </div>
-    //             ) : (
-    //               <div className={classes.likeButton}>
-    //                 <span style={{ marginLeft: "10px", marginBottom: "10px" }}>
-    //                   {post.likeCount} Likes
-    //                 </span>
-    //                 <Button
-    //                   size="large"
-    //                   icon="like"
-    //                   onClick={() => this.handleLikeOnPost(post.postId)}
-    //                   loading={
-    //                     post.postId === this.state.likeButtonId
-    //                       ? this.state.likeButtonLoading
-    //                       : false
-    //                   }
-    //                 ></Button>
-    //               </div>
-    //             )}
-    //           </div>
-
-    //           <div>
-    //             <Button
-    //               size="large"
-    //               icon="message"
-    //               style={{ marginTop: "35px" }}
-    //               onClick={() => this.handleCommentClick(post.postId)}
-    //             ></Button>
-    //           </div>
-
-    //           <div>
-    //             <Button
-    //               size="large"
-    //               icon="share-alt"
-    //               style={{ marginTop: "35px" }}
-    //               onClick={() => this.handleSharClick(post.postId)}
-    //             ></Button>
-    //           </div>
-    //         </CardActions>
-    //         <Divider></Divider>
-    //       </Card>
-    //     );
-    //   });
 
     return (
       <div>

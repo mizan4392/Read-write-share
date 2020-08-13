@@ -6,6 +6,7 @@ import { bindActionCreators } from "redux";
 import { fetchAllPost } from "../redux/actions/action_fetch";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
+import Home from "./Home";
 
 const styles = (theme) => ({
   // Root: {
@@ -26,8 +27,7 @@ class NewsFeed extends Component {
 
     return (
       <div className={classes.Root}>
-        {/* <CreatePost /> */}
-        <Post />
+        <Home />
       </div>
     );
   }
