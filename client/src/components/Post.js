@@ -238,86 +238,87 @@ class Post extends Component {
   render() {
     const { classes } = this.props;
     dayjs.extend(relativeTime);
-
+    console.log(this.props.allPosts);
     const renderCard =
-      this.props.allPosts &&
-      this.props.allPosts.map((post) => {
-        return (
-          <Card
-            title={
-              <Meta
-                avatar={<Avatar src={post.userImage} />}
+      this.props?.allPosts !== null
+        ? this.props.allPosts.map((post) => {
+            return (
+              <Card
                 title={
-                  <>
-                    <a href="#">{post.full_name}</a>
-                    <h6 style={{ fontSize: "10px" }}>
-                      {dayjs(post.createdAt).fromNow()}
-                    </h6>
-                  </>
+                  <Meta
+                    avatar={<Avatar src={post.userImage} />}
+                    title={
+                      <>
+                        <a href="#">{post.full_name}</a>
+                        <h6 style={{ fontSize: "10px" }}>
+                          {dayjs(post.createdAt).fromNow()}
+                        </h6>
+                      </>
+                    }
+                    // description={dayjs(post.createdAt).fromNow()}
+                  />
                 }
-                // description={dayjs(post.createdAt).fromNow()}
-              />
-            }
-            extra={
-              <a href="#">
-                <MoreVertIcon style={{ color: "black" }} />
-              </a>
-            }
-            style={{ marginBottom: "15px" }}
-            key={post.postId}
-            actions={[
-              <Input
-                placeholder="Post a comment"
-                addonAfter={<Typography>Post</Typography>}
-                style={{ padding: "10px" }}
-              ></Input>,
-            ]}
-          >
-            {ReactHtmlParser(post.body)}
+                extra={
+                  <a href="#">
+                    <MoreVertIcon style={{ color: "black" }} />
+                  </a>
+                }
+                style={{ marginBottom: "15px" }}
+                key={post.postId}
+                actions={[
+                  <Input
+                    placeholder="Post a comment"
+                    addonAfter={<Typography>Post</Typography>}
+                    style={{ padding: "10px" }}
+                  ></Input>,
+                ]}
+              >
+                {ReactHtmlParser(post.body)}
 
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                marginTop: "6%",
-              }}
-            >
-              <Space size="middle">
-                <Tooltip title="Love">
-                  <Button
-                    className={classes.btnBorder}
-                    icon={<HeartOutlined />}
-                  ></Button>
-                </Tooltip>
-                <Tooltip title="Comment">
-                  <Button
-                    className={classes.btnBorder}
-                    icon={<CommentOutlined />}
-                  ></Button>
-                </Tooltip>
-                <Tooltip title="Share">
-                  <Button
-                    className={classes.btnBorder}
-                    icon={<SendOutlined />}
-                  ></Button>
-                </Tooltip>
-              </Space>
-              <div>
-                <Tooltip title="Save">
-                  <Button
-                    className={classes.btnBorder}
-                    icon={<SaveOutlined />}
-                  ></Button>
-                </Tooltip>
-              </div>
-            </div>
-            <strong style={{ paddingLeft: "10px" }}>
-              {" "}
-              {post.likeCount} likes
-            </strong>
-          </Card>
-        );
-      });
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    marginTop: "6%",
+                  }}
+                >
+                  <Space size="middle">
+                    <Tooltip title="Love">
+                      <Button
+                        className={classes.btnBorder}
+                        icon={<HeartOutlined />}
+                      ></Button>
+                    </Tooltip>
+                    <Tooltip title="Comment">
+                      <Button
+                        className={classes.btnBorder}
+                        icon={<CommentOutlined />}
+                      ></Button>
+                    </Tooltip>
+                    <Tooltip title="Share">
+                      <Button
+                        className={classes.btnBorder}
+                        icon={<SendOutlined />}
+                      ></Button>
+                    </Tooltip>
+                  </Space>
+                  <div>
+                    <Tooltip title="Save">
+                      <Button
+                        className={classes.btnBorder}
+                        icon={<SaveOutlined />}
+                      ></Button>
+                    </Tooltip>
+                  </div>
+                </div>
+                <strong style={{ paddingLeft: "10px" }}>
+                  {" "}
+                  {post.likeCount} likes
+                </strong>
+              </Card>
+            );
+          })
+        : null;
 
     return (
       <div>
