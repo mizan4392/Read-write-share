@@ -3,7 +3,7 @@ import "./App.css";
 import Navigation from "./components/Navigation";
 import Profile from "./pages/Profile";
 import * as ROUTES from "./assets/constants/Routs";
-
+import "suneditor/dist/css/suneditor.min.css";
 import "./App.css";
 import { BrowserRouter as Router, Route, withRouter } from "react-router-dom";
 import NewsFeed from "./pages/NewsFeed";
@@ -13,7 +13,7 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { setNotificationState } from "./redux/actions/action_misc";
 import { Container } from "@material-ui/core";
-
+import "@pathofdev/react-tag-input/build/index.css";
 class App extends React.Component {
   render() {
     return (

@@ -28,7 +28,7 @@ import { withRouter } from "react-router-dom";
 import Notification from "./Notification";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { signout } from "../redux/actions/action_misc";
+import { signout, createEventModal } from "../redux/actions/action_misc";
 import {
   NotificationOutlined,
   PlusOutlined,
@@ -267,13 +267,16 @@ class Navigation extends Component {
 
     const createPopover = () => (
       <List itemLayout="horizontal" style={{ width: "150px" }} split={false}>
-        <List.Item>
+        <List.Item style={{ cursor: "pointer" }}>
           <Space size="small" direction="horizontal">
             <PlusOutlined />
             <Typography>Post</Typography>
           </Space>
         </List.Item>
-        <List.Item>
+        <List.Item
+          onClick={() => this.props.createEventModal(true)}
+          style={{ cursor: "pointer" }}
+        >
           <Space size="small" direction="horizontal">
             <PlusOutlined />
             <Typography>Event</Typography>
@@ -418,7 +421,7 @@ class Navigation extends Component {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ signout }, dispatch);
+  return bindActionCreators({ signout, createEventModal }, dispatch);
 }
 
 function mapStateToProps({ login }) {
