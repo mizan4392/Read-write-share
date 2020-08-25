@@ -4,12 +4,14 @@ import MiniProfile from "../components/MiniProfile";
 import SuggestedFollower from "../components/SuggestedFollower";
 import SuggestedEvent from "../components/SuggestedEvent";
 import CreateEvent from "../components/modal/CreateEvent.component";
+import CreatePost from "../components/modal/CreatePost.component";
 
 export default function Home() {
   return (
     <div style={{ display: "flex", justifyContent: "space-between" }}>
       <div style={{ width: "65%" }}>
         <CreateEvent />
+        <CreatePost />
         <Post />
       </div>
       <div style={{ width: "35%", marginLeft: "2%" }}>

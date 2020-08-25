@@ -16,6 +16,7 @@ import {
   postIdForComment,
   postForShare,
   createEventDia,
+  createPostDia,
 } from "./reducers_misc";
 
 const rootReducer = combineReducers({
@@ -41,6 +42,7 @@ const rootReducer = combineReducers({
   postIdForComment,
   postForShare,
   createEventDia,
+  createPostDia,
 });
 
 export default rootReducer;
