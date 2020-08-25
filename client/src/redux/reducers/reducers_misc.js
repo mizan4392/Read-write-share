@@ -1,5 +1,14 @@
 import * as TYPES from "../Types";
 
+const createPostDia = (state = null, action) => {
+  switch (action.type) {
+    case TYPES.CREATE_POST_MODAL:
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
 const createEventDia = (state = null, action) => {
   switch (action.type) {
     case TYPES.CREATE_EVENT_MODAL:
@@ -51,4 +60,5 @@ export {
   postIdForComment,
   postForShare,
   createEventDia,
+  createPostDia,
 };

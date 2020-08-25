@@ -1,5 +1,12 @@
 import * as TYPES from "../Types";
 
+export function createPostModal(payload) {
+  return {
+    type: TYPES.CREATE_POST_MODAL,
+    payload: payload,
+  };
+}
+
 export function createEventModal(payload) {
   return {
     type: TYPES.CREATE_EVENT_MODAL,
