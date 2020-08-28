@@ -1,4 +1,4 @@
-export const styles = (theme) => ({
+export const styles: any = (theme) => ({
   grow: {
     flexGrow: 1,
   },

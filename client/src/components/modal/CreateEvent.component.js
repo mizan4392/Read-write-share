@@ -1,17 +1,13 @@
 import React, { Component } from "react";
 import { Modal, Input, Form, DatePicker } from "antd";
 import SunEditor, { buttonList } from "suneditor-react";
-import { useSelector, useDispatch } from "react-redux";
+
 import EventType from "../Selects/EventType.tsx";
 import moment from "moment";
 import ReactTagInput from "@pathofdev/react-tag-input";
-import { createEventModal } from "../../redux/actions/action_misc";
 
 export default function CreateEvent() {
   const [form] = Form.useForm();
-
-  const createEventDia = useSelector((state) => state.createEventDia);
-  const dispatch = useDispatch();
 
   function onFinish(value) {}
   function disabledDate(current) {
@@ -19,16 +15,12 @@ export default function CreateEvent() {
     return current && current < moment().endOf("day");
   }
 
-  function onOk() {
-    dispatch(createEventModal(false));
-  }
-  function onCancel() {
-    dispatch(createEventModal(false));
-  }
+  function onOk() {}
+  function onCancel() {}
 
   return (
     <Modal
-      visible={createEventDia ? createEventDia : false}
+      // visible={createEventDia ? createEventDia : false}
       title="Create Event"
       width="60%"
       okText="Create"
