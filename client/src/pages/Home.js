@@ -1,5 +1,5 @@
 import React from "react";
-import Post from "../components/Post";
+import Post from "../components/Post.tsx";
 import MiniProfile from "../components/MiniProfile";
 import SuggestedFollower from "../components/SuggestedFollower";
 import SuggestedEvent from "../components/SuggestedEvent";

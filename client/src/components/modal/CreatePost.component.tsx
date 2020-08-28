@@ -1,17 +1,12 @@
 import React, { Component } from "react";
 import { Modal, Input, Form, DatePicker } from "antd";
 import SunEditor, { buttonList } from "suneditor-react";
-import { useSelector, useDispatch } from "react-redux";
 
 import moment from "moment";
 import ReactTagInput from "@pathofdev/react-tag-input";
-import { createPostModal } from "../../redux/actions/action_misc";
 
 export default function CreatePost() {
   const [form] = Form.useForm();
-
-  const createPostDia = useSelector((state) => state.createPostDia);
-  const dispatch = useDispatch();
 
   function onFinish(value) {}
   function disabledDate(current) {
@@ -19,16 +14,12 @@ export default function CreatePost() {
     return current && current < moment().endOf("day");
   }
 
-  function onOk() {
-    dispatch(createPostModal(false));
-  }
-  function onCancel() {
-    dispatch(createPostModal(false));
-  }
+  function onOk() {}
+  function onCancel() {}
 
   return (
     <Modal
-      visible={createPostDia ? createPostDia : false}
+      // visible={createPostDia ? createPostDia : false}
       title="Create Post"
       width="60%"
       okText="Post"
