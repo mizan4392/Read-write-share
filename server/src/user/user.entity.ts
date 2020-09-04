@@ -5,14 +5,11 @@ export class User extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'varchar', length: '50' })
+  @Column({ type: 'varchar', length: '50', nullable: true })
   userName: string;
 
   @Column({ type: 'varchar', length: '50' })
-  firstName: string;
-
-  @Column({ type: 'varchar', length: '50' })
-  lastName: string;
+  fullName: string;
 
   @Column({ type: 'varchar', length: '500', nullable: true })
   address: string;

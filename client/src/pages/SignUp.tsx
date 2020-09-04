@@ -1,11 +1,12 @@
-import React, { Component } from "react";
+import React, { Component, useState, useEffect } from "react";
 import "./Login.css";
 //redux
 
-import { Input, Button, Layout, Form, Row, Col } from "antd";
+import { Input, Button, Layout, Form, Row, Col, notification } from "antd";
 import { UserOutlined, LockOutlined, MailOutlined } from "@ant-design/icons";
-
-const style = {
+import { useStoreActions, useStoreState } from "../hooks/easyPeasy";
+import { useHistory } from "react-router-dom";
+const style: any = {
   container: {
     position: "absolute",
     background: "#ecf0f1",
@@ -20,14 +21,59 @@ const style = {
 };
 
 function Signup() {
+  const signup = useStoreActions((state) => state.auth.signup);
+  const signupRes = useStoreState((state) => state.auth.signupRes);
+  const setSignupRes = useStoreActions((state) => state.auth.setSignupRes);
+
+  const signupLoadnig = useStoreState((state) => state.auth.signupLoadnig);
+
+  const history = useHistory();
+  const [error, setError] = useState(false);
+
+  useEffect(() => {
+    if (signupRes) {
+      if (signupRes.success !== undefined) {
+        if (signupRes.success) {
+          openNotificationWithIcon(
+            "success",
+            "Sign up SucessFull!",
+            "please Login and Enjoy sharing"
+          );
+          history.push("/login");
+        }
+      } else {
+        openNotificationWithIcon(
+          "error",
+          "Couldn't signup",
+          signupRes?.message
+        );
+      }
+      setSignupRes(null);
+    }
+  }, [signupRes]);
+
+  const openNotificationWithIcon = (type, msg, des) => {
+    notification[type]({
+      message: msg,
+      description: des,
+    });
+  };
+
+  function handleSignup(value) {
+    if (value.password !== value.confirm_password) {
+      setError(true);
+    } else {
+      signup(value);
+    }
+  }
   return (
     <Layout style={style.container}>
       <h2>Read Write & Share</h2>
       <div style={{ background: "#fff", padding: "20px" }}>
-        <Form name="login" onFinish={() => {}}>
+        <Form name="login" onFinish={handleSignup}>
           <Form.Item
             style={{ width: "400px" }}
-            name="username"
+            name="fullName"
             rules={[
               {
                 required: true,
@@ -50,7 +96,7 @@ function Signup() {
 
           <Form.Item
             style={{ width: "400px" }}
-            name="username"
+            name="email"
             rules={[
               {
                 required: true,
@@ -59,15 +105,11 @@ function Signup() {
             ]}
           >
             <Input
-              prefix={
-                <MailOutlined style={{ color: "rgba(0,0,0,.25)" }} />
-                // <Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />
-              }
+              prefix={<MailOutlined style={{ color: "rgba(0,0,0,.25)" }} />}
               placeholder="Email"
               size="large"
               name="email"
               type="email"
-              // onChange={this.handleChange}
             />
           </Form.Item>
 
@@ -77,16 +119,14 @@ function Signup() {
             rules={[{ required: true, message: "Please input your password!" }]}
           >
             <Input
-              prefix={
-                <LockOutlined style={{ color: "rgba(0,0,0,.25)" }} />
-                // <Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />
-              }
+              prefix={<LockOutlined style={{ color: "rgba(0,0,0,.25)" }} />}
               type="password"
               placeholder="Password"
               size="large"
               name="password"
-              type="password"
-              // onChange={this.handleChange}
+              onChange={() => {
+                return error ? setError(false) : null;
+              }}
             />
           </Form.Item>
 
@@ -96,40 +136,26 @@ function Signup() {
             rules={[{ required: true, message: "Please input your password!" }]}
           >
             <Input
-              prefix={
-                <UserOutlined style={{ color: "rgba(0,0,0,.25)" }} />
-                // <Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />
-              }
+              prefix={<UserOutlined style={{ color: "rgba(0,0,0,.25)" }} />}
               type="password"
               placeholder="Confirm Password"
               size="large"
               name="confirm_password"
-              type="password"
-              // onChange={this.handleChange}
+              onChange={() => {
+                return error ? setError(false) : null;
+              }}
             />
           </Form.Item>
-          {/* <span style={{ color: "red" }}>
-            {this.state.error
-              ? "Password and Confirm Password not matched"
-              : ""}
-          </span>
           <span style={{ color: "red" }}>
-            {this.props.login && this.props.login.status !== "SUCCESS"
-              ? "Email already taken"
-              : ""}
-          </span> */}
+            {error ? "Password and Confirm Password not matched" : ""}
+          </span>
 
           <Row justify="space-between">
             <Col>
               {/* <Checkbox onChange={onRememberChange}>Remember me</Checkbox> */}
             </Col>
             <Col>
-              <Button
-                htmlType="submit"
-                type="submit"
-                // onClick={this.handleSubmit}
-                // loading={this.state.loading}
-              >
+              <Button htmlType="submit" loading={signupLoadnig}>
                 Signup
               </Button>
             </Col>

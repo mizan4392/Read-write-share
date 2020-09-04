@@ -22,9 +22,11 @@ import { withRouter } from "react-router-dom";
 import CameraAltIcon from "@material-ui/icons/CameraAlt";
 import Rating from "@material-ui/lab/Rating";
 
+import { useStoreState } from "../hooks/easyPeasy";
+
 const { TabPane } = Tabs;
 
-const styles = {
+const styles = (theme) => ({
   root: {
     marginTop: "4%",
   },
@@ -33,24 +35,24 @@ const styles = {
     paddingTop: "0px",
   },
   paper: {
-    padding: 2,
+    padding: theme.spacing(2),
     textAlign: "center",
-    // color: theme.palette.text.secondary,
+    color: theme.palette.text.secondary,
   },
   large: {
-    width: 23,
-    height: 23,
+    width: theme.spacing(18),
+    height: theme.spacing(18),
     position: "relative",
   },
   Avatar: {
     position: "absolute",
     left: "8%",
     top: "70%",
-    // [theme.breakpoints.down("sm")]: {
-    //   position: "absolute",
-    //   left: "20%",
-    //   top: "70%",
-    // },
+    [theme.breakpoints.down("sm")]: {
+      position: "absolute",
+      left: "20%",
+      top: "70%",
+    },
   },
   CoverPhotoUplodeLabel: {
     position: "absolute",
@@ -76,13 +78,15 @@ const styles = {
     backgroundColor: "transperent",
     borderRadius: "10px",
   },
-};
+});
 
-function Profile() {
+function Profile(props) {
+  const user = useStoreState((state) => state.auth.user);
+  const { classes } = props;
   return (
-    <div className={styles.root}>
+    <div className={classes.root}>
       <Container>
-        <Grid container spacing={2} className={styles.Container}>
+        <Grid container spacing={2} className={classes.Container}>
           <Grid item xs={12}>
             <div style={{ position: "relative" }}>
               <div>
@@ -97,21 +101,21 @@ function Profile() {
                   }}
                 ></img>
                 <Tooltip title="Uplode Cover Photo">
-                  <label className={styles.CoverPhotoUplodeLabel}>
+                  <label className={classes.CoverPhotoUplodeLabel}>
                     <CameraAltIcon style={{ color: "#fff" }} />
                     <input type="file" style={{ display: "none" }}></input>
                   </label>
                 </Tooltip>
               </div>
 
-              <div className={styles.Avatar}>
+              <div className={classes.Avatar}>
                 <Avatar
                   alt="Cindy Baker"
                   src={ProfilePic}
-                  className={styles.large}
+                  className={classes.large}
                 />
                 <Tooltip title="Uplode Profile Photo">
-                  <label className={styles.profilePhotoUplodeLabel}>
+                  <label className={classes.profilePhotoUplodeLabel}>
                     <CameraAltIcon style={{ color: "#000" }} />
                     <input type="file" style={{ display: "none" }}></input>
                   </label>
@@ -124,20 +128,18 @@ function Profile() {
             <div style={{ textAlign: "center", color: "black" }}>
               <div style={{ marginTop: "28%" }}>
                 <div>
-                  <span style={{ color: "black" }}>Md Mizanur Rahaman</span>
+                  <span style={{ color: "black" }}>{user?.fullName}</span>
                 </div>
                 <div>
-                  <label style={{ color: "black" }}>Phone: 01830791133</label>
-                </div>
-                <div>
-                  <label style={{ color: "black" }}>
-                    Address: 57/ka,Leakcircus Kolabagan{" "}
-                  </label>
+                  <label style={{ color: "black" }}>Phone: {user?.phone}</label>
                 </div>
                 <div>
                   <label style={{ color: "black" }}>
-                    Email:dev.mizan4392@gmail.com{" "}
+                    Address: {user?.address}
                   </label>
+                </div>
+                <div>
+                  <label style={{ color: "black" }}>Email:{user?.email}</label>
                 </div>
 
                 <div style={{ textAlign: "center" }}>
@@ -170,4 +172,4 @@ function Profile() {
   );
 }
 
-export default Profile;
+export default withStyles(styles)(Profile);

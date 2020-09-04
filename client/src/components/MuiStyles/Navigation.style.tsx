@@ -1,6 +1,7 @@
 export const styles: any = (theme) => ({
   grow: {
     flexGrow: 1,
+    zIndex: 1,
   },
   menuButton: {
     marginRight: theme.spacing(2),

@@ -78,7 +78,7 @@ export class AuthService {
         });
 
       if (res.id) {
-        return { success: true };
+        throw new HttpException({ success: true }, HttpStatus.OK);
       } else {
         throw new HttpException(res, HttpStatus.BAD_REQUEST);
       }
