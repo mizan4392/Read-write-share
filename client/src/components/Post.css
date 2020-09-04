@@ -1,0 +1,10 @@
+.sun-editor .se-resizing-bar {
+  display: none;
+}
+
+.se-resizing-bar .sun-editor-common {
+  display: none;
+}
+.sun-editor {
+  border: none;
+}

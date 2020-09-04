@@ -45,12 +45,16 @@ import {
   EditOutlined,
 } from "@ant-design/icons";
 import { styles } from "./MuiStyles/Navigation.style";
-import { useStoreState } from "../hooks/easyPeasy";
+import { useStoreState, useStoreActions } from "../hooks/easyPeasy";
+import { openNotificationWithIcon } from "../components/Notificarion.component";
 const { Search } = Input;
 const { Text, Title } = Typography;
 
 function Navigation(props: any) {
   const user = useStoreState((state) => state.auth.user);
+  const setCreatePostDia = useStoreActions(
+    (state) => state.post.setCreatePostDia
+  );
 
   const history = useHistory();
 
@@ -196,7 +200,17 @@ function Navigation(props: any) {
             <Button
               onClick={() => {
                 localStorage.removeItem("rwdtoken");
-                window.location.reload();
+
+                openNotificationWithIcon(
+                  "success",
+                  "Logged Out SuccessFull",
+                  "Hope you will come back"
+                );
+
+                history.push("/");
+                setTimeout(() => {
+                  window.location.reload();
+                }, 600);
               }}
               style={{ border: "none" }}
               icon={<LogoutOutlined />}
@@ -228,7 +242,7 @@ function Navigation(props: any) {
     <List itemLayout="horizontal" style={{ width: "150px" }} split={false}>
       <List.Item
         style={{ cursor: "pointer" }}
-        //   onClick={() => this.props.createPostModal(true)}
+        onClick={() => setCreatePostDia()}
       >
         <Space size="small" direction="horizontal">
           <PlusOutlined />

@@ -1,4 +1,5 @@
-import React, { Component } from "react";
+import React, { Component, useEffect } from "react";
+import "./Post.css";
 import { withStyles, Tooltip } from "@material-ui/core";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import {
@@ -13,37 +14,19 @@ import {
   Space,
 } from "antd";
 import Page_Comment from "./Page_Comment";
-import ReactHtmlParser from "react-html-parser";
-import DeleteIcon from "@material-ui/icons/Delete";
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
-import InfoIcon from "@material-ui/icons/Info";
-import {
-  deletePost,
-  likePost,
-  unLikePost,
-} from "../redux/actions/actions_push";
-import { fetchAllPost } from "../redux/actions/action_fetch";
-import { getUserData } from "../redux/actions/actionAuth";
-import {
-  setPostIdForComment,
-  setPostForShare,
-} from "../redux/actions/action_misc";
+
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-import { notification } from "antd";
-
+import ReactHtmlParser from "react-html-parser";
 import SharePost from "./SharePost";
 import {
-  SettingOutlined,
-  EditOutlined,
-  EllipsisOutlined,
   HeartOutlined,
   CommentOutlined,
   SendOutlined,
   SaveOutlined,
 } from "@ant-design/icons";
+import { useStoreActions, useStoreState } from "../hooks/easyPeasy";
+import SunEditor from "suneditor-react";
 
 const { TextArea } = Input;
 const { Meta } = Card;
@@ -93,18 +76,24 @@ const styles = (theme) => ({
 });
 
 function Post() {
+  const fetchAllPost = useStoreActions((action) => action.post.fetchAllPost);
+  const allPostLoading = useStoreState((state) => state.post.allPostLoading);
+  const allPosts = useStoreState((state) => state.post.allPosts);
+  useEffect(() => {
+    fetchAllPost();
+  }, [fetchAllPost]);
   dayjs.extend(relativeTime);
-  const renderCard = [1, 2, 3, 4].map((post) => {
+  const renderCard = allPosts?.map((post) => {
     return (
       <Card
         title={
           <Meta
-            avatar={<Avatar />}
+            avatar={<Avatar src={post?.photoUrl} />}
             title={
               <>
-                <a href="#">{"Mizan"}</a>
+                <a href="#">{post.user.fullName}</a>
                 <h6 style={{ fontSize: "10px" }}>
-                  {/* {dayjs(post.createdAt).fromNow()} */}
+                  {dayjs(post?.createdAt).fromNow()}
                 </h6>
               </>
             }
@@ -125,8 +114,7 @@ function Post() {
           ></Input>,
         ]}
       >
-        {/* {ReactHtmlParser(post.body)} */}
-        {"some post"}
+        {ReactHtmlParser(post.body)}
 
         <div
           style={{
@@ -171,7 +159,18 @@ function Post() {
 
   return (
     <div>
-      <div style={{ padding: "0 24px" }}>{renderCard}</div>
+      {allPostLoading ? (
+        <Spin
+          size="large"
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        />
+      ) : (
+        <div style={{ padding: "0 24px" }}>{renderCard}</div>
+      )}
 
       <Modal
       // visible={this.state.commentModal}

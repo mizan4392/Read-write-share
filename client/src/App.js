@@ -1,5 +1,4 @@
 import React from "react";
-import "./App.css";
 import Navigation from "./components/Navigation.component.tsx";
 import Profile from "./pages/Profile";
 import * as ROUTES from "./assets/constants/Routs";
@@ -17,6 +16,7 @@ function App() {
   React.useEffect(() => {
     getUser();
   }, [getUser]);
+
   return (
     <div>
       <Router>

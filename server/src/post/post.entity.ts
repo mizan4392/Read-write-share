@@ -12,8 +12,8 @@ export class Posts extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'longtext', nullable: true })
-  title: string;
+  // @Column({ type: 'longtext', nullable: true })
+  // title: string;
 
   @Column({ type: 'longtext', nullable: true })
   body: string;
