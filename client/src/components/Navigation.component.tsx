@@ -24,7 +24,7 @@ import {
   List,
   Badge,
 } from "antd";
-import { withRouter } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import Notification from "./Notification";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -33,19 +33,27 @@ import {
   createEventModal,
   createPostModal,
 } from "../redux/actions/action_misc";
+import * as ROUTES from "../assets/constants/Routs";
 import {
   NotificationOutlined,
   PlusOutlined,
   UserOutlined,
   FlagOutlined,
   SettingOutlined,
+  LogoutOutlined,
+  LoginOutlined,
+  EditOutlined,
 } from "@ant-design/icons";
 import { styles } from "./MuiStyles/Navigation.style";
-
+import { useStoreState } from "../hooks/easyPeasy";
 const { Search } = Input;
 const { Text, Title } = Typography;
 
 function Navigation(props: any) {
+  const user = useStoreState((state) => state.auth.user);
+
+  const history = useHistory();
+
   const { classes } = props;
 
   const login = false;
@@ -157,29 +165,62 @@ function Navigation(props: any) {
   //   );
 
   const profilePopover = () => (
-    <List itemLayout="horizontal" style={{ width: "150px" }} split={false}>
-      <List.Item>
-        <Space size="small" direction="horizontal">
-          <UserOutlined />
-          <Typography>Profile</Typography>
-        </Space>
-      </List.Item>
-      <List.Item>
-        <Space size="small" direction="horizontal">
-          <FlagOutlined />
-          <Typography>Saved</Typography>
-        </Space>
-      </List.Item>
-      <List.Item>
-        <Space size="small" direction="horizontal">
-          <SettingOutlined />
-          <Typography>Setting</Typography>
-        </Space>
-      </List.Item>
-      <Divider></Divider>
-      <List.Item>
-        <Typography>Logout</Typography>
-      </List.Item>
+    <List
+      itemLayout="horizontal"
+      style={{ width: "150px", cursor: "pointer" }}
+      split={false}
+    >
+      {user ? (
+        <>
+          {" "}
+          <List.Item>
+            <Space size="small" direction="horizontal">
+              <UserOutlined />
+              <NavLink to={ROUTES.PROFILE}>Profile</NavLink>
+            </Space>
+          </List.Item>
+          <List.Item>
+            <Space size="small" direction="horizontal">
+              <FlagOutlined />
+              <NavLink to={ROUTES.PROFILE}>Saved</NavLink>
+            </Space>
+          </List.Item>
+          <List.Item>
+            <Space size="small" direction="horizontal">
+              <SettingOutlined />
+              <NavLink to={ROUTES.SETTINGS}>Setting</NavLink>
+            </Space>
+          </List.Item>
+          <Divider></Divider>
+          <List.Item>
+            <Button
+              onClick={() => {
+                localStorage.removeItem("rwdtoken");
+                window.location.reload();
+              }}
+              style={{ border: "none" }}
+              icon={<LogoutOutlined />}
+            >
+              Logout
+            </Button>
+          </List.Item>
+        </>
+      ) : (
+        <>
+          <List.Item>
+            <Space>
+              <LoginOutlined />
+              <NavLink to="/login">Login</NavLink>
+            </Space>
+          </List.Item>
+          <List.Item>
+            <Space>
+              <EditOutlined />
+              <NavLink to="/signup">Signup</NavLink>
+            </Space>
+          </List.Item>
+        </>
+      )}
     </List>
   );
 
@@ -226,6 +267,7 @@ function Navigation(props: any) {
         position="fixed"
         style={{
           background: "#fff",
+          zIndex: 1,
         }}
       >
         <Container>
@@ -237,7 +279,7 @@ function Navigation(props: any) {
               <h4
                 className={classes.Brand}
                 onClick={() => {
-                  //   history.push("/");
+                  history.push("/");
                 }}
               >
                 RW&D

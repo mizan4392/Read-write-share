@@ -7,11 +7,16 @@ import "suneditor/dist/css/suneditor.min.css";
 import "./App.css";
 import { BrowserRouter as Router, Route, withRouter } from "react-router-dom";
 import NewsFeed from "./pages/NewsFeed";
-import Login from "./pages/Login";
-import Signup from "./pages/SignUp";
+import Login from "./pages/Login.tsx";
+import Signup from "./pages/SignUp.tsx";
 import { Container } from "@material-ui/core";
 import "@pathofdev/react-tag-input/build/index.css";
+import { useStoreActions } from "./hooks/easyPeasy";
 function App() {
+  const getUser = useStoreActions((action) => action.auth.getUser);
+  React.useEffect(() => {
+    getUser();
+  }, [getUser]);
   return (
     <div>
       <Router>

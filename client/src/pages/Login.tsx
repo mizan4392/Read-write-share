@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useEffect } from "react";
 import "./Login.css";
 //redux
 import Particles from "react-particles-js";
@@ -12,6 +12,7 @@ import {
   Checkbox,
   Tooltip,
   Col,
+  notification,
 } from "antd";
 
 import {
@@ -21,20 +22,9 @@ import {
   MailOutlined,
   KeyOutlined,
 } from "@ant-design/icons";
-
-const params = {
-  particles: {
-    number: {
-      value: 40,
-      density: {
-        enable: true,
-        value_area: 200,
-      },
-    },
-  },
-};
-
-const style = {
+import { useStoreActions, useStoreState } from "../hooks/easyPeasy";
+import { useHistory } from "react-router-dom";
+const style: any = {
   container: {
     position: "absolute",
     background: "#ecf0f1",
@@ -49,14 +39,41 @@ const style = {
 };
 
 function Login() {
+  const login = useStoreActions((state) => state.auth.login);
+  const loginLoading = useStoreState((state) => state.auth.loginLoading);
+  const loginRes = useStoreState((state) => state.auth.loginRes);
+  const setLoginRes = useStoreActions((state) => state.auth.setLoginRes);
+  const history = useHistory();
+  const openNotificationWithIcon = (type, msg, des) => {
+    notification[type]({
+      message: msg,
+      description: des,
+    });
+  };
+
+  useEffect(() => {
+    if (loginRes) {
+      if (loginRes?.success) {
+        openNotificationWithIcon("success", "Login SuccessFull", "");
+        history.push("/");
+      } else {
+        openNotificationWithIcon("success", loginRes?.msg, "");
+      }
+      setLoginRes(null);
+    }
+  }, [loginRes]);
+
+  function handleLogin(value) {
+    login(value);
+  }
   return (
     <Layout style={style.container}>
       <h2>Read Write & Share</h2>
       <div style={{ background: "#fff", padding: "20px" }}>
-        <Form name="login" onFinish={() => {}}>
+        <Form name="login" onFinish={handleLogin}>
           <Form.Item
             style={{ width: "400px" }}
-            name="username"
+            name="email"
             rules={[
               {
                 required: true,
@@ -71,8 +88,6 @@ function Login() {
               prefix={<MailOutlined />}
               placeholder="Email"
               size="large"
-              // value={this.state.email}
-              // onChange={this.handleChange}
             />
           </Form.Item>
 
@@ -88,21 +103,16 @@ function Login() {
               name="password"
               placeholder="Password"
               size="large"
-              // value={this.state.password}
-              // onChange={this.handleChange}
             />
           </Form.Item>
 
           <Row justify="space-between">
-            <Col>
-              {/* <Checkbox onChange={onRememberChange}>Remember me</Checkbox> */}
-            </Col>
+            <Col></Col>
             <Col>
               <Button
                 htmlType="submit"
-                style={{ color: "#fff" }}
-                // loading={this.state.loading}
-                // onClick={this.handleSubmit}
+                style={{ color: "#000" }}
+                loading={loginLoading}
               >
                 Login
               </Button>

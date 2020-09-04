@@ -1,12 +1,9 @@
 import { IsEmail, IsNotEmpty } from 'class-validator';
 
 export class UserDto {
-  @IsNotEmpty()
   userName: string;
 
-  firstName: string;
-
-  lastName: string;
+  fullName: string;
 
   address: string;
 
