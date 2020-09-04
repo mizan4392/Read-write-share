@@ -22,6 +22,11 @@ export class PostController {
     return this.postService.createPost(body);
   }
 
+  @Get('all')
+  fetchAllPost() {
+    return this.postService.fetchAllPost();
+  }
+
   @Get(':id')
   getPostByUser(@Param() id) {
     return this.postService.getPostByUser(id.id);

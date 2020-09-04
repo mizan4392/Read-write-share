@@ -23,7 +23,7 @@ function MiniProfile() {
             history.push(ROUTES.PROFILE);
           }}
         >
-          {user?.fullName}
+          {user.fullName}
         </a>
         <br></br>
         <Rate allowHalf defaultValue={2.5} disabled />

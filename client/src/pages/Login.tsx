@@ -56,8 +56,9 @@ function Login() {
       if (loginRes?.success) {
         openNotificationWithIcon("success", "Login SuccessFull", "");
         history.push("/");
+        window.location.reload();
       } else {
-        openNotificationWithIcon("success", loginRes?.msg, "");
+        openNotificationWithIcon("error", loginRes?.msg, "");
       }
       setLoginRes(null);
     }

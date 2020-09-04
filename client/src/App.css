@@ -10,3 +10,7 @@
 .btn-non-boder {
   border: none;
 }
+
+.sun-editor .se-resizing-bar {
+  display: none;
+}

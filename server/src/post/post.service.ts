@@ -24,6 +24,13 @@ export class PostService {
     }
   }
 
+  fetchAllPost() {
+    return this.postRipo.find({
+      relations: ['user'],
+      order: { createdAt: 'DESC' },
+    });
+  }
+
   getPostByUser(userId) {
     return this.postRipo.find({ where: { user: userId } });
   }
