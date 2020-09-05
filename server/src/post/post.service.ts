@@ -41,4 +41,13 @@ export class PostService {
   updateUser(postId, data) {
     return this.postRipo.update({ id: postId }, data);
   }
+
+  async getPostForUser(data) {
+    let id = data.userId;
+
+    return this.postRipo.find({
+      relations: ['user', 'likes', 'likes.user', 'likes.post'],
+      order: { createdAt: 'DESC' },
+    });
+  }
 }

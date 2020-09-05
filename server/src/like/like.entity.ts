@@ -18,7 +18,13 @@ export class Likes extends BaseEntity {
   @ManyToOne(type => User)
   user: User;
 
-  @ManyToOne(type => Posts)
+  // @ManyToOne(type => Posts)
+  // post: Posts;
+
+  @ManyToOne(
+    type => Posts,
+    user => user.likes,
+  )
   post: Posts;
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })

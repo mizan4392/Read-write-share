@@ -1,6 +1,6 @@
 import { thunk, Action, Thunk, action, Actions } from "easy-peasy";
 
-import { createPost, fetchAllPost } from "../services/post";
+import { createPost, fetchAllPost, fetchLoginUserPost } from "../services/post";
 
 export interface PostState {
   createDia: boolean;
@@ -17,6 +17,8 @@ export interface PostState {
   setAllPostLoading: Action<PostState, any>;
   fetchAllPost: Thunk<PostState, any>;
   setAllPosts: Action<PostState, any>;
+
+  getPostForLoggedInUser: Thunk<PostState, any>;
 }
 
 export const postState: PostState = {
@@ -61,5 +63,16 @@ export const postState: PostState = {
   }),
   setAllPostLoading: action((state, payload) => {
     state.allPostLoading = payload;
+  }),
+  getPostForLoggedInUser: thunk(async (actions, payload) => {
+    // actions.setAllPostLoading(true);
+    const res = await fetchLoginUserPost(payload);
+    if (res.status === 200 || res.status === 201) {
+      const data = await res.json();
+      // actions.setAllPostLoading(false);
+      actions.setAllPosts(data);
+    } else {
+      // actions.setAllPostLoading(false);
+    }
   }),
 };

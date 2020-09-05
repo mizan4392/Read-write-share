@@ -7,3 +7,6 @@ export const createPost = (payload) => {
 export const fetchAllPost = () => {
   return get("/post/all");
 };
+export const fetchLoginUserPost = (payload) => {
+  return post("/post/user", payload);
+};
