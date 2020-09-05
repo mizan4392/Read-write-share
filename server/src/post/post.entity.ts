@@ -4,9 +4,10 @@ import {
   PrimaryGeneratedColumn,
   Column,
   ManyToOne,
+  OneToMany,
 } from 'typeorm';
 import { User } from 'src/user/user.entity';
-
+import { Likes } from 'src/like/like.entity';
 @Entity()
 export class Posts extends BaseEntity {
   @PrimaryGeneratedColumn()
@@ -26,4 +27,10 @@ export class Posts extends BaseEntity {
 
   @Column({ type: 'timestamp', nullable: true })
   updatedAt: string;
+
+  @OneToMany(
+    type => Likes,
+    l => l.post,
+  )
+  likes: Likes[];
 }

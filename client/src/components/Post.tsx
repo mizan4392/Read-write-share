@@ -24,6 +24,7 @@ import {
   CommentOutlined,
   SendOutlined,
   SaveOutlined,
+  HeartFilled,
 } from "@ant-design/icons";
 import { useStoreActions, useStoreState } from "../hooks/easyPeasy";
 import SunEditor from "suneditor-react";
@@ -79,11 +80,70 @@ function Post() {
   const fetchAllPost = useStoreActions((action) => action.post.fetchAllPost);
   const allPostLoading = useStoreState((state) => state.post.allPostLoading);
   const allPosts = useStoreState((state) => state.post.allPosts);
+
+  const getPostForLoggedInUser = useStoreActions(
+    (action) => action.post.getPostForLoggedInUser
+  );
+
+  const user: any = useStoreState((state) => state.auth.user);
+
+  const postLike = useStoreActions((action) => action.like.postLike);
+  const setLikeRes = useStoreActions((action) => action.like.setLikeRes);
+  const likeLoading = useStoreState((state) => state.like.likeLoading);
+  const likeRes = useStoreState((state) => state.like.likeRes);
+
   useEffect(() => {
-    fetchAllPost();
-  }, [fetchAllPost]);
+    if (likeRes) {
+      const data: any = {
+        userId: user?.id,
+      };
+      getPostForLoggedInUser(data);
+      setLikeRes(false);
+    }
+  }, [likeRes]);
+
+  useEffect(() => {
+    if (user) {
+      const data: any = {
+        userId: user?.id,
+      };
+      getPostForLoggedInUser(data);
+    } else {
+      fetchAllPost();
+    }
+  }, [user]);
+
+  function onLike(data) {
+    let liked = false;
+    data?.likes?.map((l) => {
+      if (l?.post?.id === data?.id) {
+        if (l.user.id === user?.id) {
+          liked = true;
+        }
+      }
+    });
+
+    if (!liked) {
+      const postData: any = {
+        user: user?.id,
+        post: data?.id,
+      };
+
+      postLike(postData);
+    }
+  }
   dayjs.extend(relativeTime);
   const renderCard = allPosts?.map((post) => {
+    let totalLike = post?.likes?.length;
+    let liked = false;
+    post?.likes?.map((l) => {
+      if (l?.post?.id === post?.id) {
+        if (l.user.id === user?.id) {
+          liked = true;
+        }
+      }
+    });
+
     return (
       <Card
         title={
@@ -105,7 +165,7 @@ function Post() {
           </a>
         }
         style={{ marginBottom: "15px" }}
-        key={post}
+        key={post.id}
         actions={[
           <Input
             placeholder="Post a comment"
@@ -127,7 +187,19 @@ function Post() {
             <Tooltip title="Love">
               <Button
                 // className={classes.btnBorder}
-                icon={<HeartOutlined />}
+                icon={
+                  liked ? (
+                    <HeartFilled
+                      style={{ color: "red", textAlign: "center" }}
+                    />
+                  ) : (
+                    <HeartOutlined />
+                  )
+                }
+                onClick={() => onLike(post)}
+                loading={
+                  likeLoading ? (likeLoading === post.id ? true : false) : false
+                }
               ></Button>
             </Tooltip>
             <Tooltip title="Comment">
@@ -152,7 +224,7 @@ function Post() {
             </Tooltip>
           </div>
         </div>
-        <strong style={{ paddingLeft: "10px" }}> 10 likes</strong>
+        <strong style={{ paddingLeft: "10px" }}>{totalLike} likes</strong>
       </Card>
     );
   });
