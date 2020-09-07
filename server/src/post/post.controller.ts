@@ -8,9 +8,12 @@ import {
   Param,
   Delete,
   Patch,
+  UseGuards,
+  Req,
 } from '@nestjs/common';
 import { PostService } from './post.service';
 import { PostDto } from './post.dto';
+import { JwtAuthGuard } from 'src/auth/jwt_auth.guard';
 
 @Controller('post')
 export class PostController {
@@ -25,6 +28,12 @@ export class PostController {
   @Post('user')
   getPostForUser(@Body() body) {
     return this.postService.getPostForUser(body);
+  }
+
+  @Get('user')
+  @UseGuards(JwtAuthGuard)
+  fetchUserPosts(@Req() req) {
+    return this.postService.fetchUserPosts(req.user.id);
   }
 
   @Get('all')

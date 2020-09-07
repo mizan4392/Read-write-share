@@ -28,6 +28,7 @@ import {
 } from "@ant-design/icons";
 import { useStoreActions, useStoreState } from "../hooks/easyPeasy";
 import SunEditor from "suneditor-react";
+import { openNotificationWithIcon } from "./Notificarion.component";
 
 const { TextArea } = Input;
 const { Meta } = Card;
@@ -87,10 +88,11 @@ function Post() {
 
   const user: any = useStoreState((state) => state.auth.user);
 
-  const postLike = useStoreActions((action) => action.like.postLike);
-  const setLikeRes = useStoreActions((action) => action.like.setLikeRes);
-  const likeLoading = useStoreState((state) => state.like.likeLoading);
-  const likeRes = useStoreState((state) => state.like.likeRes);
+  const { postLike, setLikeRes } = useStoreActions((action) => action.like);
+  const { likeLoading, likeRes }: any = useStoreState((state) => state.like);
+
+  const { postSaveData, setSaveRes } = useStoreActions((action) => action.save);
+  const { saveLoading, saveRes }: any = useStoreState((state) => state.save);
 
   useEffect(() => {
     if (likeRes) {
@@ -101,6 +103,13 @@ function Post() {
       setLikeRes(false);
     }
   }, [likeRes]);
+
+  useEffect(() => {
+    if (saveRes) {
+      setSaveRes(false);
+      openNotificationWithIcon("success", "Post Saved on your TimeLine", "");
+    }
+  }, [saveRes]);
 
   useEffect(() => {
     if (user) {
@@ -132,6 +141,15 @@ function Post() {
       postLike(postData);
     }
   }
+
+  function onSavePost(post) {
+    const postData: any = {
+      user: user?.id,
+      post: post?.id,
+    };
+    postSaveData(postData);
+  }
+
   dayjs.extend(relativeTime);
   const renderCard = allPosts?.map((post) => {
     let totalLike = post?.likes?.length;
@@ -220,6 +238,10 @@ function Post() {
               <Button
                 // className={classes.btnBorder}
                 icon={<SaveOutlined />}
+                onClick={() => onSavePost(post)}
+                loading={
+                  saveLoading ? (saveLoading === post.id ? true : false) : false
+                }
               ></Button>
             </Tooltip>
           </div>
