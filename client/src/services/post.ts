@@ -10,3 +10,6 @@ export const fetchAllPost = () => {
 export const fetchLoginUserPost = (payload) => {
   return post("/post/user", payload);
 };
+export const fetchUserPosts = () => {
+  return get("/post/user");
+};

@@ -50,4 +50,12 @@ export class PostService {
       order: { createdAt: 'DESC' },
     });
   }
+
+  async fetchUserPosts(userId) {
+    return this.postRipo.find({
+      where: { user: userId },
+      relations: ['user', 'likes', 'likes.user'],
+      order: { createdAt: 'DESC' },
+    });
+  }
 }

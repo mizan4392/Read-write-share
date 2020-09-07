@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useEffect } from "react";
 import {
   Container,
   Grid,
@@ -22,7 +22,9 @@ import { withRouter } from "react-router-dom";
 import CameraAltIcon from "@material-ui/icons/CameraAlt";
 import Rating from "@material-ui/lab/Rating";
 
-import { useStoreState } from "../hooks/easyPeasy";
+import { useStoreState, useStoreActions } from "../hooks/easyPeasy";
+import UserPosts from "../components/userPosts.component";
+import SavedPost from "./SavedPost.page";
 
 const { TabPane } = Tabs;
 
@@ -82,7 +84,21 @@ const styles = (theme) => ({
 
 function Profile(props) {
   const user = useStoreState((state) => state.auth.user);
+  const fetchUserPosts = useStoreActions(
+    (action) => action.post.fetchUserPosts
+  );
+
+  const { fetchUserSavedPosts } = useStoreActions((action) => action.save);
   const { classes } = props;
+
+  useEffect(() => {
+    fetchUserPosts();
+  }, []);
+
+  function onTabChange(key) {
+    if (key === "4") {
+    }
+  }
   return (
     <div className={classes.root}>
       <Container>
@@ -153,15 +169,18 @@ function Profile(props) {
           </Grid>
           <Grid item xs={12} sm={8}>
             <Paper square>
-              <Tabs defaultActiveKey="1">
-                <TabPane tab="YOUR POST" key="1">
-                  {/* <Post /> */}
+              <Tabs defaultActiveKey="1" onChange={onTabChange}>
+                <TabPane tab="POST" key="1">
+                  <UserPosts />
                 </TabPane>
-                <TabPane tab="YOUR EVENTS" key="2">
+                <TabPane tab="EVENTS" key="2">
                   Content of Tab Pane 2
                 </TabPane>
-                <TabPane tab="YOUR SHARE" key="3">
+                <TabPane tab="SHARED" key="3">
                   Content of Tab Pane 3
+                </TabPane>
+                <TabPane tab="Saved" key="4">
+                  <SavedPost />
                 </TabPane>
               </Tabs>
             </Paper>

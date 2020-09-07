@@ -18,6 +18,7 @@ import { EventsController } from './events/events.controller';
 import { EventsModule } from './events/events.module';
 import { FollowersController } from './followers/followers.controller';
 import { FollowersModule } from './followers/followers.module';
+import { SaveModule } from './save/save.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { FollowersModule } from './followers/followers.module';
     ReplyCommentModule,
     EventsModule,
     FollowersModule,
+    SaveModule,
   ],
   controllers: [AppController],
   providers: [AppService],
