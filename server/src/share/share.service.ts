@@ -2,18 +2,19 @@ import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { Repository } from 'typeorm';
-import { Save } from './save.entity';
+
+import { Share } from './share.entity';
 
 @Injectable()
-export class SaveService {
-  constructor(@InjectRepository(Save) private saveRipo: Repository<Save>) {}
+export class ShareService {
+  constructor(@InjectRepository(Share) private shareRipo: Repository<Share>) {}
 
-  postSave(data) {
-    return this.saveRipo.save<Save>(data);
+  postShare(data) {
+    return this.shareRipo.save<Share>(data);
   }
 
-  getSavedPost(id) {
-    return this.saveRipo.find({
+  getSharedPost(id) {
+    return this.shareRipo.find({
       where: { user: id },
       relations: ['user', 'post', 'post.likes', 'post.user'],
     });

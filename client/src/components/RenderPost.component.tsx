@@ -78,6 +78,8 @@ interface PostProps {
   totalLike: number;
 }
 function RenderPost(props: PostProps) {
+  const { tabeKey } = useStoreState((state) => state.misc);
+
   return (
     <Card
       title={
@@ -100,75 +102,71 @@ function RenderPost(props: PostProps) {
       }
       style={{ marginBottom: "15px" }}
       key={props.post?.id}
-      actions={[
-        <Input
-          placeholder="Post a comment"
-          addonAfter={<Typography>Post</Typography>}
-          style={{ padding: "10px" }}
-        ></Input>,
-      ]}
+      actions={
+        tabeKey === "4"
+          ? []
+          : [
+              <Input
+                placeholder="Post a comment"
+                addonAfter={<Typography>Post</Typography>}
+                style={{ padding: "10px" }}
+              ></Input>,
+            ]
+      }
     >
       {ReactHtmlParser(props.post?.body)}
 
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          marginTop: "6%",
-        }}
-      >
-        <Space size="middle">
-          <Tooltip title="Love">
-            <Button
-              // className={classes.btnBorder}
-              icon={
-                props.liked ? (
-                  <HeartFilled style={{ color: "red", textAlign: "center" }} />
-                ) : (
-                  <HeartOutlined />
-                )
-              }
-              onClick={() => props.onLike(props.post)}
-              loading={
-                props.likeLoading
-                  ? props.likeLoading === props.post?.id
-                    ? true
-                    : false
-                  : false
-              }
-            ></Button>
-          </Tooltip>
-          <Tooltip title="Comment">
-            <Button
-              // className={classes.btnBorder}
-              icon={<CommentOutlined />}
-            ></Button>
-          </Tooltip>
-          <Tooltip title="Share">
-            <Button
-              // className={classes.btnBorder}
-              icon={<SendOutlined />}
-            ></Button>
-          </Tooltip>
-        </Space>
-        {/* <div>
-          <Tooltip title="Save">
-            <Button
-              // className={classes.btnBorder}
-              icon={<SaveOutlined />}
-              onClick={() => props.onSavePost(props?.post)}
-              loading={
-                props?.saveLoading
-                  ? props.saveLoading === props?.post.id
-                    ? true
-                    : false
-                  : false
-              }
-            ></Button>
-          </Tooltip>
-        </div> */}
-      </div>
-      <strong style={{ paddingLeft: "10px" }}>{props.totalLike} likes</strong>
+      {tabeKey === "4" ? null : (
+        <>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              marginTop: "6%",
+            }}
+          >
+            <Space size="middle">
+              <Tooltip title="Love">
+                <Button
+                  // className={classes.btnBorder}
+                  icon={
+                    props.liked ? (
+                      <HeartFilled
+                        style={{ color: "red", textAlign: "center" }}
+                      />
+                    ) : (
+                      <HeartOutlined />
+                    )
+                  }
+                  onClick={() => props.onLike(props.post)}
+                  loading={
+                    props.likeLoading
+                      ? props.likeLoading === props.post?.id
+                        ? true
+                        : false
+                      : false
+                  }
+                ></Button>
+              </Tooltip>
+              <Tooltip title="Comment">
+                <Button
+                  // className={classes.btnBorder}
+                  icon={<CommentOutlined />}
+                ></Button>
+              </Tooltip>
+              <Tooltip title="Share">
+                <Button
+                  // className={classes.btnBorder}
+                  icon={<SendOutlined />}
+                ></Button>
+              </Tooltip>
+            </Space>
+          </div>
+          <strong style={{ paddingLeft: "10px" }}>
+            {props.totalLike} likes
+          </strong>
+        </>
+      )}
     </Card>
   );
 }

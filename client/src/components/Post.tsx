@@ -94,6 +94,11 @@ function Post() {
   const { postSaveData, setSaveRes } = useStoreActions((action) => action.save);
   const { saveLoading, saveRes }: any = useStoreState((state) => state.save);
 
+  const { postShareData, setshareRes } = useStoreActions(
+    (action) => action.share
+  );
+  const { shareLoading, shareRes }: any = useStoreState((state) => state.share);
+
   useEffect(() => {
     if (likeRes) {
       const data: any = {
@@ -107,9 +112,26 @@ function Post() {
   useEffect(() => {
     if (saveRes) {
       setSaveRes(false);
-      openNotificationWithIcon("success", "Post Saved on your TimeLine", "");
+      openNotificationWithIcon(
+        "success",
+        "Post Saved on your TimeLine",
+        "You can always find your saved post on your timeline until the creator delete it"
+      );
+      setSaveRes(false);
     }
   }, [saveRes]);
+
+  useEffect(() => {
+    if (shareRes) {
+      setshareRes(false);
+      openNotificationWithIcon(
+        "success",
+        "Post Shared SuccessFully",
+        "You can always find your shared post on your timeline  until the creator delete it"
+      );
+      setshareRes(false);
+    }
+  }, [shareRes]);
 
   useEffect(() => {
     if (user) {
@@ -148,6 +170,14 @@ function Post() {
       post: post?.id,
     };
     postSaveData(postData);
+  }
+
+  function onSharePost(post) {
+    const postData: any = {
+      user: user?.id,
+      post: post?.id,
+    };
+    postShareData(postData);
   }
 
   dayjs.extend(relativeTime);
@@ -230,6 +260,10 @@ function Post() {
               <Button
                 // className={classes.btnBorder}
                 icon={<SendOutlined />}
+                onClick={() => onSharePost(post)}
+                loading={
+                  saveLoading ? (saveLoading === post.id ? true : false) : false
+                }
               ></Button>
             </Tooltip>
           </Space>
