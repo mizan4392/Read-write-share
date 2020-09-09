@@ -10,6 +10,8 @@ export interface SaveState {
   setSaveLoading: Action<SaveState, any>;
 
   saveedPost: any;
+  saveedPostLoading: boolean;
+  setSaveedPostLoading: Action<SaveState, any>;
   setSaveedPost: Action<SaveState, any>;
   fetchSavedPost: Thunk<SaveState, any>;
 }
@@ -38,13 +40,19 @@ export const saveState: SaveState = {
     state.saveedPost = payload;
   }),
   fetchSavedPost: thunk(async (actions, payload) => {
-    actions.setSaveLoading(payload.id);
+    actions.setSaveedPostLoading(true);
     const res = await fetchSavedPost();
     if (res.status === 200 || res.status === 201) {
-      actions.setSaveLoading(false);
+      const data = await res.json();
+      actions.setSaveedPost(data);
+      actions.setSaveedPostLoading(false);
       actions.setSaveRes(true);
     } else {
-      actions.setSaveLoading(false);
+      actions.setSaveedPostLoading(false);
     }
+  }),
+  saveedPostLoading: false,
+  setSaveedPostLoading: action((state, payload) => {
+    state.saveedPostLoading = payload;
   }),
 };

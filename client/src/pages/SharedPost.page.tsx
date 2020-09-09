@@ -2,37 +2,34 @@ import React, { useEffect, useState } from "react";
 import RenderPost from "../components/RenderPost.component";
 import { useStoreActions, useStoreState } from "../hooks/easyPeasy";
 import { Spin } from "antd";
-export default function SavedPost() {
-  const { saveedPost, saveedPostLoading } = useStoreState(
-    (state) => state.save
-  );
+export default function SharedPost() {
+  const { shareedPost, shareLoading } = useStoreState((state) => state.share);
   const { user } = useStoreState((state) => state.auth);
 
-  const [savedPosts, setSavedPosts] = useState<any>([]);
+  const [sharedPosts, setSharedPosts] = useState<any>([]);
 
   useEffect(() => {
     generatePostData();
-  }, [saveedPost]);
+  }, [shareedPost]);
 
   function generatePostData() {
     let post: any = [];
 
-    saveedPost?.map((p) => {
+    shareedPost?.map((p) => {
       let data = {
         ...p.post,
       };
-
       post.push(data);
     });
-    setSavedPosts(post);
+    setSharedPosts(post);
   }
 
-  return saveedPostLoading ? (
+  return shareLoading ? (
     <div style={{ textAlign: "center" }}>
       <Spin />
     </div>
   ) : (
-    savedPosts?.map((post) => {
+    sharedPosts?.map((post) => {
       let totalLike = post?.likes?.length;
       let liked = false;
       post?.likes?.map((l) => {

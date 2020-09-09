@@ -11,7 +11,7 @@ import { type } from 'os';
 import { Posts } from 'src/post/post.entity';
 
 @Entity()
-export class Save extends BaseEntity {
+export class Share extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 

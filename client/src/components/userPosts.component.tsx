@@ -49,6 +49,7 @@ export default function UserPosts() {
           liked={liked}
           onLike={(data) => onLike(data)}
           likeLoading={likeLoading}
+          key={post.id}
         />
       );
     })

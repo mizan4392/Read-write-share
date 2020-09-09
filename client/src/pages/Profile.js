@@ -25,6 +25,7 @@ import Rating from "@material-ui/lab/Rating";
 import { useStoreState, useStoreActions } from "../hooks/easyPeasy";
 import UserPosts from "../components/userPosts.component";
 import SavedPost from "./SavedPost.page";
+import SharedPost from "./SharedPost.page";
 
 const { TabPane } = Tabs;
 
@@ -88,7 +89,9 @@ function Profile(props) {
     (action) => action.post.fetchUserPosts
   );
 
-  const { fetchUserSavedPosts } = useStoreActions((action) => action.save);
+  const { fetchSavedPost } = useStoreActions((action) => action.save);
+  const { fetchshareedPost } = useStoreActions((action) => action.share);
+  const { setTabKey } = useStoreActions((action) => action.misc);
   const { classes } = props;
 
   useEffect(() => {
@@ -96,7 +99,12 @@ function Profile(props) {
   }, []);
 
   function onTabChange(key) {
+    setTabKey(key);
     if (key === "4") {
+      fetchSavedPost();
+    }
+    if (key === "3") {
+      fetchshareedPost();
     }
   }
   return (
@@ -168,22 +176,25 @@ function Profile(props) {
             </div>
           </Grid>
           <Grid item xs={12} sm={8}>
-            <Paper square>
-              <Tabs defaultActiveKey="1" onChange={onTabChange}>
-                <TabPane tab="POST" key="1">
-                  <UserPosts />
-                </TabPane>
-                <TabPane tab="EVENTS" key="2">
-                  Content of Tab Pane 2
-                </TabPane>
-                <TabPane tab="SHARED" key="3">
-                  Content of Tab Pane 3
-                </TabPane>
-                <TabPane tab="Saved" key="4">
-                  <SavedPost />
-                </TabPane>
-              </Tabs>
-            </Paper>
+            <Tabs
+              defaultActiveKey="1"
+              onChange={onTabChange}
+              style={{ padding: "10px" }}
+              type="card"
+            >
+              <TabPane tab="POST" key="1">
+                <UserPosts />
+              </TabPane>
+              <TabPane tab="EVENTS" key="2">
+                Content of Tab Pane 2
+              </TabPane>
+              <TabPane tab="SHARED" key="3">
+                <SharedPost />
+              </TabPane>
+              <TabPane tab="Saved" key="4">
+                <SavedPost />
+              </TabPane>
+            </Tabs>
           </Grid>
         </Grid>
       </Container>
