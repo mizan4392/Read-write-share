@@ -8,10 +8,11 @@ import {
 import { User } from 'src/user/user.entity';
 
 export enum EventType {
-  CONTRIBUTE = 'CONTRIBUTE',
-  SELL = 'SELL',
-  OPEN_GIFT = 'OPEN_GIFT',
-  BORROW = 'BORROW',
+  Sell = 'Sell',
+  Borrow = 'Borrow',
+  Gift = 'Gift',
+  Donate = 'Donate',
+  Request = 'Request',
 }
 
 @Entity()
@@ -23,24 +24,21 @@ export class Events extends BaseEntity {
   title: string;
 
   @Column({ type: 'longtext', nullable: true })
-  shortDescription: string;
-
-  @Column({ type: 'longtext', nullable: true })
-  body: string;
+  des: string;
 
   @Column({ type: 'enum', enum: EventType })
   eventType: string;
 
-  @Column({ type: 'boolean' })
+  @Column({ type: 'boolean', nullable: true })
   active: boolean;
 
-  @Column({ type: 'boolean' })
+  @Column({ type: 'boolean', nullable: true })
   accept: boolean;
 
-  @Column({ type: 'longtext' })
+  @Column({ type: 'longtext', nullable: true })
   coverUrl: string;
 
-  @Column({ type: 'longtext' })
+  @Column({ type: 'longtext', nullable: true })
   profileUrl: string;
 
   @Column({ type: 'timestamp', nullable: true })

@@ -1,13 +1,15 @@
 import React from "react";
-import Post from "../components/Post.tsx";
+
 import MiniProfile from "../components/MiniProfile";
 import SuggestedFollower from "../components/SuggestedFollower";
 import SuggestedEvent from "../components/SuggestedEvent";
-import CreateEvent from "../components/modal/CreateEvent.component";
+
 import CreatePost from "../components/modal/CreatePost.component";
 import { useStoreState } from "../hooks/easyPeasy";
 import { Card, Space, Button } from "antd";
 import { useHistory } from "react-router-dom";
+import Post from "../components/Post";
+import CreateEvent from "../components/modal/CreateEvent.component";
 export default function Home() {
   const user = useStoreState((state) => state.auth.user);
 
