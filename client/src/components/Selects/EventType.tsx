@@ -16,25 +16,35 @@ export const eventType = [
   },
   {
     id: 4,
-    name: "request",
+    name: "Gift",
+  },
+  {
+    id: 5,
+    name: "Request",
   },
 ];
 
-export default function EventType() {
-  function onChange() {}
+class EventProps {
+  onChange: Function;
+}
+
+export default function EventType({ onChange }: EventProps) {
+  function onEventChangeChange(evntName) {
+    onChange(evntName);
+  }
   return (
     <Select
       showSearch
       style={{ width: 200 }}
       placeholder="Select a event type"
-      onChange={onChange}
+      onChange={onEventChangeChange}
       filterOption={(input, option: any) =>
         option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
       }
     >
       {eventType.map((ev) => {
         return (
-          <Option value={ev.id} key={ev.id}>
+          <Option value={ev.name} key={ev.id}>
             {ev.name}
           </Option>
         );

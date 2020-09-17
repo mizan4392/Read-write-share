@@ -4,18 +4,14 @@ export class EventsDto {
   @IsNotEmpty()
   title: string;
 
-  shortDescription: string;
-
   @IsNotEmpty()
-  body: string;
+  des: string;
 
   @IsNotEmpty()
   eventType: string;
 
-  @IsNotEmpty()
   active: boolean;
 
-  @IsNotEmpty()
   accept: boolean;
 
   coverUrl: string;

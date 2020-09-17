@@ -1,40 +1,43 @@
 import { thunk, Action, Thunk, action, Actions } from "easy-peasy";
 
-import { createPost } from "../services/post";
+import { postEvent } from "../services/event";
 
 export interface EventState {
-  createDia: boolean;
-  setCreatePostDia: Action<EventState>;
+  eventDia: boolean;
+  setEventDia: Action<EventState>;
 
-  postRes: boolean;
-  postLoading: boolean;
-  setPostLoading: Action<EventState, any>;
-  createPost: Thunk<EventState, any>;
-  setPostRes: Action<EventState, any>;
+  postEvtRes: boolean;
+  postEvtLod: boolean;
+  setEvtRes: Action<EventState, any>;
+  setEvtLod: Action<EventState, any>;
+  postEvent: Thunk<EventState, any>;
 }
 
 export const eventState: EventState = {
-  createDia: false,
-  setCreatePostDia: action((state) => {
-    state.createDia = !state.createDia;
+  eventDia: false,
+  setEventDia: action((state) => {
+    state.eventDia = !state.eventDia;
   }),
+  postEvtRes: false,
+  postEvtLod: false,
+  setEvtRes: action((state, payload) => {
+    state.postEvtRes = payload;
+  }),
+  setEvtLod: action((state, payload) => {
+    state.postEvtLod = payload;
+  }),
+  postEvent: thunk(async (actions, payload) => {
+    actions.setEvtLod(true);
+    const res = await postEvent(payload);
 
-  postRes: false,
-  postLoading: false,
-  createPost: thunk(async (actions, payload) => {
-    actions.setPostLoading(true);
-    const res = await createPost(payload);
     if (res.status === 200 || res.status === 201) {
-      actions.setPostLoading(false);
-      actions.setPostRes(true);
+      actions.setEvtLod(false);
+      actions.setEvtRes(true);
     } else {
-      actions.setPostLoading(false);
+      const data = await res.json();
+
+      console.log(data);
+      actions.setEvtLod(false);
     }
-  }),
-  setPostRes: action((state, payload) => {
-    state.postRes = payload;
-  }),
-  setPostLoading: action((state, payload) => {
-    state.postLoading = payload;
   }),
 };

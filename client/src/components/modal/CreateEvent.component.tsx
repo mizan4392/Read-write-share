@@ -1,33 +1,58 @@
-import React, { Component } from "react";
+import React, { Component, useEffect } from "react";
 import { Modal, Input, Form, DatePicker } from "antd";
 import SunEditor, { buttonList } from "suneditor-react";
 
-import EventType from "../Selects/EventType.tsx";
 import moment from "moment";
 import ReactTagInput from "@pathofdev/react-tag-input";
+import EventType from "../Selects/EventType";
+import { useStoreActions, useStoreState } from "../../hooks/easyPeasy";
+import { openNotificationWithIcon } from "../../components/Notificarion.component";
 
 export default function CreateEvent() {
   const [form] = Form.useForm();
 
-  function onFinish(value) {}
+  const { eventDia, postEvtLod, postEvtRes } = useStoreState(
+    (state) => state.event
+  );
+  const user = useStoreState((state) => state.auth.user);
+  const { setEventDia, postEvent, setEvtRes } = useStoreActions(
+    (state) => state.event
+  );
+
+  useEffect(() => {
+    if (postEvtRes) {
+      openNotificationWithIcon("success", "Event created Successfully");
+      setEvtRes(false);
+      setEventDia();
+      form.resetFields();
+    }
+  }, [postEvtRes]);
+
+  function onFinish(value) {
+    value.user = user?.id;
+    postEvent(value);
+  }
   function disabledDate(current) {
     // Can not select days before today and today
     return current && current < moment().endOf("day");
   }
 
-  function onOk() {}
-  function onCancel() {}
+  function onCancel() {
+    setEventDia();
+    form.resetFields();
+  }
 
   return (
     <Modal
-      // visible={createEventDia ? createEventDia : false}
+      visible={eventDia}
       title="Create Event"
       width="60%"
       okText="Create"
-      onOk={() => onOk()}
       onCancel={() => onCancel()}
+      okButtonProps={{ form: "create-event", htmlType: "submit" }}
+      confirmLoading={postEvtLod}
     >
-      <Form layout="vertical" onFinish={onFinish} form={form}>
+      <Form layout="vertical" form={form} onFinish={onFinish} id="create-event">
         <Form.Item
           label="Title:"
           name="title"
@@ -52,17 +77,15 @@ export default function CreateEvent() {
         <Form.Item
           label="Event Type:"
           name="eventType"
-          rules={[
-            { required: true, message: "Please write event description" },
-          ]}
+          rules={[{ required: true, message: "Please select event Type" }]}
           style={{ marginTop: "10px" }}
         >
-          <EventType />
+          <EventType onChange={() => {}} />
         </Form.Item>
 
         <Form.Item
           label="Event Expired Date:"
-          name="expDate"
+          name="endDate"
           rules={[
             { required: true, message: "Please write event description" },
           ]}

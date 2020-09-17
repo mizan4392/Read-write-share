@@ -55,6 +55,7 @@ function Navigation(props: any) {
   const setCreatePostDia = useStoreActions(
     (state) => state.post.setCreatePostDia
   );
+  const setEventDia = useStoreActions((state) => state.event.setEventDia);
 
   const history = useHistory();
 
@@ -249,10 +250,7 @@ function Navigation(props: any) {
           <Typography>Post</Typography>
         </Space>
       </List.Item>
-      <List.Item
-        //   onClick={() => this.props.createEventModal(true)}
-        style={{ cursor: "pointer" }}
-      >
+      <List.Item onClick={() => setEventDia()} style={{ cursor: "pointer" }}>
         <Space size="small" direction="horizontal">
           <PlusOutlined />
           <Typography>Event</Typography>
