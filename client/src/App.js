@@ -18,7 +18,7 @@ function App() {
   }, [getUser]);
 
   return (
-    <div>
+    <div style={{ backgroundColor: "#f5f3f2" }}>
       <Router>
         <RenderView>
           <Route exact path={ROUTES.ROOT} component={withRouter(NewsFeed)} />
@@ -37,7 +37,7 @@ function RenderView(props) {
       <div>
         <Navigation />
       </div>
-      <div style={{ marginTop: "8%" }}>
+      <div style={{ paddingTop: "8%" }}>
         <Container> {props.children}</Container>{" "}
       </div>
     </div>

@@ -102,17 +102,17 @@ function RenderPost(props: PostProps) {
       }
       style={{ marginBottom: "15px" }}
       key={props.post?.id}
-      actions={
-        tabeKey === "4"
-          ? []
-          : [
-              <Input
-                placeholder="Post a comment"
-                addonAfter={<Typography>Post</Typography>}
-                style={{ padding: "10px" }}
-              ></Input>,
-            ]
-      }
+      // actions={
+      //   tabeKey === "4"
+      //     ? []
+      //     : [
+      //         <Input
+      //           placeholder="Post a comment"
+      //           addonAfter={<Typography>Post</Typography>}
+      //           style={{ padding: "10px" }}
+      //         ></Input>,
+      //       ]
+      // }
     >
       {ReactHtmlParser(props.post?.body)}
 
@@ -148,12 +148,12 @@ function RenderPost(props: PostProps) {
                   }
                 ></Button>
               </Tooltip>
-              <Tooltip title="Comment">
+              {/* <Tooltip title="Comment">
                 <Button
                   // className={classes.btnBorder}
                   icon={<CommentOutlined />}
                 ></Button>
-              </Tooltip>
+              </Tooltip> */}
               <Tooltip title="Share">
                 <Button
                   // className={classes.btnBorder}
