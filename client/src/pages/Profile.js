@@ -26,6 +26,7 @@ import { useStoreState, useStoreActions } from "../hooks/easyPeasy";
 import UserPosts from "../components/userPosts.component";
 import SavedPost from "./SavedPost.page";
 import SharedPost from "./SharedPost.page";
+import UserEvent from "./UserEvent";
 
 const { TabPane } = Tabs;
 
@@ -92,6 +93,9 @@ function Profile(props) {
   const { fetchSavedPost } = useStoreActions((action) => action.save);
   const { fetchshareedPost } = useStoreActions((action) => action.share);
   const { setTabKey } = useStoreActions((action) => action.misc);
+  const fetchUserEvent = useStoreActions(
+    (action) => action.event.fetchUserEvent
+  );
   const { classes } = props;
 
   useEffect(() => {
@@ -105,6 +109,9 @@ function Profile(props) {
     }
     if (key === "3") {
       fetchshareedPost();
+    }
+    if (key === "2") {
+      fetchUserEvent();
     }
   }
   return (
@@ -186,7 +193,7 @@ function Profile(props) {
                 <UserPosts />
               </TabPane>
               <TabPane tab="EVENTS" key="2">
-                Content of Tab Pane 2
+                <UserEvent />
               </TabPane>
               <TabPane tab="SHARED" key="3">
                 <SharedPost />

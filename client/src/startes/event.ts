@@ -1,6 +1,6 @@
 import { thunk, Action, Thunk, action, Actions } from "easy-peasy";
 
-import { postEvent } from "../services/event";
+import { postEvent, fetchUserEvent, fetchGlobalEvt } from "../services/event";
 
 export interface EventState {
   eventDia: boolean;
@@ -11,6 +11,14 @@ export interface EventState {
   setEvtRes: Action<EventState, any>;
   setEvtLod: Action<EventState, any>;
   postEvent: Thunk<EventState, any>;
+
+  userEvent: any;
+  userEvtLod: boolean;
+  setUserEvtLod: Action<EventState, any>;
+  fetchUserEvent: Thunk<EventState>;
+  setUserEvent: Action<EventState, any>;
+
+  fetchGlobalEvt: Thunk<EventState>;
 }
 
 export const eventState: EventState = {
@@ -38,6 +46,39 @@ export const eventState: EventState = {
 
       console.log(data);
       actions.setEvtLod(false);
+    }
+  }),
+  userEvent: [],
+  userEvtLod: false,
+  fetchUserEvent: thunk(async (actions) => {
+    actions.setUserEvtLod(true);
+    const res = await fetchUserEvent();
+
+    if (res.status === 200 || res.status === 201) {
+      const data = await res.json();
+      actions.setUserEvtLod(false);
+      actions.setUserEvent(data);
+    } else {
+      actions.setUserEvtLod(false);
+    }
+  }),
+  setUserEvtLod: action((state, payload) => {
+    state.userEvtLod = payload;
+  }),
+  setUserEvent: action((state, payload) => {
+    state.userEvent = payload;
+  }),
+
+  fetchGlobalEvt: thunk(async (actions) => {
+    actions.setUserEvtLod(true);
+    const res = await fetchGlobalEvt();
+
+    if (res.status === 200 || res.status === 201) {
+      const data = await res.json();
+      actions.setUserEvtLod(false);
+      actions.setUserEvent(data);
+    } else {
+      actions.setUserEvtLod(false);
     }
   }),
 };

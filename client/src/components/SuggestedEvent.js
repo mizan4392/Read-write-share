@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Carousel } from "antd";
-import EventView from "./EventView";
+import EventView from "./EventView.tsx";
+
 const contentStyle = {
   height: "160px",
   color: "#fff",
@@ -13,18 +14,38 @@ export default class SuggestedEvent extends Component {
     return (
       <div>
         <p style={{ color: "#cccccc" }}>Suggestions For You(Event)</p>
-        <Carousel autoplay nextArrow>
+        <Carousel autoplay>
           <div>
-            <EventView />
+            <EventView
+              coverUrl="aa"
+              profileUrl="nn"
+              title="My Event 1"
+              des="<p>sdasdfasfasf</p>"
+            />
           </div>
           <div>
-            <EventView />
+            <EventView
+              coverUrl="aa"
+              profileUrl="nn"
+              title="My Event 2"
+              des="<p>sdasdfasfasf</p>"
+            />
           </div>
           <div>
-            <EventView />
+            <EventView
+              coverUrl="aa"
+              profileUrl="nn"
+              title="My Event 3"
+              des="<p>sdasdfasfasf</p>"
+            />
           </div>
           <div>
-            <EventView />
+            <EventView
+              coverUrl="aa"
+              profileUrl="nn"
+              title="My Event 4"
+              des="<p>sdasdfasfasf</p>"
+            />
           </div>
         </Carousel>
       </div>

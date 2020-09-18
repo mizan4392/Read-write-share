@@ -214,13 +214,13 @@ function Post() {
         }
         style={{ marginBottom: "15px" }}
         key={post.id}
-        actions={[
-          <Input
-            placeholder="Post a comment"
-            addonAfter={<Typography>Post</Typography>}
-            style={{ padding: "10px" }}
-          ></Input>,
-        ]}
+        // actions={[
+        //   <Input
+        //     placeholder="Post a comment"
+        //     addonAfter={<Typography>Post</Typography>}
+        //     style={{ padding: "10px" }}
+        //   ></Input>,
+        // ]}
       >
         {ReactHtmlParser(post.body)}
 
@@ -250,12 +250,12 @@ function Post() {
                 }
               ></Button>
             </Tooltip>
-            <Tooltip title="Comment">
+            {/* <Tooltip title="Comment">
               <Button
                 // className={classes.btnBorder}
                 icon={<CommentOutlined />}
               ></Button>
-            </Tooltip>
+            </Tooltip> */}
             <Tooltip title="Share">
               <Button
                 // className={classes.btnBorder}

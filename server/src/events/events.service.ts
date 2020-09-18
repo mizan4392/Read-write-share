@@ -26,4 +26,21 @@ export class EventsService {
   editEvents(eventId, data) {
     return this.eventsRepo.update({ id: eventId }, data);
   }
+
+  async fetchUserEvent(user) {
+    const res = await this.eventsRepo.find({
+      where: { user: user },
+      relations: ['user'],
+    });
+
+    return res;
+  }
+
+  async fetchGlobalEvent(user) {
+    const res = await this.eventsRepo.find({
+      relations: ['user'],
+    });
+
+    return res;
+  }
 }
