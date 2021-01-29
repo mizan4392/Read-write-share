@@ -15,7 +15,7 @@ import CoverPhoto from "../assets/Profile/cover.jpg";
 import CreatePost from "../components/CreatePost";
 import Post from "../components/Post.tsx";
 import { fetchUsersPost } from "../redux/actions/action_fetch";
-import { Tabs } from "antd";
+import { Tabs, Button } from "antd";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
@@ -84,6 +84,11 @@ const styles = (theme) => ({
   },
 });
 
+let profile =
+  "https://www.seekpng.com/png/detail/115-1150053_avatar-png-transparent-png-royalty-free-default-user.png";
+let coverPhoto =
+  "https://i.pinimg.com/originals/55/f4/eb/55f4eb45819c90449bd02f84548104c1.jpg";
+
 function Profile(props) {
   const user = useStoreState((state) => state.auth.user);
   const fetchUserPosts = useStoreActions(
@@ -114,6 +119,7 @@ function Profile(props) {
       fetchUserEvent();
     }
   }
+
   return (
     <div className={classes.root}>
       <Container>
@@ -122,7 +128,11 @@ function Profile(props) {
             <div style={{ position: "relative" }}>
               <div>
                 <img
-                  src={CoverPhoto}
+                  src={
+                    user?.coverPhotoUrl !== null
+                      ? user?.coverPhotoUrl
+                      : coverPhoto
+                  }
                   height="300px"
                   width="100%"
                   style={{
@@ -142,7 +152,7 @@ function Profile(props) {
               <div className={classes.Avatar}>
                 <Avatar
                   alt="Cindy Baker"
-                  src={ProfilePic}
+                  src={user?.photoUrl !== null ? user?.photoUrl : profile}
                   className={classes.large}
                 />
                 <Tooltip title="Uplode Profile Photo">
@@ -181,6 +191,9 @@ function Profile(props) {
                 </div>
               </div>
             </div>
+            <div>
+              <Button type="primary">Update Profile</Button>
+            </div>
           </Grid>
           <Grid item xs={12} sm={8}>
             <Tabs
@@ -199,6 +212,9 @@ function Profile(props) {
                 <SharedPost />
               </TabPane>
               <TabPane tab="Saved" key="4">
+                <SavedPost />
+              </TabPane>
+              <TabPane tab="Responded Event" key="5">
                 <SavedPost />
               </TabPane>
             </Tabs>

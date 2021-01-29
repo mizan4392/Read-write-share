@@ -1,5 +1,5 @@
 import React, { Component, useEffect } from "react";
-import { Modal, Input, Form, DatePicker } from "antd";
+import { Modal, Input, Form, DatePicker, Upload, Button } from "antd";
 import SunEditor, { buttonList } from "suneditor-react";
 
 import moment from "moment";
@@ -8,6 +8,14 @@ import EventType from "../Selects/EventType";
 import { useStoreActions, useStoreState } from "../../hooks/easyPeasy";
 import { openNotificationWithIcon } from "../../components/Notificarion.component";
 
+const props = {
+  name: "file",
+  action: "https://www.mocky.io/v2/5cc8019d300000980a055e76",
+  headers: {
+    authorization: "authorization-text",
+  },
+};
+
 export default function CreateEvent() {
   const [form] = Form.useForm();
 
@@ -15,7 +23,7 @@ export default function CreateEvent() {
     (state) => state.event
   );
   const user = useStoreState((state) => state.auth.user);
-  const { setEventDia, postEvent, setEvtRes } = useStoreActions(
+  const { setEventDia, postEvent, setEvtRes, fetchGlobalEvt } = useStoreActions(
     (state) => state.event
   );
 
@@ -24,12 +32,17 @@ export default function CreateEvent() {
       openNotificationWithIcon("success", "Event created Successfully");
       setEvtRes(false);
       setEventDia();
+      fetchGlobalEvt();
       form.resetFields();
     }
   }, [postEvtRes]);
 
   function onFinish(value) {
     value.user = user?.id;
+    value.coverUrl =
+      "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?ixlib=rb-1.2.1&w=1000&q=80";
+    value.profileUrl =
+      "https://images.unsplash.com/photo-1575709527142-a93ed587bb83?ixlib=rb-1.2.1&w=1000&q=80";
     postEvent(value);
   }
   function disabledDate(current) {
@@ -92,6 +105,26 @@ export default function CreateEvent() {
           style={{ marginTop: "10px" }}
         >
           <DatePicker disabledDate={disabledDate} />
+        </Form.Item>
+
+        <Form.Item
+          label="Event Cover Picture:"
+          name="aa"
+          style={{ marginTop: "10px" }}
+        >
+          <Upload key="1" {...props}>
+            <Button>Click to Profile</Button>
+          </Upload>
+        </Form.Item>
+
+        <Form.Item
+          label="Event Profile Picture:"
+          name="endvvDate"
+          style={{ marginTop: "10px" }}
+        >
+          <Upload key="2" {...props}>
+            <Button>Click to Cover</Button>
+          </Upload>
         </Form.Item>
       </Form>
     </Modal>

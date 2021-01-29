@@ -30,7 +30,6 @@ export class EventsController {
   }
 
   @Get('global')
-  @UseGuards(JwtAuthGuard)
   fetchGlobalEvent(@Req() req) {
     return this.eventsService.fetchGlobalEvent(req.user);
   }

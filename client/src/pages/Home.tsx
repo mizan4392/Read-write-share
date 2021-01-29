@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import MiniProfile from "../components/MiniProfile";
 import SuggestedFollower from "../components/SuggestedFollower";
@@ -17,14 +17,15 @@ const { TabPane } = Tabs;
 
 export default function Home() {
   const user = useStoreState((state) => state.auth.user);
-  const fetchGlobalEvt = useStoreActions(
-    (action) => action.event.fetchGlobalEvt
-  );
+  const { fetchGlobalEvt } = useStoreActions((action) => action.event);
+
+  useEffect(() => {
+    fetchGlobalEvt();
+  }, [fetchGlobalEvt]);
 
   const history = useHistory();
 
   function onTabChange(key) {
-    console.log(key);
     if (key === "2") {
       fetchGlobalEvt();
     }
@@ -37,7 +38,7 @@ export default function Home() {
         <CreatePost />
 
         <h6>Page Mode</h6>
-        <Tabs type="card" onChange={onTabChange}>
+        <Tabs type="card" onChange={onTabChange} defaultActiveKey={"2"}>
           <TabPane key="1" tab="POST">
             <Post />
           </TabPane>

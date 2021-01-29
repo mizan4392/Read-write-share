@@ -71,7 +71,7 @@ export default function CreatePost() {
         >
           <SunEditor
             placeholder="content:"
-            setOptions={{ buttonList: buttonList.formatting }}
+            setOptions={{ buttonList: buttonList.basic }}
             setDefaultStyle="height:auto"
             onChange={(val) => handleChange(val)}
           />

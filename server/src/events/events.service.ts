@@ -31,6 +31,7 @@ export class EventsService {
     const res = await this.eventsRepo.find({
       where: { user: user },
       relations: ['user'],
+      order: { createdAt: 'DESC' },
     });
 
     return res;
@@ -39,7 +40,10 @@ export class EventsService {
   async fetchGlobalEvent(user) {
     const res = await this.eventsRepo.find({
       relations: ['user'],
+      order: { createdAt: 'DESC' },
     });
+
+    console.log(res);
 
     return res;
   }

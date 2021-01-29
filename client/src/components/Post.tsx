@@ -192,11 +192,13 @@ function Post() {
       }
     });
 
+    console.log(post);
+
     return (
       <Card
         title={
           <Meta
-            avatar={<Avatar src={post?.photoUrl} />}
+            avatar={<Avatar src={post?.user?.photoUrl} />}
             title={
               <>
                 <a href="#">{post.user.fullName}</a>
