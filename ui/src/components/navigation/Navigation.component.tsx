@@ -3,10 +3,11 @@ import { EditOutlined, FlagOutlined, LoginOutlined, LogoutOutlined, Notification
 import React from "react";
 import './navigation.css'
 import { NavLink, useHistory } from "react-router-dom";
+import * as ROUTES from '../../utils/routes'
 const { Search } = Input
 interface NavigationProps { }
 
-const user = false
+const user = true
 export const Navigation: React.FC<NavigationProps> = ({ children }) => {
   const history = useHistory()
   return (
@@ -119,8 +120,7 @@ const profilePopover = () => (
         <List.Item>
           <Space size="small" direction="horizontal">
             <UserOutlined />
-
-            <NavLink to={""}>Profile</NavLink>
+            <NavLink to={ROUTES.PROFILE}>Profile</NavLink>
           </Space>
         </List.Item>
         <List.Item>

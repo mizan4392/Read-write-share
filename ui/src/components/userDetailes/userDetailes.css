@@ -1,0 +1,15 @@
+.profile-card{
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+}
+.Avatar{
+    height: 180px;
+    width: 180px;
+    /* position: relative; */
+}
+
+.profilePhotoUplodeLabel {
+  padding: 10px;
+  
+}

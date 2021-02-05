@@ -119,6 +119,7 @@ function Profile(props) {
       <Container>
         <Grid container spacing={2} className={classes.Container}>
           <Grid item xs={12}>
+            
             <div style={{ position: "relative" }}>
               <div>
                 <img
@@ -153,9 +154,11 @@ function Profile(props) {
                 </Tooltip>
               </div>
             </div>
+         
           </Grid>
 
           <Grid item xs={12} sm={4}>
+
             <div style={{ textAlign: "center", color: "black" }}>
               <div style={{ marginTop: "28%" }}>
                 <div>
@@ -181,6 +184,7 @@ function Profile(props) {
                 </div>
               </div>
             </div>
+         
           </Grid>
           <Grid item xs={12} sm={8}>
             <Tabs
