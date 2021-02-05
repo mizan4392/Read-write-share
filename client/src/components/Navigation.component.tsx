@@ -300,46 +300,8 @@ function Navigation(props: any) {
             <div>
               <Search placeholder="Search..." size="small" />
             </div>
-            <div>
-              <div className={classes.sectionDesktop}>
-                <Space direction="horizontal" size="large">
-                  <Tooltip title="Create">
-                    <Popover
-                      content={createPopover()}
-                      placement="bottomLeft"
-                      trigger="click"
-                    >
-                      <PlusOutlined style={{ color: "#000" }} />
-                    </Popover>
-                  </Tooltip>
-                  <Tooltip title="Notification">
-                    <Popover
-                      content={notificationPopover()}
-                      placement="bottomLeft"
-                      trigger="click"
-                    >
-                      <NotificationOutlined style={{ color: "#000" }} />
-                    </Popover>
-                  </Tooltip>
-                  <Tooltip title="user">
-                    <Popover
-                      content={profilePopover()}
-                      placement="bottomLeft"
-                      trigger="click"
-                    >
-                      <Avatar
-                        // src={`${API_BASE}/${userData?.photo}`}
-                        size="large"
-                        style={{ marginRight: 5, cursor: "pointer" }}
-                      />
-                    </Popover>
-                  </Tooltip>
-                </Space>
-              </div>
-              <div className={classes.sectionMobile}>
-                <Button>moreIcon</Button>
-              </div>
-            </div>
+          
+            
             {/* <div style={{ marginRight: "auto" }}>
                 
              
