@@ -1,0 +1,31 @@
+.flex-between{
+    display: flex;
+    justify-content: space-between;
+}
+
+.sectionDesktop{
+    display:block;
+}
+.sectionMobile{
+    display: none
+}
+
+@media screen and (max-width: 480px) and (min-width: 0px) {
+    .sectionMobile {
+        display: block
+    }
+    .sectionDesktop{
+        display: none
+    }
+}
+
+@media screen and (max-width: 768px) and (min-width: 481px) {
+    .sectionMobile {
+        display:block
+    }
+    .sectionDesktop{
+        display:none
+    }
+}
+
+
