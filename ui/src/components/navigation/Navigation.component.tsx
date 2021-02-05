@@ -2,19 +2,20 @@ import { Input, Space, Tooltip, Popover, Avatar, Button, Typography ,List, Divid
 import { EditOutlined, FlagOutlined, LoginOutlined, LogoutOutlined, NotificationOutlined, PlusOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons'
 import React from "react";
 import './navigation.css'
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 const { Search } = Input
 interface NavigationProps { }
 
-const user = true
+const user = false
 export const Navigation: React.FC<NavigationProps> = ({ children }) => {
+  const history = useHistory()
   return (
     <div className="flex-between">
       <div>
         <h4
           className="pointer"
           onClick={() => {
-            // history.push("/");
+            history.push("/");
           }}
         >
           RW&D
@@ -118,22 +119,22 @@ const profilePopover = () => (
         <List.Item>
           <Space size="small" direction="horizontal">
             <UserOutlined />
-            <a>Profile</a>
-            {/* <NavLink to={""}>Profile</NavLink> */}
+
+            <NavLink to={""}>Profile</NavLink>
           </Space>
         </List.Item>
         <List.Item>
           <Space size="small" direction="horizontal">
             <FlagOutlined />
-            <a>Saved</a>
-            {/* <NavLink to={""}>Saved</NavLink> */}
+  
+            <NavLink to={""}>Saved</NavLink>
           </Space>
         </List.Item>
         <List.Item>
           <Space size="small" direction="horizontal">
             <SettingOutlined />
-            <a>Setting</a>
-            {/* <NavLink to={""}>Setting</NavLink> */}
+
+            <NavLink to={""}>Setting</NavLink>
           </Space>
         </List.Item>
         <Divider></Divider>
@@ -165,15 +166,13 @@ const profilePopover = () => (
         <List.Item>
           <Space>
             <LoginOutlined />
-            <a>Login</a>
-            {/* <NavLink to="/login">Login</NavLink> */}
+            <NavLink to="/login">Login</NavLink>
           </Space>
         </List.Item>
         <List.Item>
           <Space>
             <EditOutlined />
-            <a>Signup</a>
-            {/* <NavLink to="/signup">Signup</NavLink> */}
+            <NavLink to="/signup">Signup</NavLink>
           </Space>
         </List.Item>
       </>

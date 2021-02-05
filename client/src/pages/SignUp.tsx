@@ -165,6 +165,7 @@ function Signup() {
           </div>
         </Form>
       </div>
+    
     </Layout>
   );
 }
