@@ -12,6 +12,12 @@ body{
   pointer-events: none;
 }
 
+
+.se-resizing-bar{
+  display:none !important;
+}
+
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;

@@ -19,6 +19,7 @@ export const Home: React.FC = () => {
           <AppRoute />
         </Content>
       </Layout>
+    
     </Router>
   );
 };
