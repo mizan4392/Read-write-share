@@ -4,15 +4,17 @@ import React from "react";
 import './navigation.css'
 import { NavLink, useHistory } from "react-router-dom";
 import * as ROUTES from '../../utils/routes'
-import {useStoreActions,useStoreState} from '../../hooks/easyPeasy'
 import { CreatePost } from "../Create/CreatePost/CreatePost.component";
+import { useStoreState ,useStoreActions} from "../../hooks/easyPeasy";
+
 const { Search } = Input
 interface NavigationProps { }
 
 const user = true
 export const Navigation: React.FC<NavigationProps> = ({ children }) => {
-  // const {setCreatePostDia} = useStoreActions(action=>action.post)
-  // const {createPostDia} = useStoreState(state=>state.post)
+
+  const {setCreatePostDia}  = useStoreActions(state=>state.post)
+  const {createPostDia}  = useStoreState(state=>state.post)
   const history = useHistory()
 
 
@@ -20,7 +22,9 @@ export const Navigation: React.FC<NavigationProps> = ({ children }) => {
     <List itemLayout="horizontal" style={{ width: "150px" }} split={false}>
     <List.Item
       style={{ cursor: "pointer" }}
-      // onClick={() => setCreatePostDia(true)}
+      onClick={() => {
+        console.log("sdfbgdzjshfbvgdhbv->>")
+        setCreatePostDia(true)}}
     >
       <Space size="small" direction="horizontal">
         {/* <PlusOutlined /> */}
@@ -182,7 +186,7 @@ export const Navigation: React.FC<NavigationProps> = ({ children }) => {
         </div>
       </div>
       
-    
+      {createPostDia ? <CreatePost/> : null}
     </div>
   );
 };

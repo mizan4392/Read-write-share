@@ -1,4 +1,4 @@
-import { createStore, Action } from "easy-peasy";
+import { createStore } from "easy-peasy";
 import { postState, PostState } from "../states/post";
 
 export interface StoreModel {
@@ -6,7 +6,8 @@ export interface StoreModel {
 }
 
 export const storeModel1: StoreModel = {
-  post:postState
+    post:postState
 };
+
 
 export const store = createStore(storeModel1);
