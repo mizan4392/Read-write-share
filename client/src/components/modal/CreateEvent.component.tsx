@@ -95,5 +95,6 @@ export default function CreateEvent() {
         </Form.Item>
       </Form>
     </Modal>
+  
   );
 }
