@@ -16,6 +16,7 @@
     "@types/redux": "^3.6.0",
     "antd": "^4.11.2",
     "easy-peasy": "^4.0.1",
+    "moment": "^2.29.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-router-dom": "^5.2.0",

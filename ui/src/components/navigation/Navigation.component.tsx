@@ -1,11 +1,12 @@
-import { Input, Space, Tooltip, Popover, Avatar, Button, Typography ,List, Divider} from "antd";
+import { Input, Space, Tooltip, Popover, Avatar, Button, Typography, List, Divider } from "antd";
 import { EditOutlined, FlagOutlined, LoginOutlined, LogoutOutlined, NotificationOutlined, PlusOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons'
 import React from "react";
 import './navigation.css'
 import { NavLink, useHistory } from "react-router-dom";
 import * as ROUTES from '../../utils/routes'
 import { CreatePost } from "../Create/CreatePost/CreatePost.component";
-import { useStoreState ,useStoreActions} from "../../hooks/easyPeasy";
+import { useStoreState, useStoreActions } from "../../hooks/easyPeasy";
+import CreateEvent from "../Create/CreateEvent/CreateEvent.component";
 
 const { Search } = Input
 interface NavigationProps { }
@@ -13,33 +14,38 @@ interface NavigationProps { }
 const user = true
 export const Navigation: React.FC<NavigationProps> = ({ children }) => {
 
-  const {setCreatePostDia}  = useStoreActions(state=>state.post)
-  const {createPostDia}  = useStoreState(state=>state.post)
+  const { setCreatePostDia } = useStoreActions(state => state.post)
+  const { setCreateEventDia } = useStoreActions(state => state.event)
+  const { createPostDia } = useStoreState(state => state.post)
+  const { createEventDia } = useStoreState(state => state.event)
   const history = useHistory()
 
 
   const createPopover = () => (
     <List itemLayout="horizontal" style={{ width: "150px" }} split={false}>
-    <List.Item
-      style={{ cursor: "pointer" }}
-      onClick={() => {
-        console.log("sdfbgdzjshfbvgdhbv->>")
-        setCreatePostDia(true)}}
-    >
-      <Space size="small" direction="horizontal">
-        {/* <PlusOutlined /> */}
-        <Typography>Post</Typography>
-      </Space>
-    </List.Item>
-    <List.Item
-      // onClick={() => setEventDia()}
-      style={{ cursor: "pointer" }}>
-      <Space size="small" direction="horizontal">
-        {/* <PlusOutlined /> */}
-        <Typography>Event</Typography>
-      </Space>
-    </List.Item>
-  </List>
+      <List.Item
+        style={{ cursor: "pointer" }}
+        onClick={() => {
+
+          setCreatePostDia(true)
+        }}
+      >
+        <Space size="small" direction="horizontal">
+          {/* <PlusOutlined /> */}
+          <Typography>Post</Typography>
+        </Space>
+      </List.Item>
+      <List.Item
+        onClick={() => {
+          setCreateEventDia(true)
+        }}
+        style={{ cursor: "pointer" }}>
+        <Space size="small" direction="horizontal">
+          {/* <PlusOutlined /> */}
+          <Typography>Event</Typography>
+        </Space>
+      </List.Item>
+    </List>
   )
 
   const notificationPopover = () => (
@@ -74,14 +80,14 @@ export const Navigation: React.FC<NavigationProps> = ({ children }) => {
           <List.Item>
             <Space size="small" direction="horizontal">
               <FlagOutlined />
-    
+
               <NavLink to={""}>Saved</NavLink>
             </Space>
           </List.Item>
           <List.Item>
             <Space size="small" direction="horizontal">
               <SettingOutlined />
-  
+
               <NavLink to={""}>Setting</NavLink>
             </Space>
           </List.Item>
@@ -90,13 +96,13 @@ export const Navigation: React.FC<NavigationProps> = ({ children }) => {
             <Button
               // onClick={() => {
               //   localStorage.removeItem("rwdtoken");
-  
+
               //   openNotificationWithIcon(
               //     "success",
               //     "Logged Out SuccessFull",
               //     "Hope you will come back"
               //   );
-  
+
               //   // history.push("/");
               //   setTimeout(() => {
               //     window.location.reload();
@@ -110,21 +116,21 @@ export const Navigation: React.FC<NavigationProps> = ({ children }) => {
           </List.Item>
         </>
       ) : (
-        <>
-          <List.Item>
-            <Space>
-              <LoginOutlined />
-              <NavLink to="/login">Login</NavLink>
-            </Space>
-          </List.Item>
-          <List.Item>
-            <Space>
-              <EditOutlined />
-              <NavLink to="/signup">Signup</NavLink>
-            </Space>
-          </List.Item>
-        </>
-      )}
+          <>
+            <List.Item>
+              <Space>
+                <LoginOutlined />
+                <NavLink to="/login">Login</NavLink>
+              </Space>
+            </List.Item>
+            <List.Item>
+              <Space>
+                <EditOutlined />
+                <NavLink to="/signup">Signup</NavLink>
+              </Space>
+            </List.Item>
+          </>
+        )}
     </List>
   );
 
@@ -148,13 +154,13 @@ export const Navigation: React.FC<NavigationProps> = ({ children }) => {
         <div className="sectionDesktop">
           <Space direction="horizontal" size="large">
             {/* <Tooltip title="Create"> */}
-              <Popover
-                content={createPopover()}
-                placement="bottomLeft"
-                trigger="click"
-                className="pointer"
-              >
-                Create
+            <Popover
+              content={createPopover()}
+              placement="bottomLeft"
+              trigger="click"
+              className="pointer"
+            >
+              Create
               </Popover>
             {/* </Tooltip> */}
             <Tooltip title="Notification">
@@ -185,8 +191,9 @@ export const Navigation: React.FC<NavigationProps> = ({ children }) => {
           <Button>moreIcon</Button>
         </div>
       </div>
-      
-      {createPostDia ? <CreatePost/> : null}
+
+      {createPostDia ? <CreatePost /> : null}
+      {createEventDia ? <CreateEvent /> : null}
     </div>
   );
 };

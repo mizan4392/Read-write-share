@@ -6,7 +6,7 @@ export const CreatePost: React.FC = ({ children }) => {
     const { setCreatePostDia } = useStoreActions(action => action.post)
     const { createPostDia } = useStoreState(state => state.post)
 
-    console.log("createPostDia->",createPostDia)
+
     const [form] = Form.useForm()
     return (
         <Modal
