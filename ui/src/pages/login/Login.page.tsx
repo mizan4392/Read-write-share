@@ -1,12 +1,38 @@
 import { KeyOutlined, MailOutlined } from '@ant-design/icons'
-import { Button, Col, Form, Input, Row } from 'antd'
-import React from 'react'
+import { Button, Col, Form, Input, Row,notification } from 'antd'
+import React, { useEffect } from 'react'
+import { useHistory } from 'react-router'
+import { LoginDataI } from './login'
 import './login.css'
+import { useStoreActions, useStoreState } from '../../hooks/easyPeasy'
+import * as ROUTER from '../../utils/routes'
 
 export const Login: React.FC = () => {
+
+  const { loginUser, setLoginUserRes } = useStoreActions(a => a.auth)
+  const { loginUserLod, loginUserRes } = useStoreState(s => s.auth)
+
+  const [form] = Form.useForm()
+  const history = useHistory()
+
+  useEffect(()=>{
+    if(loginUserRes){
+      if(loginUserRes.success){
+        history.push(ROUTER.ROOT)
+        setLoginUserRes(null)
+      }else{
+        notification.error({message:"UnAuthorized"})
+      }
+    }
+  },[loginUserRes])
+
+  function handleLogin(value: LoginDataI) {
+    loginUser(value)
+  }
+
   return <div className="login"><h2>Read Write & Share</h2>
     <div style={{ background: "#fff", padding: "20px" }}>
-      <Form name="login" >
+      <Form name="login" form={form} onFinish={(value) => handleLogin(value)}>
         <Form.Item
           style={{ width: "400px" }}
           name="email"
@@ -26,7 +52,6 @@ export const Login: React.FC = () => {
             size="large"
           />
         </Form.Item>
-
         <Form.Item
           style={{ width: "400px" }}
           name="password"
@@ -41,14 +66,13 @@ export const Login: React.FC = () => {
             size="large"
           />
         </Form.Item>
-
         <Row justify="space-between">
           <Col></Col>
           <Col>
             <Button
               htmlType="submit"
               style={{ color: "#000" }}
-            // loading={loginLoading}
+              loading={loginUserLod}
             >
               Login
             </Button>

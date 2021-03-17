@@ -12,6 +12,12 @@ export class UserService {
     return this.userRipo.save(body);
   }
 
+  /**
+   * 
+   * @param email 
+   * @param relations 
+   * @returns Promise<User>
+   */
   findOne(email: string, relations: string[] = []): Promise<User> {
     return this.userRipo.findOne({ where: { email }, relations });
   }
