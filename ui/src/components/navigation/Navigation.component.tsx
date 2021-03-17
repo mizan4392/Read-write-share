@@ -1,4 +1,4 @@
-import { Input, Space, Tooltip, Popover, Avatar, Button, Typography, List, Divider } from "antd";
+import { Input, Space, Tooltip, notification,Popover, Avatar, Button, Typography, List, Divider } from "antd";
 import { EditOutlined, FlagOutlined, LoginOutlined, LogoutOutlined, NotificationOutlined, PlusOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons'
 import React from "react";
 import './navigation.css'
@@ -11,13 +11,14 @@ import CreateEvent from "../Create/CreateEvent/CreateEvent.component";
 const { Search } = Input
 interface NavigationProps { }
 
-const user = true
+
 export const Navigation: React.FC<NavigationProps> = ({ children }) => {
 
   const { setCreatePostDia } = useStoreActions(state => state.post)
   const { setCreateEventDia } = useStoreActions(state => state.event)
   const { createPostDia } = useStoreState(state => state.post)
   const { createEventDia } = useStoreState(state => state.event)
+  const { user } = useStoreState(state => state.auth)
   const history = useHistory()
 
 
@@ -94,20 +95,13 @@ export const Navigation: React.FC<NavigationProps> = ({ children }) => {
           <Divider></Divider>
           <List.Item>
             <Button
-              // onClick={() => {
-              //   localStorage.removeItem("rwdtoken");
-
-              //   openNotificationWithIcon(
-              //     "success",
-              //     "Logged Out SuccessFull",
-              //     "Hope you will come back"
-              //   );
-
-              //   // history.push("/");
-              //   setTimeout(() => {
-              //     window.location.reload();
-              //   }, 600);
-              // }}
+              onClick={() => {
+                localStorage.removeItem("rwd_t");
+                notification.success({message:"Logged Out SuccessFull"})
+                setTimeout(() => {
+                  window.location.reload();
+                }, 600);
+              }}
               style={{ border: "none" }}
               icon={<LogoutOutlined />}
             >
