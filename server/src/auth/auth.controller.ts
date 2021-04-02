@@ -11,6 +11,7 @@ import {
   Param,
   UsePipes,
   ValidationPipe,
+  Req,
 } from '@nestjs/common';
 
 import { AuthService } from './auth.service';
@@ -43,4 +44,5 @@ export class AuthController {
   updatePassword(@Body() body) {
     return this.as.changePassword(body);
   }
+
 }

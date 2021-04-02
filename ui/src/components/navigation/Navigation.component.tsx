@@ -18,7 +18,9 @@ export const Navigation: React.FC<NavigationProps> = ({ children }) => {
   const { setCreateEventDia } = useStoreActions(state => state.event)
   const { createPostDia } = useStoreState(state => state.post)
   const { createEventDia } = useStoreState(state => state.event)
-  const { user } = useStoreState(state => state.auth)
+  // const { user } = useStoreState(state => state.auth)
+  const { userDetails } = useStoreState(state => state.profile)
+
   const history = useHistory()
 
 
@@ -69,7 +71,7 @@ export const Navigation: React.FC<NavigationProps> = ({ children }) => {
       style={{ width: "150px", cursor: "pointer" }}
       split={false}
     >
-      {user ? (
+      {userDetails ? (
         <>
           {" "}
           <List.Item>

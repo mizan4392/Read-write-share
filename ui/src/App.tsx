@@ -8,11 +8,14 @@ import jwt_decode from 'jwt-decode'
 
 function App() {
   const {setUserData} = useStoreActions(a=>a.auth)
+  const { getUserDetails } = useStoreActions(a => a.profile)
   useEffect(()=>{
     let token = localStorage.getItem('rwd_t')
     if(token){
       const decoded:any = jwt_decode(token)
       setUserData(decoded.user)
+      getUserDetails(decoded.user.id)
+      
     }
   },[])
   return (

@@ -45,4 +45,10 @@ export class UserService {
       return { success: false, msg: res };
     }
   }
+
+ async getUserDetails(userId){
+    let user = await this.userRipo.findOne({id:userId})
+    delete user.password
+    return user
+  }
 }
