@@ -1,9 +1,16 @@
 import { CameraOutlined } from '@ant-design/icons'
 import { Tooltip } from 'antd'
 import React from 'react'
+import { useStoreActions } from '../../hooks/easyPeasy'
 import { ProfileAvater } from '../profileAvater/ProfileAvater.component'
 import './profileCover.css'
 export const ProfileCover: React.FC = ({ children }) => {
+
+  const {uploadSinglePhoto} = useStoreActions(a=>a.profile)
+
+  function handleFileChange(event:any){
+    uploadSinglePhoto(event.target.files[0])
+  }
     return   <div style={{ position: "relative" }}>
     <div style={{marginTop:"5px"}}>
       <img
@@ -20,7 +27,7 @@ export const ProfileCover: React.FC = ({ children }) => {
       <Tooltip title="Uplode Cover Photo">
         <label className="CoverPhotoUplodeLabel">
           <CameraOutlined style={{ color: "#fff" }} />
-          <input type="file" style={{ display: "none" }}></input>
+          <input type="file" style={{ display: "none" }} onChange={handleFileChange}></input>
         </label>
       </Tooltip>
     </div>

@@ -1,5 +1,5 @@
 import { action, Action, thunk, Thunk } from "easy-peasy";
-import {getUserDetails,updateUserProfile} from '../services/profile'
+import {getUserDetails,updateUserProfile,uploadSinglePhoto} from '../services/profile'
 export interface ProfileState{
     updateProfileDia:boolean;
     setUpdateProfileDia:Action<ProfileState,boolean>
@@ -13,6 +13,12 @@ export interface ProfileState{
     setUpdateUserRes:Action<ProfileState,boolean>
     setUpdateUserLod:Action<ProfileState,boolean>
     updateUserProfile:Thunk<ProfileState,any>
+
+    uploadSinglePhotoRes:boolean
+    setUploadSinglePhotoRes:Action<ProfileState,boolean>
+    uploadSinglePhotoLod:boolean
+    setUploadSinglePhotoLod:Action<ProfileState,boolean>
+    uploadSinglePhoto:Thunk<ProfileState,any>
 }
 
 
@@ -48,6 +54,27 @@ export const profileState:ProfileState={
             actions.setUpdateUserLod(false)
         }else{
             actions.setUpdateUserLod(false)
+        }
+    }),
+    uploadSinglePhotoRes:false,
+    setUploadSinglePhotoRes:action((state, payload) => {
+        state.uploadSinglePhotoRes = payload
+    }),
+    uploadSinglePhotoLod:false,
+    setUploadSinglePhotoLod:action((state, payload) => {
+        state.uploadSinglePhotoLod = payload
+    }),
+    uploadSinglePhoto:thunk(async(actions,payload)=>{
+        actions.setUploadSinglePhotoLod(true)
+        let formData = new FormData()
+        formData.append("file",payload)
+        let res = await uploadSinglePhoto(formData)
+
+        if(res.status === 200 || res.status === 201){
+            actions.setUploadSinglePhotoRes(true)
+            actions.setUploadSinglePhotoLod(false)
+        }else{
+            actions.setUploadSinglePhotoLod(false)
         }
     }),
 }

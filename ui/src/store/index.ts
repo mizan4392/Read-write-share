@@ -2,7 +2,7 @@ import { createStore } from "easy-peasy";
 import { authState, AuthState } from "../states/auth";
 import { eventState, EventState } from "../states/event";
 import { postState, PostState } from "../states/post";
-import { profileState, ProfileState } from "../states/profile";
+import { ProfileState ,profileState} from "../states/profile";
 
 export interface StoreModel {
   post:PostState,

@@ -20,6 +20,7 @@ import { FollowersController } from './followers/followers.controller';
 import { FollowersModule } from './followers/followers.module';
 import { SaveModule } from './save/save.module';
 import { ShareModule } from './share/share.module';
+import { StorageModule } from './storage/storage.module';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { ShareModule } from './share/share.module';
     FollowersModule,
     SaveModule,
     ShareModule,
+    StorageModule,
   ],
   controllers: [AppController],
   providers: [AppService],
