@@ -10,6 +10,7 @@ import * as ROUTER from '../../utils/routes'
 export const Login: React.FC = () => {
 
   const { loginUser, setLoginUserRes } = useStoreActions(a => a.auth)
+
   const { loginUserLod, loginUserRes } = useStoreState(s => s.auth)
 
   const [form] = Form.useForm()

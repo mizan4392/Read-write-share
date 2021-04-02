@@ -8,6 +8,7 @@ import {
   UseGuards,
   Get,
   Req,
+  Patch,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UserDto } from './user.dto';
@@ -18,15 +19,16 @@ import { JwtAuthGuard } from 'src/auth/jwt_auth.guard';
 export class UserController {
   constructor(private userService: UserService) {}
 
-  @Get()
-  @UseGuards(JwtAuthGuard)
-  getUserDetalies(@Req() req) {
-    delete req?.user?.password;
-    return req.user;
+  @Get(':id')
+  getUserDetails(@Param('id') id) {
+
+    return this.userService.getUserDetails(id)
   }
 
-  @Post('update/:id')
-  updateUser(@Body() body: UserDto, @Param() id) {
-    return this.userService.updateUser(id.id, body);
+  @Patch()
+  updateUser(@Body() body) {
+    return this.userService.updateUser(body.id, body);
   }
+
+
 }

@@ -12,6 +12,11 @@ body{
   pointer-events: none;
 }
 
+.title-Text {
+  color: rgb(3, 27, 78) !important;
+  font-weight: bold;
+  padding: 0 0 8px;
+}
 
 .se-resizing-bar{
   display:none !important;

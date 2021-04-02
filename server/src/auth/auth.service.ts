@@ -84,4 +84,8 @@ export class AuthService {
       }
     }
   }
+
+  getUserDetails(user:User){
+    return this.usersService.findOne(user.email)
+  }
 }
