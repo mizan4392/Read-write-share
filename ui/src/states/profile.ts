@@ -6,7 +6,7 @@ export interface ProfileState{
 
     userDetails:any
     setUserDetails:Action<ProfileState,boolean>
-    getUserDetails:Thunk<ProfileState,number>
+    getUserDetails:Thunk<ProfileState>
 
     updateUserRes:boolean
     updateUserLod:boolean
@@ -32,7 +32,7 @@ export const profileState:ProfileState={
         state.userDetails = payload
     }),
     getUserDetails:thunk(async(actions,payload)=>{
-        let res = await getUserDetails(payload)
+        let res = await getUserDetails()
         if(res.status === 200 || res.status === 201){
             let data = await res.json()
             actions.setUserDetails(data)

@@ -22,10 +22,10 @@ import { FileInterceptor } from '@nestjs/platform-express';
 export class UserController {
   constructor(private userService: UserService) {}
 
-  @Get(':id')
-  getUserDetails(@Param('id') id) {
-
-    return this.userService.getUserDetails(id)
+  @Get()
+  @UseGuards(JwtAuthGuard)
+  getUserDetails(@Req() req) {
+    return this.userService.getUserDetails(req.user.id)
   }
 
   @Patch()
