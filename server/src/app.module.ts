@@ -21,10 +21,16 @@ import { FollowersModule } from './followers/followers.module';
 import { SaveModule } from './save/save.module';
 import { ShareModule } from './share/share.module';
 import { StorageModule } from './storage/storage.module';
+import { JwtModule } from '@nestjs/jwt';
+import { jwtSecret } from './auth/constraitns';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot(TypeormConfig),
+    JwtModule.register({
+      secret: jwtSecret,
+      signOptions: { expiresIn: 360000000000 },
+    }),
     UserModule,
     AuthModule,
     PostModule,

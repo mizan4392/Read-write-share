@@ -1,6 +1,6 @@
 import { API_BASE } from '../utils/config'
-import { token } from '../states/auth'
 
+let token = localStorage.getItem('rwd_t')
 export const GetApiUrl = (url:string) => API_BASE + url
 
 export const request = (
@@ -10,7 +10,7 @@ export const request = (
   headers?: any
 ) => {
   headers = headers || {}
-
+  console.log("token------------",token)
   if (token) {
     headers['Authorization'] = `Bearer ${token}`
   }
