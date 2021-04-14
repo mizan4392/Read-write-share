@@ -28,6 +28,7 @@ client/node_modules
 .idea/workspace.xml
 server/dist
 server/public
+server/assets
 
 .idea
 ui/node_modules
