@@ -1,27 +1,43 @@
-import { Form, Modal } from 'antd';
-import React from 'react'
+import { Form, Modal, notification } from 'antd';
+import React, { useEffect } from 'react'
 import SunEditor, { buttonList } from 'suneditor-react';
 import { useStoreActions, useStoreState } from '../../../hooks/easyPeasy';
 export const CreatePost: React.FC = ({ children }) => {
-    const { setCreatePostDia } = useStoreActions(action => action.post)
-    const { createPostDia } = useStoreState(state => state.post)
+    const { setCreatePostDia,createPost,setCreatePostRes } = useStoreActions(action => action.post)
+    const { createPostDia,createPostRes,createPostLod } = useStoreState(state => state.post)
 
 
     const [form] = Form.useForm()
+    useEffect(()=>{
+        if(createPostRes){
+            notification.success({message:"Post created Successfully"})
+            setCreatePostRes(false)
+            setCreatePostDia(false)
+        }
+    },[createPostRes])
+
+    function onFinish(value:any){
+        createPost(value)
+    }
+
     return (
         <Modal
             visible={createPostDia}
             title="Create Post"
             width="60%"
             okText="Post"
-            onOk={() => setCreatePostDia(false)}
             onCancel={() => setCreatePostDia(false)}
-        //   confirmLoading={postLoading}
+            okButtonProps={{
+                htmlType:'submit',
+                form:"create-post",
+                loading:createPostLod
+
+            }}
         >
-            <Form layout="vertical" form={form}>
+            <Form layout="vertical" form={form} onFinish={onFinish} name="create-post">
                 <Form.Item
                     label="Content:"
-                    name="des"
+                    name="body"
                     rules={[{ required: true, message: "Please write Post Content" }]}
                 >
                     <SunEditor

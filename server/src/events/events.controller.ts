@@ -14,14 +14,16 @@ import {
 import { EventsService } from './events.service';
 import { EventsDto } from './events.dto';
 import { JwtAuthGuard } from 'src/auth/jwt_auth.guard';
+import { GetUser } from 'src/custom-decorator/get-user.decorator';
+import { User } from 'src/user/user.entity';
 @Controller('events')
 export class EventsController {
   constructor(private eventsService: EventsService) {}
 
   @Post()
   @UsePipes(ValidationPipe)
-  createEvents(@Body() body: EventsDto) {
-    return this.eventsService.createEvents(body);
+  createEvents(@Body() body: EventsDto,@GetUser() user:User) {
+    return this.eventsService.createEvents(body,user);
   }
   @Get()
   @UseGuards(JwtAuthGuard)

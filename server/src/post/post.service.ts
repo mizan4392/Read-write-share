@@ -7,16 +7,9 @@ import { Posts } from './post.entity';
 export class PostService {
   constructor(@InjectRepository(Posts) private postRipo: Repository<Posts>) {}
 
-  async createPost(data) {
-    const res = await this.postRipo
-      .save(data)
-      .then(res => {
-        return res;
-      })
-      .catch(err => {
-        return err;
-      });
-
+  async createPost(data,user) {
+    data.user = user.id
+    const res = await this.postRipo.save(data)
     if (res.id) {
       return { success: true };
     } else {

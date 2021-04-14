@@ -1,9 +1,9 @@
-import { Modal, Form, Input, DatePicker } from 'antd';
-import React, { ReactElement } from 'react'
+import { Modal, Form, Input, DatePicker, notification } from 'antd';
+import React, { ReactElement, useEffect } from 'react'
 import SunEditor, { buttonList } from 'suneditor-react';
 import EventType from '../../DropDowns/EventType';
 import moment from 'moment'
-import { useStoreState,useStoreActions } from '../../../hooks/easyPeasy';
+import { useStoreState, useStoreActions } from '../../../hooks/easyPeasy';
 interface Props {
 
 }
@@ -11,11 +11,25 @@ interface Props {
 export default function CreateEvent({ }: Props): ReactElement {
     const [form] = Form.useForm()
 
-    const {createEventDia} = useStoreState(state=>state.event)
-    const {setCreateEventDia} = useStoreActions(action=>action.event)
-    function disabledDate(current:any) {
+    const { createEventDia ,createEventLod,createEventRes} = useStoreState(state => state.event)
+    const { setCreateEventDia,setCreateEventRes ,createEvent} = useStoreActions(action => action.event)
+
+    useEffect(()=>{
+        if(createEventRes){
+            notification.success({message:"Event created Successfully"})
+            setCreateEventRes(false)
+            setCreateEventDia(false)
+        }
+    },[createEventRes])
+
+    function disabledDate(current: any) {
         // Can not select days before today and today
         return current && current < moment().endOf("day");
+    }
+
+    function onFinish(value: any) {
+        createEvent(value)
+     
     }
 
     return (
@@ -24,11 +38,10 @@ export default function CreateEvent({ }: Props): ReactElement {
             title="Create Event"
             width="60%"
             okText="Create"
-              onCancel={() => setCreateEventDia(false)}
-            okButtonProps={{ form: "create-event", htmlType: "submit" }}
-        //   confirmLoading={postEvtLod}
+            onCancel={() => setCreateEventDia(false)}
+            okButtonProps={{ form: "create-event", htmlType: "submit",loading:createEventLod }}
         >
-            <Form layout="vertical" form={form} onFinish={()=>{}} id="create-event">
+            <Form layout="vertical" form={form} onFinish={onFinish} name="create-event">
                 <Form.Item
                     label="Title:"
                     name="title"

@@ -20,8 +20,7 @@ export class EventsDto {
 
   @IsNotEmpty()
   endDate: string;
-
-  @IsNotEmpty()
+  
   user: string;
 
   createdAt: string;

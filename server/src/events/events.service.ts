@@ -7,9 +7,10 @@ import { Repository } from 'typeorm';
 export class EventsService {
   constructor(
     @InjectRepository(Events) private readonly eventsRepo: Repository<Events>,
-  ) {}
+  ) { }
 
-  async createEvents(data) {
+  async createEvents(data, user) {
+    data.user = user?.id
     let res = await this.eventsRepo.save(data);
 
     if (res.id) {

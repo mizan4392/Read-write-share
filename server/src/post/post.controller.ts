@@ -14,15 +14,19 @@ import {
 import { PostService } from './post.service';
 import { PostDto } from './post.dto';
 import { JwtAuthGuard } from 'src/auth/jwt_auth.guard';
+import { GetUser } from 'src/custom-decorator/get-user.decorator';
+import { User } from 'src/user/user.entity';
 
 @Controller('post')
 export class PostController {
   constructor(private postService: PostService) {}
 
   @Post()
+  @UseGuards(JwtAuthGuard)
   @UsePipes(ValidationPipe)
-  createPost(@Body() body: PostDto) {
-    return this.postService.createPost(body);
+  createPost(@Body() body: PostDto,@GetUser() user:User) {
+
+    return this.postService.createPost(body,user);
   }
 
   @Post('user')
