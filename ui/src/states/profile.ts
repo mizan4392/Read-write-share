@@ -31,7 +31,7 @@ export const profileState:ProfileState={
     setUserDetails:action((state, payload) => {
         state.userDetails = payload
     }),
-    getUserDetails:thunk(async(actions,payload)=>{
+    getUserDetails:thunk(async(actions)=>{
         let res = await getUserDetails()
         if(res.status === 200 || res.status === 201){
             let data = await res.json()
