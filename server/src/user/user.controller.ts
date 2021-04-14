@@ -17,6 +17,8 @@ import { UserDto } from './user.dto';
 
 import { JwtAuthGuard } from 'src/auth/jwt_auth.guard';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { GetUser } from 'src/custom-decorator/get-user.decorator';
+import { User } from './user.entity';
 
 @Controller('user')
 export class UserController {
@@ -34,10 +36,11 @@ export class UserController {
   }
 
   @Post('singlePhoto')
+  @UseGuards(JwtAuthGuard)
   @UseInterceptors(FileInterceptor('file'))
-  uploadSinglePhoto(@UploadedFile() file) {
-    
-    return this.userService.uploadSinglePhoto(file);
+  uploadSinglePhoto(@UploadedFile() file,@GetUser() user:User,@Body('type') type) {
+   
+    return this.userService.uploadSinglePhoto(file,user,JSON.parse(type));
   }
 
   
