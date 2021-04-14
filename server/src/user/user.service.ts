@@ -4,9 +4,19 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './user.entity';
 import { Repository } from 'typeorm';
 
+import { AssetService } from 'src/storage/assets.service';
+
+export enum UploadTypeE {
+  cover = 'cover',
+  profile = 'profile',
+}
+
 @Injectable()
 export class UserService {
-  constructor(@InjectRepository(User) private userRipo: Repository<User>) {}
+  constructor(
+    @InjectRepository(User) private userRipo: Repository<User>,
+    private readonly assets:AssetService
+    ) {}
 
   createUser(body: UserDto) {
     return this.userRipo.save(body);
@@ -52,7 +62,18 @@ export class UserService {
     return user
   }
 
-  async uploadSinglePhoto(file){
-    
+  async uploadSinglePhoto(file,user:User,uploadType:{type:string}){
+    if(uploadType.type === UploadTypeE.cover){
+     let filepath = await  this.assets.saveCoverPic(file,file.originalname)
+     console.log("filepath",filepath)
+     if(filepath){
+      return this.userRipo.update({id:user.id},{coverPhotoUrl:filepath})
+     }
+    }else{
+      let filepath = await  this.assets.saveProfilePic(file,file.originalname)
+      if(filepath){
+        return this.userRipo.update({id:user.id},{photoUrl:filepath})
+      }
+    }
   }
 }

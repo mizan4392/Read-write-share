@@ -67,7 +67,8 @@ export const profileState:ProfileState={
     uploadSinglePhoto:thunk(async(actions,payload)=>{
         actions.setUploadSinglePhotoLod(true)
         let formData = new FormData()
-        formData.append("file",payload)
+        formData.append("file",payload.file)
+        formData.append("type",JSON.stringify({type: payload.type}))
         let res = await uploadSinglePhoto(formData)
 
         if(res.status === 200 || res.status === 201){

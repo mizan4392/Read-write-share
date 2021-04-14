@@ -9,7 +9,12 @@ export const ProfileCover: React.FC = ({ children }) => {
   const {uploadSinglePhoto} = useStoreActions(a=>a.profile)
 
   function handleFileChange(event:any){
-    uploadSinglePhoto(event.target.files[0])
+    let postData = {
+      file:event.target.files[0],
+      type:"cover"
+    }
+    console.log("postData->>",postData)
+    uploadSinglePhoto(postData)
   }
     return   <div style={{ position: "relative" }}>
     <div style={{marginTop:"5px"}}>
