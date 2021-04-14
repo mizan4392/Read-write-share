@@ -1,34 +1,51 @@
 import { CameraOutlined } from '@ant-design/icons'
-import { Tooltip } from 'antd'
-import React from 'react'
-import { useStoreActions } from '../../hooks/easyPeasy'
+import { notification, Tooltip, Image, Button } from 'antd'
+import React, { useEffect, useState } from 'react'
+import { useStoreActions, useStoreState } from '../../hooks/easyPeasy'
+import { REACT_APP_ASSET_ROOT } from '../../utils/config'
 import { ProfileAvater } from '../profileAvater/ProfileAvater.component'
 import './profileCover.css'
 export const ProfileCover: React.FC = ({ children }) => {
 
-  const {uploadSinglePhoto} = useStoreActions(a=>a.profile)
+  const { userDetails, uploadSinglePhotoRes } = useStoreState(a => a.profile)
+  const { uploadSinglePhoto, setUploadSinglePhotoRes, getUserDetails } = useStoreActions(a => a.profile)
+  const [cover, setCover] = useState<boolean>(false)
 
-  function handleFileChange(event:any){
-    let postData = {
-      file:event.target.files[0],
-      type:"cover"
+  useEffect(() => {
+    if (cover) {
+      if (uploadSinglePhotoRes) {
+        getUserDetails()
+        notification.success({ message: "Cover photo updated" })
+        setUploadSinglePhotoRes(false)
+      }
     }
-    console.log("postData->>",postData)
+
+  }, [uploadSinglePhotoRes])
+  function handleFileChange(event: any) {
+    setCover(true)
+    let postData = {
+      file: event.target.files[0],
+      type: "cover"
+    }
     uploadSinglePhoto(postData)
   }
-    return   <div style={{ position: "relative" }}>
-    <div style={{marginTop:"5px"}}>
-      <img
-        src="https://i.pinimg.com/originals/23/05/35/230535d2013c6b8f34e2304d050df22f.jpg"
+
+
+  return <div style={{ position: "relative" }}>
+    <div style={{ marginTop: "5px" }}>
+
+      <Image
+        width={'100%'}
         height="300px"
-        width="100%"
-        style={{
-          backgroundRepeat: "no-repeat",
-          backgroundPosition: "center",
-          position: "relative",
-          borderRadius:"15px"
-        }}
-      ></img>
+        src={`${REACT_APP_ASSET_ROOT}${userDetails?.coverPhotoUrl}`}
+        placeholder={
+          <Image
+            preview={false}
+            src={`${REACT_APP_ASSET_ROOT}${userDetails?.coverPhotoUrl}`}
+            width={200}
+          />
+        }
+      />
       <Tooltip title="Uplode Cover Photo">
         <label className="CoverPhotoUplodeLabel">
           <CameraOutlined style={{ color: "#fff" }} />
@@ -37,7 +54,7 @@ export const ProfileCover: React.FC = ({ children }) => {
       </Tooltip>
     </div>
     <div>
-        <ProfileAvater />
+      <ProfileAvater />
     </div>
   </div>
 

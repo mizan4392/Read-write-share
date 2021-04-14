@@ -10,7 +10,7 @@ export const request = (
   headers?: any
 ) => {
   headers = headers || {}
-  console.log("token------------",token)
+
   if (token) {
     headers['Authorization'] = `Bearer ${token}`
   }
