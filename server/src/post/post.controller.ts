@@ -45,9 +45,11 @@ export class PostController {
     return this.postService.fetchAllPost();
   }
 
-  @Get(':id')
-  getPostByUser(@Param() id) {
-    return this.postService.getPostByUser(id.id);
+  @Get('user-post')
+  @UseGuards(JwtAuthGuard)
+  getPostByUser(@Param() id,@Req() req) {
+  
+    return this.postService.getPostByUser(req.user.id);
   }
 
   @Delete(':id')
